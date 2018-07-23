@@ -58,6 +58,9 @@ dead_hang_sloper.delete()
 exercises = Exercise.find_all()
 exercises.each {|exercise| p exercise}
 
+# Test find method
+exercise_found = Exercise.find(dead_hang_thin_crimp.id)
+
 # Workouts =====================================================================
 
 # Test delete_all and clear the database table before we start

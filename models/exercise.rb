@@ -24,6 +24,16 @@ class Exercise
         @id = result.first['id'].to_i
     end
 
+    def self.find(id)
+        sql = "SELECT * FROM exercises
+        WHERE exercises.id = $1"
+        values = [id]
+        result = SqlRunner.run(sql, values)
+        exercise_hash = result.first()
+        return Exercise.new(exercise_hash)
+
+    end
+
     def self.find_all()
         sql = "SELECT * FROM exercises;"
         result = SqlRunner.run(sql)
