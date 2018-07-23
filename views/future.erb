@@ -1,1 +1,7 @@
 <h1>This is the future sessions page</h1>
+
+<%for workout in @all_workouts%>
+<ul>
+    <li>Name: <%=workout.name%>, Complete : <%=workout.complete%></li>
+</ul>
+<%end%>
