@@ -1,0 +1,16 @@
+<h1> Show workout </h1>
+<ul>
+    <li>Name: <%=@workout.name%></li>
+    <li>complete: <%=@workout.complete%></li>
+</ul>
+
+<ul>
+
+<%for exercise in @exercises%>
+    <li>Name: <%=exercise.name%></li>
+    <li>Reps: <%=exercise.reps%></li>
+    <li>Sets: <%=exercise.sets%></li>
+    <li>Notes: <%=exercise.notes%></li>
+<%end%>
+
+</ul>

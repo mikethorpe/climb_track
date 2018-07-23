@@ -3,5 +3,6 @@
 <%for workout in @all_workouts%>
 <ul>
     <li>Name: <%=workout.name%>, Complete : <%=workout.complete%></li>
+    <a href="/workouts/<%=workout.id%>"><button type="button" name="delete">View details</button></a>
 </ul>
 <%end%>
