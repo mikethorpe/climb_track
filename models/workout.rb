@@ -4,7 +4,7 @@ require_relative('../db/sql_runner')
 
 class Workout
     
-    attr_accessor :name, :complete
+    attr_accessor :id, :name, :complete
 
     def initialize(options)
         @id = options['id'].to_s if options['id'] != nil
