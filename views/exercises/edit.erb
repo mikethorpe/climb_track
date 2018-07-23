@@ -1,0 +1,17 @@
+<form class="" action="/exercises/<%=@exercise.id%>/edit" method="post">
+    
+    <input type="submit" value="Update exercise">
+
+    <label for="Name">Name</label>
+    <input id="Name" type="text" name="name" value ="<%=@exercise.name%>" >
+
+    <label for="Sets">Sets</label>
+    <input id="Sets" type="number" name="sets" value ="<%=@exercise.sets%>">
+
+    <label for="Reps">Reps</label>
+    <input id="Reps" type="number" name="reps" value ="<%=@exercise.reps%>">
+
+    <label for="Notes">Notes</label>
+    <input id="Notes" type="text" name="notes" value ="<%=@exercise.notes%>">
+
+</form>

@@ -3,6 +3,8 @@
 <a href="/exercises/new"><button type="button" name="new-exercise">NewExercise</button></a>
 <%for exercise in @all_exercises%>
 <ul>
-<li>Name: <%=exercise.name%>, Reps: <%=exercise.reps%>, Sets: <%=exercise.sets%>, Notes: <%=exercise.notes%></li>
+    <li>Name: <%=exercise.name%>, Reps: <%=exercise.reps%>, Sets: <%=exercise.sets%>, Notes: <%=exercise.notes%></li>
+    <a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">Delete</button></a>
+    <a href="/exercises/<%=exercise.id%>/edit"><button type="button" name="edit">Edit</button></a>
 </ul>
 <%end%>

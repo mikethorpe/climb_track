@@ -1,0 +1,5 @@
+<p> Are you sure you want to delete the exercise: <%=@exercise.name%></p>
+<form class="" action="/exercises/<%=@exercise.id%>/delete" method="post">
+    <input type="submit" value="Yes">
+</form>
+<a href="/exercises"><button type="button" name="No">No</button></a>
