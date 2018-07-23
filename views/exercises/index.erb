@@ -1,0 +1,8 @@
+<h1> Exercises </h1>
+
+<a href="/exercises/new"><button type="button" name="new-exercise">NewExercise</button></a>
+<%for exercise in @all_exercises%>
+<ul>
+<li>Name: <%=exercise.name%>, Reps: <%=exercise.reps%>, Sets: <%=exercise.sets%>, Notes: <%=exercise.notes%></li>
+</ul>
+<%end%>
