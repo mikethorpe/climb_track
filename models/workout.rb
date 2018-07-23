@@ -1,6 +1,7 @@
 # Mike Thorpe 2018
 # Workout class models workout table entries in db
 require_relative('../db/sql_runner')
+require_relative('exercise')
 
 class Workout
     
@@ -45,6 +46,17 @@ class Workout
     def self.delete_all()
         sql = "DELETE FROM workouts;"
         SqlRunner.run(sql)
+    end
+
+    def exercises()
+        sql = "SELECT exercises.*
+        FROM exercises
+        INNER JOIN activities
+        ON activities.exercise_id = exercises.id
+        WHERE activities.workout_id = $1"
+        values = [@id]
+        result = SqlRunner.run(sql, values)
+        return result.map { |exercise| Exercise.new(exercise)}
     end
 
 end

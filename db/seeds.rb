@@ -92,6 +92,8 @@ workouts = Workout.find_all()
 workouts.each {|workout| p workout}
 
 
+
+
 # Activities ===================================================================
 
 # Test delete_all and clear the database table before we start
@@ -127,3 +129,11 @@ core_workout_activity.update()
 #  Test find_all method
 activities = Activity.find_all()
 activities.each {|activity| p activity}
+
+# Workouts =====================================================================
+
+# Test exercises method
+core_workout_exercises = core_workout.exercises()
+
+p "Core workout exercises"
+core_workout_exercises.each {|exercise| p exercise}
