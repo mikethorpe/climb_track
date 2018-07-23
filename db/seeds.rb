@@ -1,8 +1,11 @@
 # Mike Thorpe 2018
 # Seeds for database
 require_relative('../models/exercise')
+require_relative('../models/workout')
 
-# Clear the database before we start
+# Exercises ====================================================================
+
+# Test delete_all and clear the database table before we start
 Exercise.delete_all()
 
 dead_hang_sloper_options = {
@@ -37,6 +40,39 @@ dead_hang_sloper.update()
 # Test delete method
 dead_hang_sloper.delete()
 
-#  Test find_all method
+# Test find_all method
 exercises = Exercise.find_all()
 exercises.each {|exercise| p exercise}
+
+# Workouts =====================================================================
+
+# Test delete_all and clear the database table before we start
+Workout.delete_all()
+
+finger_endurance_workout_options = {
+    'name' => 'Finger endurance',
+    'complete' => false
+}
+finger_endurance = Workout.new(finger_endurance_workout_options)
+
+# Test save method
+finger_endurance.save()
+
+core_workout_options = {
+    'name' => 'Core session',
+    'complete' => false
+}
+core_workout = Workout.new(core_workout_options)
+core_workout.save()
+
+# Test update method
+core_workout.name = "Core workout 2"
+core_workout.complete = true
+core_workout.update()
+
+# Test delete method
+finger_endurance.delete()
+
+#  Test find_all method
+workouts = Workout.find_all()
+workouts.each {|workout| p workout}
