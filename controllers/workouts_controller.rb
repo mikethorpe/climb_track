@@ -46,5 +46,6 @@ end
 # show results
 get '/workouts/:id/edit' do
     @workout = Workout.find(params['id'])
+    @exercises = Exercise.find_all()
     erb(:"workouts/edit")
 end

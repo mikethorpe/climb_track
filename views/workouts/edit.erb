@@ -1,13 +1,26 @@
 <h1> Edit workout </h1>
 
 <form class="" action="/workouts/<%=@workout.id%>/edit" method="post">
-    
     <input type="submit" value="Update workout">
+    
+    <a href="/activity/<%=@workout.id%>/delete"><button type="button" name="">Delete workout</button></a>
 
-    <label for="Name">Name</label>
+    <hr>
+
+    <label for="Name">Name: </label>
     <input id="Name" type="text" name="name" value ="<%=@workout.name%>" >
+    <hr>
 
-     <hr>
+    <label for="exercise">Add exercise: </label>
+
+    <select id="exercise" name="exercise">
+        <%for exercise in @exercises%>
+            <option value="<%=exercise.id%>"><%=exercise.name%></option>
+        <%end%>
+    </select>  
+    <hr>
+
+    </form>
 
     <%for activity in @workout.activities()%>
         
@@ -18,9 +31,10 @@
             <li>Notes: <%=activity.exercise.notes%> </li>
 
         </ul>
+        
+        <a href="/activity/<%=activity.id%>/delete"><button type="button" name="">Remove exercise</button></a>
     
         <hr>
 
     <%end%>
 
-</form>
