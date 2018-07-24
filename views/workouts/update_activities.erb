@@ -16,13 +16,11 @@
 
 <%for activity in @workout.activities()%>
     
-    <ul>
-        <li>Name: <%=activity.exercise.name %> </li> 
-        <li>Reps: <%=activity.exercise.reps%> </li>
-        <li>Sets: <%=activity.exercise.sets%> </li>
-        <li>Notes: <%=activity.exercise.notes%> </li>
-
-    </ul>
+    <table>        
+        <tr><td>Name: <%=activity.exercise().name %> </td> </tr> 
+        <tr><td>Reps: <%=activity.exercise().reps%> Sets: <%=activity.exercise().sets%></td> </tr>
+        <tr><td>Notes: <%=activity.exercise().notes%></td> </tr>
+    </table>
     
     <form class="" action="/workouts/<%=@workout.id%>/delete_activity" method="post">
         <input type="hidden" name="activity_id" value="<%=activity.id%>"/>

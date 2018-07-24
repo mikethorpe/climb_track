@@ -1,20 +1,22 @@
 <h1> Show workout </h1>
-<ul>
-    <li>Name: <%=@workout.name%></li>
-    <li>complete: <%=@workout.complete%></li>
-</ul>
 
-<ul>
+<p>Name: <%=@workout.name%></p>
 
-<%for exercise in @exercises%>
-    <li>Name: <%=exercise.name%></li>
-    <li>Reps: <%=exercise.reps%></li>
-    <li>Sets: <%=exercise.sets%></li>
-    <li>Notes: <%=exercise.notes%></li>
-<%end%>
-    <a href="/workouts/<%=@workout.id%>/edit"><button type="button" name="edit">Edit workout</button></a>
+<a href="/workouts/<%=@workout.id%>/edit"><button type="button" name="edit">Edit workout</button></a>
 
 <form class="" action="/workouts/<%=@workout.id %>/delete" method="post">
   <input type="submit" value="Delete workout">
 </form>
-</ul>
+
+<hr>
+
+<%for exercise in @exercises%>
+    <table>        
+        <tr><td>Name: <%=exercise.name %> </td> </tr> 
+        <tr><td>Reps: <%=exercise.reps%> Sets: <%=exercise.sets%></td> </tr>
+        <tr><td>Notes: <%=exercise.notes%></td> </tr>
+    </table>
+    <hr>
+<%end%>
+
+
