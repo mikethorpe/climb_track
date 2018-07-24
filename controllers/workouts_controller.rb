@@ -41,3 +41,10 @@ get '/workouts/:id/results' do
     @workout = Workout.find(params['id'])
     erb(:"workouts/results")
 end
+
+
+# show results
+get '/workouts/:id/edit' do
+    @workout = Workout.find(params['id'])
+    erb(:"workouts/edit")
+end
