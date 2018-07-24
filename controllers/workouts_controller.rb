@@ -73,3 +73,9 @@ post '/workouts/:workout_id/add_activity' do
     path = '/workouts/' + params['workout_id'] + '/edit'
     redirect to(path)
 end
+
+post '/workouts/:id/delete' do
+    workout = Workout.find(params['id'])
+    workout.delete()
+    redirect to('/future')
+end

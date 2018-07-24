@@ -1,5 +1,9 @@
 <h1> Edit workout </h1>
 
+<form class="" action="/workouts/<%=@workout.id%>/delete" method="post">
+    <input type="submit" value="Delete workout">
+</form>
+
 <form class="" action="/workouts/<%=@workout.id%>/edit" method="post">
     <input type="submit" value="Update workout details">
     <label for="name">Name: </label>

@@ -18,7 +18,7 @@ CREATE TABLE workouts (
 
 CREATE TABLE activities (
     id SERIAL8 PRIMARY KEY,
-    workout_id INT8 REFERENCES workouts(id),
+    workout_id INT8 REFERENCES workouts(id) ON DELETE CASCADE,
     exercise_id INT8 REFERENCES exercises(id),
     result VARCHAR(255)
 );
