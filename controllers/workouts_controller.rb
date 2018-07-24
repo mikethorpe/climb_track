@@ -39,8 +39,8 @@ end
 post '/' do
     workout = Workout.find(params['id'])
     workout.complete = true
-    workout.update()
     update_activity_results(workout, params)
+    workout.update()
     redirect to('/')
 end
 

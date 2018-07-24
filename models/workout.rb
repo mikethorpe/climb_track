@@ -6,20 +6,21 @@ require_relative('activity')
 
 class Workout
     
-    attr_accessor :id, :name, :complete
+    attr_accessor :id, :name, :complete, :overall_result
 
     def initialize(options)
-        @id = options['id'].to_s if options['id'] != nil
+        @id = options['id'].to_i if options['id'] != nil
         @name = options['name']
-        @complete = true?(options['complete'])  
+        @complete = true?(options['complete'])
+        @overall_result = options['overall_result'].to_i if options['overall_result'] != nil
     end
 
     def save()
         sql = "INSERT INTO workouts 
-        (name, complete) 
-        VALUES($1, $2) 
+        (name, complete, overall_result) 
+        VALUES($1, $2, $3) 
         RETURNING id;"
-        values = [@name, @complete]
+        values = [@name, @complete, @overall_result]
         result = SqlRunner.run(sql, values)
         @id = result.first['id'].to_i
     end
@@ -41,10 +42,11 @@ class Workout
     end
 
     def update()
+        @overall_result = self.calculate_average_result()
         sql = "UPDATE workouts 
-        SET (name, complete) = ($1, $2) 
-        WHERE workouts.id = $3;"
-        values = [@name, @complete, @id]
+        SET (name, complete, overall_result) = ($1, $2, $3) 
+        WHERE workouts.id = $4;"
+        values = [@name, @complete, @overall_result, @id]
         SqlRunner.run(sql, values)
     end
 
@@ -83,4 +85,16 @@ class Workout
         return true if (some_string == "true" || some_string == "t" || some_string == "TRUE")
         return false
     end
+    
+    def calculate_average_result()
+        activities = self.activities()
+        return 0 if (activities.count == 0)
+        
+        total_points = 0
+        activities.each { |activity| total_points += activity.result }    
+        average = total_points.to_f / activities.count.to_f
+        rounded_average = average.round        
+        return rounded_average
+    end
+
 end
