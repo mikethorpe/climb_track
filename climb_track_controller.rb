@@ -7,6 +7,7 @@ also_reload('./models/*')
 
 #index
 get '/' do
+    @all_workouts = Workout.find_all()
     erb(:index)
 end
 

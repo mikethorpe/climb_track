@@ -1,0 +1,23 @@
+<h1>Workout results for:  <%=@workout.name%></h1>
+
+
+    <hr>
+
+    <%for activity in @workout.activities()%>
+        
+        <ul>
+            <li>Name: <%=activity.exercise.name %> </li> 
+            <li>Reps: <%=activity.exercise.reps%> </li>
+            <li>Sets: <%=activity.exercise.sets%> </li>
+            <li>Notes: <%=activity.exercise.notes%> </li>
+            <li>Result: <%=activity.result%> </li>
+
+        </ul>
+    
+        <hr>
+
+    <%end%>
+
+
+</form>
+

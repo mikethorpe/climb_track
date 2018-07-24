@@ -35,3 +35,9 @@ def update_activity_results(workout, params)
     end
 
 end
+
+# show results
+get '/workouts/:id/results' do
+    @workout = Workout.find(params['id'])
+    erb(:"workouts/results")
+end
