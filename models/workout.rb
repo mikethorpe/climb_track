@@ -11,7 +11,7 @@ class Workout
     def initialize(options)
         @id = options['id'].to_s if options['id'] != nil
         @name = options['name']
-        @complete = options['complete']
+        @complete = false
     end
 
     def save()

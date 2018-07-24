@@ -7,6 +7,12 @@ get '/workouts/create' do
     erb(:"workouts/create")
 end
 
+post '/workouts/create' do
+    workout = Workout.new(params)
+    workout.save()
+    redirect to('/future')
+end
+
 # show
 get '/workouts/:id' do
     @workout = Workout.find(params['id'])
