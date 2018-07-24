@@ -1,10 +1,29 @@
 <h1> Exercises </h1>
 
 <a href="/exercises/new"><button type="button" name="new-exercise">NewExercise</button></a>
+
+<table>
+    <tr>
+        <th>name</th>
+        <th>reps</th>
+        <th>sets</th>
+        <th>notes</th>
+
+    </tr>
+
 <%for exercise in @all_exercises%>
-<ul>
-    <li>Name: <%=exercise.name%>, Reps: <%=exercise.reps%>, Sets: <%=exercise.sets%>, Notes: <%=exercise.notes%></li>
-    <a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">Delete</button></a>
-    <a href="/exercises/<%=exercise.id%>/edit"><button type="button" name="edit">Edit</button></a>
-</ul>
+    <tr>
+        <td><%=exercise.name%></td>
+        <td><%=exercise.reps%></td>
+        <td><%=exercise.sets%></td>
+        <td><a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">Delete</button></a></td>
+        <td><a href="/exercises/<%=exercise.id%>/edit"><button type="button" name="edit">Edit</button></a></td>
+    </tr>
+    <tr>
+        <td colspan="5">
+        Notes:
+        <%=exercise.notes%></td>
+    </tr>
 <%end%>
+
+</table>
