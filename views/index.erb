@@ -1,11 +1,22 @@
 <h1>This is the index page</h1>
 
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Result</th>
+        <th></th>
+
+    </tr>
 
 <%for workout in @all_workouts%>
     <% if (workout.complete === true) %>
-        <ul>
-            <li>Name: <%=workout.name%></li>
-        </ul>
-        <a href="/workouts/<%=workout.id%>/results"><button type="button" name="workout_results">View details</button></a>
+        <tr>
+            <td> Name: <%=workout.name%></td>
+            <td></td>
+            <td><a href="/workouts/<%=workout.id%>/results"><button type="button" name="workout_results">View details</button></a></td>
+        </tr>
+        
     <%end%>
 <%end%>
+
+</table>
