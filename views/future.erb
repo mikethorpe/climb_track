@@ -1,5 +1,7 @@
 <h1>This is the future sessions page</h1>
 
+    <a href="/workouts/create"><button type="button" name="create">Add workout</button></a>
+
 <%for workout in @all_workouts%>
 <ul>
     <li>Name: <%=workout.name%>, Complete : <%=workout.complete%></li>

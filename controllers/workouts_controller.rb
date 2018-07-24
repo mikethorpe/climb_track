@@ -1,12 +1,19 @@
 require_relative('../models/workout')
 require("pry")
 
+
+# new workout
+get '/workouts/create' do
+    erb(:"workouts/create")
+end
+
 # show
 get '/workouts/:id' do
     @workout = Workout.find(params['id'])
     @exercises = @workout.exercises()
     erb(:"workouts/show")
 end
+
 
 # run workout
 get '/workouts/:id/run' do
