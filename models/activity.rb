@@ -24,11 +24,11 @@ class Activity
         @id = result.first['id'].to_i
     end
 
-    def find(id)
+    def self.find(id)
         sql = "SELECT *
         FROM activities
         WHERE activities.id = $1"
-        values = [id] 
+        values = [id]
         result = SqlRunner.run(sql, values)
         activity_hash = result.first()
         return Activity.new(activity_hash)

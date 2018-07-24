@@ -32,8 +32,8 @@
     </ul>
     
     <form class="" action="/workouts/<%=@workout.id%>/delete_activity" method="post">
-    <input type="submit" value="Remove exercise">
-
+        <input type="hidden" name="activity_id" value="<%=activity.id%>"/>
+        <input type="submit" value="Remove exercise">
     </form>
     
     <hr>

@@ -49,3 +49,11 @@ get '/workouts/:id/edit' do
     @exercises = Exercise.find_all()
     erb(:"workouts/edit")
 end
+
+# delete activity
+post '/workouts/:id/delete_activity' do
+    activity = Activity.find(params['activity_id'])
+    activity.delete()
+    path = '/workouts/' + params['id'] + '/edit'
+    redirect to(path)
+end
