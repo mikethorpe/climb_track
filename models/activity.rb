@@ -1,10 +1,11 @@
 # Mike Thorpe 2018
 # Activity class models activity table entries in db
 require_relative('../db/sql_runner')
+require_relative('exercise')
 
 class Activity
 
-    attr_accessor :workout_id, :exercise_id, :result
+    attr_accessor :id, :workout_id, :exercise_id, :result
 
     def initialize(options)
         @id = options['id'].to_s if options['id'] != nil
@@ -21,6 +22,16 @@ class Activity
         values = [@workout_id, @exercise_id, @result]
         result = SqlRunner.run(sql, values)
         @id = result.first['id'].to_i
+    end
+
+    def find(id)
+        sql = "SELECT *
+        FROM activities
+        WHERE activities.id = $1"
+        values = [id] 
+        result = SqlRunner.run(sql, values)
+        activity_hash = result.first()
+        return Activity.new(activity_hash)
     end
 
 
@@ -47,6 +58,16 @@ class Activity
     def self.delete_all()
         sql = "DELETE FROM activities;"
         SqlRunner.run(sql)
+    end
+
+    def exercise()
+        sql = "SELECT * 
+        FROM exercises
+        WHERE exercises.id = $1"
+        values = [@exercise_id]
+        result = SqlRunner.run(sql, values)
+        exercise_hash = result.first()
+        return Exercise.new(exercise_hash)  
     end
 
 end

@@ -1,0 +1,33 @@
+<h1>Run workout <%=@workout.name%></h1>
+
+<form class="" action="/" method="post">
+
+    <hr>
+
+    <%for activity in @workout.activities()%>
+        
+        <ul>
+            <li>Name: <%=activity.exercise.name %> </li> 
+            <li>Reps: <%=activity.exercise.reps%> </li>
+            <li>Sets: <%=activity.exercise.sets%> </li>
+            <li>Notes: <%=activity.exercise.notes%> </li>
+        </ul>
+        
+        <label for="result">How was the exercise</label>
+        
+        <select id="result" name="activityresult_<%=activity.id%>">
+            <option value="0">Didn't do it</option>
+            <option value="1">Really struggled</option>
+            <option value="2">Struggled towards the end</option>
+            <option value="3">Completed easily</option>
+        </select>    
+        
+        <hr>
+
+    <%end%>
+
+    <input type="hidden" name="id" value="<%=@workout.id%>" />
+    <input type='submit' value="Complete workout"/>
+
+</form>
+

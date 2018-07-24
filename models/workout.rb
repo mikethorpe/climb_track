@@ -2,6 +2,7 @@
 # Workout class models workout table entries in db
 require_relative('../db/sql_runner')
 require_relative('exercise')
+require_relative('activity')
 
 class Workout
     
@@ -67,6 +68,15 @@ class Workout
         values = [@id]
         result = SqlRunner.run(sql, values)
         return result.map { |exercise| Exercise.new(exercise)}
+    end
+
+    def activities()
+        sql = "SELECT *
+        FROM activities
+        WHERE activities.workout_id = $1"
+        values = [@id]
+        result = SqlRunner.run(sql, values)
+        return result.map { |activity| Activity.new(activity)}
     end
 
 end
