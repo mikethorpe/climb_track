@@ -11,11 +11,13 @@
 
 <form class="" action="/workouts/<%=@workout.id%>/add_activity" method="post">
     <label for="exercise">Add exercise: </label>
-    <select id="exercise" name="exercise">
+    <select id="exercise-id" name="exercise_id">
         <%for exercise in @exercises%>
             <option value="<%=exercise.id%>"><%=exercise.name%></option>
         <%end%>
     </select>  
+    <input type="submit" value="Add exercise">
+
 </form>
 
 <hr>

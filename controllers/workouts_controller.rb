@@ -50,10 +50,18 @@ get '/workouts/:id/edit' do
     erb(:"workouts/edit")
 end
 
-# delete activity
+# delete activity from workout during edit
 post '/workouts/:id/delete_activity' do
     activity = Activity.find(params['activity_id'])
     activity.delete()
     path = '/workouts/' + params['id'] + '/edit'
+    redirect to(path)
+end
+
+# add activity to workout during edit
+post '/workouts/:workout_id/add_activity' do
+    activity = Activity.new(params)
+    activity.save()
+    path = '/workouts/' + params['workout_id'] + '/edit'
     redirect to(path)
 end
