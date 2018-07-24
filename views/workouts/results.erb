@@ -1,5 +1,5 @@
 <h1>Workout results for:  <%=@workout.name%></h1>
-
+<img src="<%=@result_icons[@workout.overall_result]%>">
 
     <hr>
 
@@ -10,7 +10,8 @@
             <li>Reps: <%=activity.exercise.reps%> </li>
             <li>Sets: <%=activity.exercise.sets%> </li>
             <li>Notes: <%=activity.exercise.notes%> </li>
-            <li>Result: <%=activity.result%> </li>
+            <li><img src="<%=@result_icons[activity.result]%>"></li>
+
 
         </ul>
     

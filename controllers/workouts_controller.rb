@@ -1,6 +1,4 @@
 require_relative('../models/workout')
-require("pry")
-
 
 # new workout
 get '/workouts/create' do
@@ -60,6 +58,7 @@ end
 # show results
 get '/workouts/:id/results' do
     @workout = Workout.find(params['id'])
+    @result_icons = ImageMap.icons()
     erb(:"workouts/results")
 end
 
