@@ -2,39 +2,45 @@
 
 <form class="" action="/workouts/<%=@workout.id%>/edit" method="post">
     <input type="submit" value="Update workout">
-    
-    <a href="/activity/<%=@workout.id%>/delete"><button type="button" name="">Delete workout</button></a>
-
-    <hr>
-
     <label for="Name">Name: </label>
     <input id="Name" type="text" name="name" value ="<%=@workout.name%>" >
-    <hr>
+</form>
 
+<hr>
+
+
+<form class="" action="/workouts/<%=@workout.id%>/add_activity" method="post">
     <label for="exercise">Add exercise: </label>
-
     <select id="exercise" name="exercise">
         <%for exercise in @exercises%>
             <option value="<%=exercise.id%>"><%=exercise.name%></option>
         <%end%>
     </select>  
-    <hr>
+</form>
+
+<hr>
+
+
+<%for activity in @workout.activities()%>
+    
+    <ul>
+        <li>Name: <%=activity.exercise.name %> </li> 
+        <li>Reps: <%=activity.exercise.reps%> </li>
+        <li>Sets: <%=activity.exercise.sets%> </li>
+        <li>Notes: <%=activity.exercise.notes%> </li>
+
+    </ul>
+    
+    <form class="" action="/workouts/<%=@workout.id%>/delete_activity" method="post">
+    <input type="submit" value="Remove exercise">
 
     </form>
-
-    <%for activity in @workout.activities()%>
-        
-        <ul>
-            <li>Name: <%=activity.exercise.name %> </li> 
-            <li>Reps: <%=activity.exercise.reps%> </li>
-            <li>Sets: <%=activity.exercise.sets%> </li>
-            <li>Notes: <%=activity.exercise.notes%> </li>
-
-        </ul>
-        
-        <a href="/activity/<%=activity.id%>/delete"><button type="button" name="">Remove exercise</button></a>
     
-        <hr>
+    <hr>
 
-    <%end%>
+<%end%>
 
+
+<form class="" action="/workouts/<%=@workout.id %>/delete" method="post">
+  <input type="submit" value="Delete workout">
+</form>
