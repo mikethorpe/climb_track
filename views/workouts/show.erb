@@ -14,4 +14,7 @@
 <%end%>
     <a href="/workouts/<%=@workout.id%>/edit"><button type="button" name="edit">Edit workout</button></a>
 
+<form class="" action="/workouts/<%=@workout.id %>/delete" method="post">
+  <input type="submit" value="Delete workout">
+</form>
 </ul>

@@ -10,7 +10,15 @@ end
 post '/workouts/create' do
     workout = Workout.new(params)
     workout.save()
-    redirect to('/future')
+    path = '/workouts/' + workout.id.to_s + '/update_activities'
+    redirect to(path)
+end
+
+# update activities
+get '/workouts/:id/update_activities' do
+    @workout = Workout.find(params['id'])
+    @exercises = Exercise.find_all()
+    erb(:"workouts/update_activities")
 end
 
 # show
@@ -67,7 +75,7 @@ post '/workouts/:id/edit' do
     workout = Workout.find(params['id'])
     workout.name = params['name']
     workout.update()
-    path = '/workouts/' + params['id'] + '/edit'
+    path = '/workouts/' + params['id'] + '/update_activities'
     redirect to(path)
 end
 
@@ -75,7 +83,7 @@ end
 post '/workouts/:id/delete_activity' do
     activity = Activity.find(params['activity_id'])
     activity.delete()
-    path = '/workouts/' + params['id'] + '/edit'
+    path = '/workouts/' + params['id'] + '/update_activities'
     redirect to(path)
 end
 
@@ -83,7 +91,7 @@ end
 post '/workouts/:workout_id/add_activity' do
     activity = Activity.new(params)
     activity.save()
-    path = '/workouts/' + params['workout_id'] + '/edit'
+    path = '/workouts/' + params['workout_id'] + '/update_activities'
     redirect to(path)
 end
 
