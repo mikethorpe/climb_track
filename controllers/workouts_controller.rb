@@ -43,11 +43,19 @@ get '/workouts/:id/results' do
 end
 
 
-# show results
+# edit
 get '/workouts/:id/edit' do
     @workout = Workout.find(params['id'])
     @exercises = Exercise.find_all()
     erb(:"workouts/edit")
+end
+
+post '/workouts/:id/edit' do
+    workout = Workout.find(params['id'])
+    workout.name = params['name']
+    workout.update()
+    path = '/workouts/' + params['id'] + '/edit'
+    redirect to(path)
 end
 
 # delete activity from workout during edit
