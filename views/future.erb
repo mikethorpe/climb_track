@@ -3,9 +3,11 @@
     <a href="/workouts/create"><button type="button" name="create">Add workout</button></a>
 
 <%for workout in @all_workouts%>
-<ul>
-    <li>Name: <%=workout.name%>, Complete : <%=workout.complete%></li>
-    <a href="/workouts/<%=workout.id%>"><button type="button" name="delete">View details</button></a>
-    <a href="/workouts/<%=workout.id%>/run"><button type="button" name="run">Run</button></a>
-</ul>
+    <%if (workout.complete === false) %>
+        <ul>
+            <li>Name: <%=workout.name%></li>
+            <a href="/workouts/<%=workout.id%>"><button type="button" name="delete">View details</button></a>
+            <a href="/workouts/<%=workout.id%>/run"><button type="button" name="run">Run</button></a>
+        </ul>
+    <%end%>
 <%end%>

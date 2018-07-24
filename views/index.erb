@@ -1,9 +1,11 @@
 <h1>This is the index page</h1>
 
-<%for workout in @all_workouts%>
-<ul>
-    <li>Name: <%=workout.name%></li>
-</ul>
-    <a href="/workouts/<%=workout.id%>/results"><button type="button" name="workout_results">View details</button></a>
 
+<%for workout in @all_workouts%>
+    <% if (workout.complete === true) %>
+        <ul>
+            <li>Name: <%=workout.name%></li>
+        </ul>
+        <a href="/workouts/<%=workout.id%>/results"><button type="button" name="workout_results">View details</button></a>
+    <%end%>
 <%end%>

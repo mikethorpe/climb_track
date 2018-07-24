@@ -11,7 +11,7 @@ class Workout
     def initialize(options)
         @id = options['id'].to_s if options['id'] != nil
         @name = options['name']
-        @complete = false
+        @complete = true?(options['complete'])  
     end
 
     def save()
@@ -79,4 +79,8 @@ class Workout
         return result.map { |activity| Activity.new(activity)}
     end
 
+    def true?(some_string)
+        return true if (some_string == "true" || some_string == "t" || some_string == "TRUE")
+        return false
+    end
 end

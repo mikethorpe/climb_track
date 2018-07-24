@@ -14,6 +14,8 @@ end
 # future
 get '/future' do
     @all_workouts = Workout.find_all()
+    p "These are workouts"
+    @all_workouts.each{|workout| p workout}
     erb(:future)
 end
 
