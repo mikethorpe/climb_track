@@ -1,3 +1,8 @@
+<%if @exercise.activities().count != 0%>
+    <p>Warning: This exercise is associated with workouts.
+    Updating this exercise will cause it to be updated for all past and present workouts</p>
+<%end%>
+
 <form class="" action="/exercises/<%=@exercise.id%>/edit" method="post">
     
     <input type="submit" value="Update exercise">
