@@ -6,6 +6,7 @@ get '/workouts/create' do
 end
 
 post '/workouts/create' do
+    params['date'] = check_date_not_past(params['date'])
     workout = Workout.new(params)
     workout.save()
     path = '/workouts/' + workout.id.to_s + '/update_activities'
@@ -71,6 +72,7 @@ get '/workouts/:id/edit' do
 end
 
 post '/workouts/:id/edit' do
+    params['date'] = check_date_not_past(params['date'])
     workout = Workout.find(params['id'])
     workout.name = params['name']
     workout.date = params['date']
@@ -99,4 +101,11 @@ post '/workouts/:id/delete' do
     workout = Workout.find(params['id'])
     workout.delete()
     redirect to('/future')
+end
+
+# returns todays date if date_string is in the past
+# else returns date_string
+def check_date_not_past(date_string)
+    return Date.today().to_s if Date.parse(date_string) < Date.today()
+    return date_string
 end
