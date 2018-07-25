@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
-</head>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>climb_track</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/styles/styles.css" />
+    </head>
 
-<nav>
-    <ul>
-        <li><a href="/future">Future sessions</a></li>
-        <li><a href="/">Past sessions</a></li>
-        <li><a href="/help">Help</a></li>
-        <li><a href="/exercises">Exercises</a></li>
-    </ul>
-</nav>
+    <body>
 
-<body>
-      <%= yield %>
-</body>
+        <div class="header-nav">
+            
+                <header>
+                    <h1>climb_track</h1>
+                </header>
+
+                <nav>
+                    <ul>
+                        <li><a href="/future">future sessions</a></li>
+                        <li><a href="/">past sessions</a></li>
+                        <li><a href="/help">help</a></li>
+                        <li><a href="/exercises">exercises</a></li>
+                    </ul>
+                </nav>
+
+        </div>
+
+        <main>
+            <article>
+                <%= yield %>
+            </article>
+        </main>
+
+        <footer>
+            <p>Mike Thorpe &copy 2018</p>
+        </footer>
+
+    </body>
+
+
 </html>
