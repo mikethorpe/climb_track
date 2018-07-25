@@ -3,7 +3,12 @@
 <form class="" action="/workouts/<%=@workout.id%>/edit" method="post">
     <label for="name">Name: </label>
     <input id="name" type="text" name="name" value ="<%=@workout.name%>" >
+
+    <label for="date">Workout date: </label>
+    <input type="date" id="date" name="date" value="<%=@workout.date%>">
+
     <input type="submit" value="Next">
+
 </form>
 
 

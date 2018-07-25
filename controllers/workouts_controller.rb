@@ -73,6 +73,7 @@ end
 post '/workouts/:id/edit' do
     workout = Workout.find(params['id'])
     workout.name = params['name']
+    workout.date = params['date']
     workout.update()
     path = '/workouts/' + params['id'] + '/update_activities'
     redirect to(path)

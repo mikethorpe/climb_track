@@ -6,7 +6,7 @@ require_relative('activity')
 
 class Workout
     
-    attr_accessor :id, :name, :complete, :overall_result
+    attr_accessor :id, :name, :complete, :overall_result, :date
 
     def initialize(options)
         @id = options['id'].to_i if options['id'] != nil

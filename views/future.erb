@@ -6,6 +6,7 @@
 <table>
     <tr>
         <th>Name</th>
+        <th>Date</th>
         <th></th>
         <th></th>
 
@@ -15,6 +16,7 @@
     <%if (workout.complete === false) %>
         <tr>
             <td><%=workout.name%></td>
+            <td> <%=workout.date%></td>
             <td><a href="/workouts/<%=workout.id%>"><button type="button" name="delete">View details</button></a></td>
             <td><a href="/workouts/<%=workout.id%>/run"><button type="button" name="run">Run</button></a></td>
         </tr>
