@@ -11,17 +11,14 @@
         <th></th>
 
     </tr>
+    
 <%for workout in @future_workouts%>
-
-    <%if (workout.complete === false) %>
-        <tr>
-            <td><%=workout.name%></td>
-            <td> <%=workout.date%></td>
-            <td><a href="/workouts/<%=workout.id%>"><button type="button" name="delete">View details</button></a></td>
-            <td><a href="/workouts/<%=workout.id%>/run"><button type="button" name="run">Run</button></a></td>
-        </tr>
-        
-    <%end%>
+    <tr>
+        <td><%=workout.name%></td>
+        <td> <%=workout.date%></td>
+        <td><a href="/workouts/<%=workout.id%>"><button type="button" name="delete">View details</button></a></td>
+        <td><a href="/workouts/<%=workout.id%>/run"><button type="button" name="run">Run</button></a></td>
+    </tr>
 <%end%>
 
 </table>

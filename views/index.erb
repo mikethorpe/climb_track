@@ -10,15 +10,13 @@
     </tr>
 
 <%for workout in @past_workouts%>
-    <% if (workout.complete === true) %>
-        <tr>
-            <td> <%=workout.name%></td>
-            <td> <%=workout.date%></td>
-            <td><img src="<%=@result_icons[workout.overall_result]%>"></td>
-            <td><a href="/workouts/<%=workout.id%>/results"><button type="button" name="workout_results">View details</button></a></td>
-        </tr>
+    <tr>
+        <td> <%=workout.name%></td>
+        <td> <%=workout.date%></td>
+        <td><img src="<%=@result_icons[workout.overall_result]%>"></td>
+        <td><a href="/workouts/<%=workout.id%>/results"><button type="button" name="workout_results">View details</button></a></td>
+    </tr>
         
-    <%end%>
 <%end%>
 
 </table>
