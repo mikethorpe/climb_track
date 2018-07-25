@@ -36,7 +36,6 @@ end
 
 post '/' do
     workout = Workout.find(params['id'])
-    workout.complete = true
     update_activity_results(workout, params)
     workout.recalculate_average_result()
     workout.update()

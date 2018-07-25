@@ -14,7 +14,6 @@ CREATE TABLE workouts (
     id SERIAL8 PRIMARY KEY,
     name VARCHAR(255),
     overall_result INT8,
-    complete BOOLEAN,
     date DATE
 );
 

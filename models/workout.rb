@@ -6,12 +6,11 @@ require_relative('activity')
 
 class Workout
     
-    attr_accessor :id, :name, :complete, :overall_result, :date
+    attr_accessor :id, :name, :overall_result, :date
 
     def initialize(options)
         @id = options['id'].to_i if options['id'] != nil
         @name = options['name']
-        @complete = true?(options['complete'])
         @date = options['date']
         @overall_result = -1
         @overall_result = options['overall_result'].to_i if options['overall_result'] != nil
@@ -20,10 +19,10 @@ class Workout
 
     def save()
         sql = "INSERT INTO workouts 
-        (name, complete, overall_result, date) 
-        VALUES($1, $2, $3, $4) 
+        (name, overall_result, date) 
+        VALUES($1, $2, $3) 
         RETURNING id;"
-        values = [@name, @complete, @overall_result, @date]
+        values = [@name, @overall_result, @date]
         result = SqlRunner.run(sql, values)
         @id = result.first['id'].to_i
     end
@@ -65,9 +64,9 @@ class Workout
 
     def update()
         sql = "UPDATE workouts 
-        SET (name, complete, overall_result, date) = ($1, $2, $3, $4) 
-        WHERE workouts.id = $5;"
-        values = [@name, @complete, @overall_result, @date, @id]
+        SET (name, overall_result, date) = ($1, $2, $3) 
+        WHERE workouts.id = $4;"
+        values = [@name, @overall_result, @date, @id]
         SqlRunner.run(sql, values)
     end
 
