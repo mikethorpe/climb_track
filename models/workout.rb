@@ -13,14 +13,15 @@ class Workout
         @name = options['name']
         @complete = true?(options['complete'])
         @overall_result = options['overall_result'].to_i if options['overall_result'] != nil
+        @date = options['date']
     end
 
     def save()
         sql = "INSERT INTO workouts 
-        (name, complete, overall_result) 
-        VALUES($1, $2, $3) 
+        (name, complete, overall_result, date) 
+        VALUES($1, $2, $3, $4) 
         RETURNING id;"
-        values = [@name, @complete, @overall_result]
+        values = [@name, @complete, @overall_result, @date]
         result = SqlRunner.run(sql, values)
         @id = result.first['id'].to_i
     end
@@ -44,9 +45,9 @@ class Workout
     def update()
         @overall_result = self.calculate_average_result()
         sql = "UPDATE workouts 
-        SET (name, complete, overall_result) = ($1, $2, $3) 
-        WHERE workouts.id = $4;"
-        values = [@name, @complete, @overall_result, @id]
+        SET (name, complete, overall_result, date) = ($1, $2, $3, $4) 
+        WHERE workouts.id = $5;"
+        values = [@name, @complete, @overall_result, @date, @id]
         SqlRunner.run(sql, values)
     end
 
