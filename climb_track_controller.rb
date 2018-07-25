@@ -8,14 +8,14 @@ also_reload('./models/*')
 
 #index
 get '/' do
-    @all_workouts = Workout.find_all()
+    @past_workouts = Workout.find_past_descending()
     @result_icons = ImageMap.icons()
     erb(:index)
 end
 
 # future
 get '/future' do
-    @all_workouts = Workout.find_all()
+    @future_workouts = Workout.find_future_ascending()
     erb(:future)
 end
 

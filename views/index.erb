@@ -9,7 +9,7 @@
 
     </tr>
 
-<%for workout in @all_workouts%>
+<%for workout in @past_workouts%>
     <% if (workout.complete === true) %>
         <tr>
             <td> <%=workout.name%></td>

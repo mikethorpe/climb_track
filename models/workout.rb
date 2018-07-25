@@ -42,6 +42,25 @@ class Workout
         return result.map { |workout| Workout.new(workout)}        
     end
 
+
+    def self.find_past_descending()
+        sql = "SELECT * FROM workouts 
+        WHERE date <= $1
+        ORDER BY date DESC;"
+        values = [Date.today().to_s]
+        result = SqlRunner.run(sql, values)
+        return result.map { |workout| Workout.new(workout)}        
+    end
+
+    def self.find_future_ascending()
+        sql = "SELECT * FROM workouts 
+        WHERE date > $1
+        ORDER BY date ASC;"
+        values = [Date.today().to_s]
+        result = SqlRunner.run(sql, values)
+        return result.map { |workout| Workout.new(workout)}        
+    end
+
     def update()
         @overall_result = self.calculate_average_result()
         sql = "UPDATE workouts 
