@@ -12,8 +12,10 @@ class Workout
         @id = options['id'].to_i if options['id'] != nil
         @name = options['name']
         @complete = true?(options['complete'])
-        @overall_result = options['overall_result'].to_i if options['overall_result'] != nil
         @date = options['date']
+        @overall_result = -1
+        @overall_result = options['overall_result'].to_i if options['overall_result'] != nil
+
     end
 
     def save()
