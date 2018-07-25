@@ -64,7 +64,6 @@ class Workout
     end
 
     def update()
-        @overall_result = self.calculate_average_result()
         sql = "UPDATE workouts 
         SET (name, complete, overall_result, date) = ($1, $2, $3, $4) 
         WHERE workouts.id = $5;"
@@ -108,15 +107,14 @@ class Workout
         return false
     end
     
-    def calculate_average_result()
+    def recalculate_average_result()
         activities = self.activities()
         return 0 if (activities.count == 0)
         
         total_points = 0
         activities.each { |activity| total_points += activity.result }    
         average = total_points.to_f / activities.count.to_f
-        rounded_average = average.round        
-        return rounded_average
+        @overall_result = average.round
     end
 
 end
