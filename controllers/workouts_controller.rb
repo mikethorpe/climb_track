@@ -1,6 +1,5 @@
 require_relative('../models/workout')
 
-# new workout
 get '/workouts/create' do
     erb(:"workouts/create")
 end
@@ -91,8 +90,13 @@ end
 
 # add activity to workout during edit
 post '/workouts/:workout_id/add_activity' do
-    activity = Activity.new(params)
-    activity.save()
+    # binding.pry
+    # check we have an exercise to add to an activity, then add it
+    if (params['exercise_id'] != nil)
+        activity = Activity.new(params)
+        activity.save()
+    end
+
     path = '/workouts/' + params['workout_id'] + '/update_activities'
     redirect to(path)
 end

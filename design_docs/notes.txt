@@ -8,7 +8,7 @@ Implementing date-time:
 
 Bugs to fix:
     * Foreign key violation when attempting to delete and exercise that is associated with a workout (FIXED)
-    * Trying to add exercise to workout when no exercises exist causes error
+    * Trying to add exercise to workout when no exercises exist causes error (DONE)
 
 Additional to do:
     * Continue to write views to get app to match initial wireframe design
@@ -20,4 +20,4 @@ Additional to do:
     * User guide
 
 The near future:
-    * Build in user authent
+    * Build in user authentication
