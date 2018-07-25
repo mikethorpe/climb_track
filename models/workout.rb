@@ -47,7 +47,7 @@ class Workout
 
     def self.find_past_descending()
         sql = "SELECT * FROM workouts 
-        WHERE date <= $1
+        WHERE date < $1 OR (date = $1 AND overall_result > -1)
         ORDER BY date DESC;"
         values = [Date.today().to_s]
         result = SqlRunner.run(sql, values)
@@ -56,7 +56,7 @@ class Workout
 
     def self.find_future_ascending()
         sql = "SELECT * FROM workouts 
-        WHERE date > $1
+        WHERE date >= $1 AND overall_result = -1
         ORDER BY date ASC;"
         values = [Date.today().to_s]
         result = SqlRunner.run(sql, values)
