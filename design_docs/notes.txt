@@ -3,6 +3,6 @@ Implementing date-time:
     * Add date field for front end - for now use date input (unusupported on some browsers), extend later (DONE)
     * Add date field to database - store as date (DONE)
     * Hook up front end to back to store date from create in db (DONE)
-    * Hook up views to display dates of workouts
+    * Hook up views to display dates of workouts (DONE)
     * Add crud actions to read back from database and sort by date field (ascending and descending)
     * Each workout should store date as a Date object so comparisons between dates can be made
