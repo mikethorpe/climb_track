@@ -101,6 +101,11 @@ post '/workouts/:workout_id/add_activity' do
     redirect to(path)
 end
 
+get '/workouts/:id/delete' do
+    @workout = Workout.find(params['id'])
+    erb(:"workouts/delete")
+end
+
 post '/workouts/:id/delete' do
     workout = Workout.find(params['id'])
     workout.delete()
