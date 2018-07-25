@@ -7,7 +7,7 @@ Implementing date-time:
     * Add crud actions to read back from database and sort by date field (ascending and descending) (DONE)
 
 Bugs to fix:
-    * Foreign key violation when attempting to delete and exercise that is associated with a workout
+    * Foreign key violation when attempting to delete and exercise that is associated with a workout (FIXED)
     * Trying to add exercise to workout when no exercises exist causes error
 
 Additional to do:

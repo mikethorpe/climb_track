@@ -7,7 +7,8 @@
         <th>name</th>
         <th>reps</th>
         <th>sets</th>
-        <th>notes</th>
+        <th></th>
+
 
     </tr>
 
@@ -16,7 +17,9 @@
         <td><%=exercise.name%></td>
         <td><%=exercise.reps%></td>
         <td><%=exercise.sets%></td>
-        <td><a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">Delete</button></a></td>
+        <%if exercise.activities().count == 0%>
+            <td><a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">Delete</button></a></td>
+        <%end%>
         <td><a href="/exercises/<%=exercise.id%>/edit"><button type="button" name="edit">Edit</button></a></td>
     </tr>
     <tr>
