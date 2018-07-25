@@ -5,3 +5,19 @@ Implementing date-time:
     * Hook up front end to back to store date from create in db (DONE)
     * Hook up views to display dates of workouts (DONE)
     * Add crud actions to read back from database and sort by date field (ascending and descending) (DONE)
+
+Bugs to fix:
+    * Foreign key violation when attempting to delete and exercise that is associated with a workout
+    * Trying to add exercise to workout when no exercises exist causes error
+
+Additional to do:
+    * Continue to write views to get app to match initial wireframe design
+    * CSS styling & formatting in HTML - think about the UX
+    * Review code and improve quality
+    * Add some unit tests
+    * Update design docs to ensure they agree with the code
+    * Take photos of paper design docs and and to repo
+    * User guide
+
+The near future:
+    * Build in user authent
