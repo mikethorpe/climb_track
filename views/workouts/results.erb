@@ -1,16 +1,32 @@
 <h1><img src="<%=@result_icons[@workout.overall_result]%>"> workout result for: <%=@workout.name%></h1> 
 <p>date: <%=@workout.date%> </p>
 
+
+<table>
+  
+    <tr>
+        <th>exercise</th>
+        <th>sets</th>
+        <th>reps</th>
+        <th>result</th>
+    </tr>     
+
     <%for activity in @workout.activities()%>
-        <table>        
-            <tr><td><img src="<%=@result_icons[activity.result]%>"> <%=activity.exercise().name %> </td> </tr> 
-            <tr><td>reps: <%=activity.exercise().reps%> Sets: <%=activity.exercise().sets%></td> </tr>
-            <tr><td>notes: <%=activity.exercise().notes%></td> </tr>
-        <table>        
+            
+
+        <tr>
+            <td><div><%=activity.exercise().name%></div><div class="notes"><%=activity.exercise().notes%></div> </td>
+            <td><%=activity.exercise().reps%></td>
+            <td><%=activity.exercise().sets%></td>
+            <td><img src="<%=@result_icons[activity.result]%>"> </td>
+            
+        </tr>
+
     
 
     <%end%>
 
+<table>        
 
 </form>
 

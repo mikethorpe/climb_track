@@ -6,7 +6,7 @@
 
 .header-nav {
     display: grid;
-    border-bottom: solid;
+    border-bottom: 5px solid #798486;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     align-items: center;
     background-color: #3b6fc4;
@@ -81,3 +81,17 @@ footer p {
 .warning {
     color: red;
 }
+
+
+
+table {
+    width: 100%;
+    text-align: center;
+
+}
+
+table th, td {
+    border-bottom: 1px solid #ddd;
+
+}
+
