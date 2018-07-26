@@ -1,22 +1,24 @@
+
 <%if @exercise.activities().count != 0%>
-    <p>Warning: This exercise is associated with workouts.
-    Updating this exercise will cause it to be updated for all past and present workouts</p>
+    <p class="warning">Warning: the exercise is associated with at least one workout. Updating will update the exercise in all associated past and present workouts.</p>
 <%end%>
 
 <form class="" action="/exercises/<%=@exercise.id%>/edit" method="post">
     
-    <input type="submit" value="Update exercise">
 
-    <label for="Name">Name</label>
+    <label for="Name">name:</label>
     <input id="Name" type="text" name="name" value ="<%=@exercise.name%>" >
 
-    <label for="Sets">Sets</label>
+    <label for="Sets">sets:</label>
     <input id="Sets" type="number" name="sets" value ="<%=@exercise.sets%>">
 
-    <label for="Reps">Reps</label>
+    <label for="Reps">reps:</label>
     <input id="Reps" type="number" name="reps" value ="<%=@exercise.reps%>">
 
-    <label for="Notes">Notes</label>
+    <label for="Notes">notes:</label>
+
     <input id="Notes" type="text" name="notes" value ="<%=@exercise.notes%>">
+
+    <input type="submit" value="update exercise">
 
 </form>

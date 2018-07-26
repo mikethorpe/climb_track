@@ -1,12 +1,12 @@
-<h1>Future sessions</h1>
+<h1>future sessions</h1>
 
-    <a href="/workouts/create"><button type="button" name="create">Add workout</button></a>
+    <a href="/workouts/create"><button type="button" name="create">create workout</button></a>
 
 
 <table>
     <tr>
-        <th>Name</th>
-        <th>Date</th>
+        <th>name</th>
+        <th>target date</th>
         <th></th>
         <th></th>
 
@@ -16,9 +16,9 @@
     <tr>
         <td><%=workout.name%></td>
         <td> <%=workout.date%></td>
-        <td><a href="/workouts/<%=workout.id%>"><button type="button" name="delete">View details</button></a></td>
+        <td><a href="/workouts/<%=workout.id%>"><button type="button" name="delete">view details</button></a></td>
         <%if Date.today().to_s == workout.date%>
-            <td><a href="/workouts/<%=workout.id%>/run"><button type="button" name="run">Run</button></a></td>
+            <td><a href="/workouts/<%=workout.id%>/run"><button type="button" name="run">run</button></a></td>
         <%end%>
     </tr>
 <%end%>

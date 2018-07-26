@@ -1,16 +1,13 @@
-<h1> Show workout </h1>
+<h1> workout details for: <%=@workout.name%> </h1>
 
-<p>Name: <%=@workout.name%></p>
-<p>Date: <%=@workout.date%></p>
+<p>target date: <%=@workout.date%></p>
 
 
-<a href="/workouts/<%=@workout.id%>/edit"><button type="button" name="edit">Edit workout</button></a>
+<a href="/workouts/<%=@workout.id%>/edit"><button type="button" name="edit">edit workout</button></a>
 
 <form class="" action="/workouts/<%=@workout.id %>/delete" method="get">
-  <input type="submit" value="Delete workout">
+  <input type="submit" value="delete workout">
 </form>
-
-<hr>
 
 <%for exercise in @exercises%>
     <table>        
@@ -20,5 +17,3 @@
     </table>
     <hr>
 <%end%>
-
-

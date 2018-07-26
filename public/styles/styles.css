@@ -77,4 +77,7 @@ footer {
 footer p {
     color: #798486;
 }
-  
+
+.warning {
+    color: red;
+}

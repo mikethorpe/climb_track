@@ -1,6 +1,6 @@
-<h1> Exercises </h1>
+<h1> exercises </h1>
 
-<a href="/exercises/new"><button type="button" name="new-exercise">NewExercise</button></a>
+<a href="/exercises/new"><button type="button" name="new-exercise">create exercise</button></a>
 
 <table>
     <tr>
@@ -17,10 +17,10 @@
         <td><%=exercise.name%></td>
         <td><%=exercise.reps%></td>
         <td><%=exercise.sets%></td>
+        <td><a href="/exercises/<%=exercise.id%>/edit"><button type="button" name="edit">edit</button></a></td>
         <%if exercise.activities().count == 0%>
-            <td><a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">Delete</button></a></td>
+            <td><a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">delete</button></a></td>
         <%end%>
-        <td><a href="/exercises/<%=exercise.id%>/edit"><button type="button" name="edit">Edit</button></a></td>
     </tr>
     <tr>
         <td colspan="5">

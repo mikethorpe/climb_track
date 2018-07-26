@@ -1,16 +1,15 @@
-<h1>Run workout <%=@workout.name%></h1>
-<p>Date <%=@workout.date%></p>
+<h1>run workout: <%=@workout.name%></h1> 
+<p>date <%=@workout.date%></p>
 
 <form class="" action="/" method="post">
 
-    <hr>
 
     <%for activity in @workout.activities()%>
         
         <table>
-            <tr><td>Name: <%=activity.exercise().name %> </td></tr>
-            <tr><td>Reps: <%=activity.exercise().reps%> Sets: <%=activity.exercise().sets%> </td></tr>
-            <tr><td>Notes: <%=activity.exercise().notes%> </td></tr>
+            <tr><td>name: <%=activity.exercise().name %> </td></tr>
+            <tr><td>reps: <%=activity.exercise().reps%> Sets: <%=activity.exercise().sets%> </td></tr>
+            <tr><td>notes: <%=activity.exercise().notes%> </td></tr>
         </table>
         
         <label for="result">How was the exercise</label>
@@ -18,15 +17,14 @@
             <option value="0">Didn't do it</option>
             <option value="1">Really struggled</option>
             <option value="2">Struggled towards the end</option>
-            <option value="3">Completed easily</option>
+            <option value="3">Seemed fine</option>
         </select>    
         
-        <hr>
 
     <%end%>
 
     <input type="hidden" name="id" value="<%=@workout.id%>" />
-    <input type='submit' value="Complete workout"/>
+    <p><input type='submit' value="Complete workout"/></p>
 
 </form>
 

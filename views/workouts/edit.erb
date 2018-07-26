@@ -1,10 +1,10 @@
-<h1> Edit workout </h1>
+<h1> edit workout: <%=@workout.name%></h1>
 
 <form class="" action="/workouts/<%=@workout.id%>/edit" method="post">
-    <label for="name">Name: </label>
+    <label for="name">name: </label>
     <input id="name" type="text" name="name" value ="<%=@workout.name%>" >
 
-    <label for="date">Workout date: </label>
+    <label for="date">workout date: </label>
     <input type="date" id="date" name="date" value="<%=@workout.date%>">
 
     <input type="submit" value="Next">

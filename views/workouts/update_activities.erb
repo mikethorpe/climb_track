@@ -1,17 +1,15 @@
-<h1> Add / remove some activities to your workout </h1>
+<h1> add some exercises to your workout </h1>
 
 <form class="" action="/workouts/<%=@workout.id%>/add_activity" method="post">
-    <label for="exercise">Add exercise: </label>
     <select id="exercise-id" name="exercise_id">
         <%for exercise in @exercises%>
             <option value="<%=exercise.id%>"><%=exercise.name%></option>
         <%end%>
     </select>  
-    <input type="submit" value="Add exercise">
+    <input type="submit" value="add exercise">
 
 </form>
 
-<hr>
 
 
 <%for activity in @workout.activities()%>
@@ -27,8 +25,6 @@
         <input type="submit" value="Remove exercise">
     </form>
     
-    <hr>
-
 <%end%>
 
 <a href="/workouts/<%=@workout.id%>"><button type="button" name="finish">View workout</button></a>
