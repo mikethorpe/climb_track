@@ -99,3 +99,7 @@ button {
     display: inline;
 }
 
+.notes {
+    color: #798486;
+    font-size: 9pt;
+}
