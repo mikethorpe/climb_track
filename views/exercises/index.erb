@@ -8,6 +8,7 @@
         <th>reps</th>
         <th>sets</th>
         <th></th>
+        <th></th>
 
 
     </tr>
@@ -20,6 +21,8 @@
         <td><a href="/exercises/<%=exercise.id%>/edit"><button type="button" name="edit">edit</button></a></td>
         <%if exercise.activities().count == 0%>
             <td><a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">delete</button></a></td>
+        <%else%>
+            <td></td>
         <%end%>
     </tr>
     
