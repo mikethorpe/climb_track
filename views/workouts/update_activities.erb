@@ -12,19 +12,35 @@
 
 
 
-<%for activity in @workout.activities()%>
+
+
+<table>
+  
+    <tr>
+        <th>exercise</th>
+        <th>sets</th>
+        <th>reps</th>
+        <th>action</th>
+    </tr>     
+
+    <%for activity in @workout.activities()%>
+            
+
+        <tr>
+            <td><div><%=activity.exercise().name%></div><div class="notes"><%=activity.exercise().notes%></div> </td>
+            <td><%=activity.exercise().reps%></td>
+            <td><%=activity.exercise().sets%></td>
+             <td><form class="" action="/workouts/<%=@workout.id%>/delete_activity" method="post">
+                <input type="hidden" name="activity_id" value="<%=activity.id%>"/>
+                <input type="submit" value="Remove exercise"><td>
+            </form>
+        </tr>
+
     
-    <table>        
-        <tr><td>Name: <%=activity.exercise().name %> </td> </tr> 
-        <tr><td>Reps: <%=activity.exercise().reps%> Sets: <%=activity.exercise().sets%></td> </tr>
-        <tr><td>Notes: <%=activity.exercise().notes%></td> </tr>
-    </table>
-    
-    <form class="" action="/workouts/<%=@workout.id%>/delete_activity" method="post">
-        <input type="hidden" name="activity_id" value="<%=activity.id%>"/>
-        <input type="submit" value="Remove exercise">
-    </form>
-    
-<%end%>
+
+    <%end%>
+
+<table> 
+
 
 <a href="/workouts/<%=@workout.id%>"><button type="button" name="finish">View workout</button></a>

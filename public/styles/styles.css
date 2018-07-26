@@ -95,3 +95,10 @@ table th, td {
 
 }
 
+input {
+    display: block;
+}
+
+button {
+    display: inline;
+}
