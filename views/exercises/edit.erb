@@ -3,7 +3,7 @@
     <p class="warning">Warning: the exercise is associated with at least one workout. Updating will update the exercise in all associated past and present workouts.</p>
 <%end%>
 
-<form class="" action="/exercises/<%=@exercise.id%>/edit" method="post">
+<form class="input-block" action="/exercises/<%=@exercise.id%>/edit" method="post">
     
 
     <label for="Name">name:</label>
@@ -19,6 +19,9 @@
 
     <input id="Notes" type="text" name="notes" value ="<%=@exercise.notes%>">
 
+    <p><label for="Notes">notes:</label><p>
+    <textarea class="input-notes" id="Notes" name="notes"><%=@exercise.notes%></textarea>
+    
     <input type="submit" value="update exercise">
 
 </form>

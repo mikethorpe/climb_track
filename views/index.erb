@@ -14,7 +14,10 @@
         <td> <%=workout.name%></td>
         <td> <%=workout.date%></td>
         <td><img src="<%=@result_icons[workout.overall_result]%>"></td>
-        <td><a href="/workouts/<%=workout.id%>/results"><button type="button" name="workout_results">view details</button></a></td>
+        <td><form action="/workouts/<%=workout.id%>/results" method="get">
+                <input type="submit" value="view details">    
+            </form>
+        </td>
     </tr>
         
 <%end%>

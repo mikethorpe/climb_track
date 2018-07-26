@@ -1,6 +1,9 @@
-<h1> exercises </h1>
+<h1 class="exercises-index-h1"> exercises </h1>
 
-<a href="/exercises/new"><button type="button" name="new-exercise">create exercise</button></a>
+
+<form class="create-buttons" action="/exercises/new" method="get">
+  <input type="submit" value="create exercise">
+</form>
 
 <table class="exercise">
     <tr>
@@ -9,8 +12,6 @@
         <th>sets</th>
         <th></th>
         <th></th>
-
-
     </tr>
 
 <%for exercise in @all_exercises%>
@@ -18,9 +19,16 @@
         <td><div><%=exercise.name%></div><div class="notes"><%=exercise.notes%></div> </td>
         <td><%=exercise.reps%></td>
         <td><%=exercise.sets%></td>
-        <td><a href="/exercises/<%=exercise.id%>/edit"><button type="button" name="edit">edit</button></a></td>
+        <td>
+            <form class="" action="/exercises/<%=exercise.id%>/edit" method="get">
+                <input type="submit" value="edit">
+            </form>
+        </td>
         <%if exercise.activities().count == 0%>
-            <td><a href="/exercises/<%=exercise.id%>/delete"><button type="button" name="delete">delete</button></a></td>
+            <td>
+            <form class="delete-confirm-button" action="/exercises/<%=exercise.id%>/delete" method="get">
+                <input type="submit" value="delete">
+            </form>
         <%else%>
             <td></td>
         <%end%>

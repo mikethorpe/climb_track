@@ -27,7 +27,7 @@
             <td><%=activity.exercise().reps%></td>
             <td><%=activity.exercise().sets%></td>
             <td>
-                <form action="/workouts/<%=@workout.id%>/delete_activity" method="post">
+                <form class="delete-buttons" action="/workouts/<%=@workout.id%>/delete_activity" method="post">
                     <input type="hidden" name="activity_id" value="<%=activity.id%>"/>
                     <input type="submit" value="Remove exercise">
                 </form>
@@ -38,4 +38,9 @@
 
 </table> 
 
-<a href="/workouts/<%=@workout.id%>"><button type="button" name="finish">View workout</button></a>
+
+<form class="" action="/workouts/<%=@workout.id%>" method="get">
+    <input type="submit" value="view workout">
+</form>
+
+

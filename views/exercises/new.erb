@@ -1,6 +1,6 @@
 <h1>create new exercise</h1>
 
-<form class="" action="/exercises" method="post">
+<form class="input-block" action="/exercises" method="post">
     
     <label for="Name">name:</label>
     <input id="Name" type="text" name="name">
@@ -11,9 +11,9 @@
     <label for="Reps">reps:</label>
     <input id="Reps" type="number" name="reps">
 
-    <label for="Notes">notes:</label>
-    <input id="Notes" type="text" name="notes">
+    <p><label for="Notes">notes:</label><p>
+    <textarea class="input-notes" id="Notes" name="notes"></textarea>
 
-    <input type="submit" value="Create exercise">
+    <p><input type="submit" value="Create exercise"></p>
 
 </form>

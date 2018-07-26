@@ -2,7 +2,9 @@
 <p>workout: <%=@workout.name%>
 <p>target date: <%=@workout.date%></p>
 
-<a href="/workouts/<%=@workout.id%>/edit"><button type="button" name="edit">edit workout</button></a>
+<form class="" action="/workouts/<%=@workout.id%>/edit" method="get">
+  <input type="submit" value="edit workout">
+</form>
 
 <form class="" action="/workouts/<%=@workout.id %>/delete" method="get">
   <input type="submit" value="delete workout">

@@ -1,10 +1,10 @@
 
 <p>are you sure you want to delete the workout <%=@workout.name%>?<p>
 
-<form class="" action="/workouts/<%=@workout.id %>/delete" method="post">
+<form class="delete-confirm-button" action="/workouts/<%=@workout.id %>/delete" method="post">
   <input type="submit" value="yes">
 </form>
 
-<form class="" action="/workouts/<%=@workout.id %>" method="get">
+<form class="confirm-buttons" action="/workouts/<%=@workout.id %>" method="get">
   <input type="submit" value="no">
 </form>
