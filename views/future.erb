@@ -1,7 +1,7 @@
 <h1 class="future-index-h1">future sessions</h1>
 
 <form class="create-buttons"action="/workouts/create" method="get">
-    <input type="submit" value="Create workout">    
+    <input type="submit" value="create workout">    
 </form>
 
 <table class="overview">
@@ -13,6 +13,7 @@
     </tr>
     
 <%for workout in @future_workouts%>
+
     <tr>
         <td><%=workout.name%></td>
         <td> <%=workout.date%></td>

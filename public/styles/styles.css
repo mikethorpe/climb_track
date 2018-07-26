@@ -20,7 +20,6 @@ header {
 nav {
     font-weight: 400;
     margin-bottom: 10px;
-    /* float: right; */
     align-items: center;
 
 
@@ -132,8 +131,12 @@ input[type="submit"] {
     display: inline-block;
     font-size: 12px;
     border-radius: 4px;
+    margin: 5px;
 }
 
+.centered-p {
+    text-align: center;
+}
 
 .confirm-buttons {
     display: inline;
@@ -143,16 +146,26 @@ input[type="submit"] {
     display: inline;
 }
 
+
 .future-index-h1 {
     display: inline;
 }
 
+
+.edit-workout-button {
+    float: right;
+}
 .create-buttons {
     float: right;
 }
 
+
 .delete-buttons input {
     background-color: #f44336;
+}
+
+.delete-buttons {
+    float: right;
 }
 
 .delete-confirm-button {

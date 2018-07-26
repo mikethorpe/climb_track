@@ -4,24 +4,40 @@
 <form class="" action="/" method="post">
 
 
+   
+        <table>        
+            <tr>
+                <th>exercise</th>
+                <th>sets</th>
+                <th>reps</th>
+                <th>how was it?</th>
+            </tr>  
+
+
     <%for activity in @workout.activities()%>
-        
-        <table>
-            <tr><td>name: <%=activity.exercise().name %> </td></tr>
-            <tr><td>reps: <%=activity.exercise().reps%> Sets: <%=activity.exercise().sets%> </td></tr>
-            <tr><td>notes: <%=activity.exercise().notes%> </td></tr>
-        </table>
-        
-        <label for="result">How was the exercise</label>
-        <select id="result" name="activityresult_<%=activity.id%>">
-            <option value="0">Didn't do it</option>
-            <option value="1">Really struggled</option>
-            <option value="2">Struggled towards the end</option>
-            <option value="3">Seemed fine</option>
-        </select>    
-        
+     
+
+                <tr>
+                    <td><div><%=activity.exercise().name%></div><div class="notes"><%=activity.exercise().notes%></div></td>
+                    <td><%=activity.exercise().reps%></td>
+                    <td><%=activity.exercise().sets%></td>
+                    <td>
+                        <select id="result" name="activityresult_<%=activity.id%>">
+                            <option value="0">Didn't do it</option>
+                            <option value="1">Really struggled</option>
+                            <option value="2">Hard at the end<option>
+                            <option value="3">Seemed fine</option>
+                        </select>    
+                    </td>
+                </tr>
+
+
+       
 
     <%end%>
+
+
+</table>
 
     <input type="hidden" name="id" value="<%=@workout.id%>" />
     <p><input type='submit' value="Complete workout"/></p>
