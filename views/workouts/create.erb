@@ -1,12 +1,14 @@
-<h1>create new workout</h1>
+<p>creating new workout...</p>
 
-<p> Give your workout a name and date </p>
+<br>
+
 <form class="input-block" action="/workouts/create" method="post">
     <label for="name">name: </label>
     <input id="name" type="text" name="name"  >
 
     <label for="date">workout date: </label>
     <input type="date" id="date" name="date" value="<%=Date.today()%>">
+
     <input type="submit" value="Create workout">    
     </select>
 

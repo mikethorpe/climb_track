@@ -1,10 +1,18 @@
 
-<p>are you sure you want to delete the workout <%=@workout.name%>?<p>
+<br>
 
-<form class="delete-confirm-button" action="/workouts/<%=@workout.id %>/delete" method="post">
-  <input type="submit" value="yes">
-</form>
+<p class="centered-p">Are you sure you want to delete the workout <%=@workout.name%>?<p>
 
-<form class="confirm-buttons" action="/workouts/<%=@workout.id %>" method="get">
-  <input type="submit" value="no">
-</form>
+<br>
+
+<center>
+
+  <form class="delete-confirm-button" action="/workouts/<%=@workout.id %>/delete" method="post">
+    <input type="submit" value="yes">
+  </form>
+
+  <form class="confirm-buttons" action="/workouts/<%=@workout.id %>" method="get">
+    <input type="submit" value="no">
+  </form>
+
+</center>

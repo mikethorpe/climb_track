@@ -10,6 +10,8 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     align-items: center;
     background-color: #3b6fc4;
+    min-height: 70px;
+    padding-bottom: 8px;
 }
 
 header {
@@ -19,7 +21,6 @@ header {
 
 nav {
     font-weight: 400;
-    margin-bottom: 10px;
     align-items: center;
 
 
@@ -103,6 +104,7 @@ button {
 
 .input-block input {
     display: block;
+    margin-bottom: 5px;
 }
 
 .input-notes {
@@ -155,6 +157,7 @@ input[type="submit"] {
 .edit-workout-button {
     float: right;
 }
+
 .create-buttons {
     float: right;
 }
@@ -177,4 +180,8 @@ input[type="submit"] {
 
 .run-buttons input {
     background-color: #4CAF50;
+}
+
+.complete-workout-button {
+    float: right;
 }

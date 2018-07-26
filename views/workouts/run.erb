@@ -1,10 +1,12 @@
-<h1>run workout: <%=@workout.name%></h1> 
-<p>date <%=@workout.date%></p>
+
+<p class="centered-p">running workout... </p>
+<p class="centered-p">name: <%=@workout.name%></p>
+<p class="centered-p">date: <%=@workout.date%></p>
+
+<br>
 
 <form class="" action="/" method="post">
 
-
-   
         <table>        
             <tr>
                 <th>exercise</th>
@@ -15,8 +17,7 @@
 
 
     <%for activity in @workout.activities()%>
-     
-
+    
                 <tr>
                     <td><div><%=activity.exercise().name%></div><div class="notes"><%=activity.exercise().notes%></div></td>
                     <td><%=activity.exercise().reps%></td>
@@ -25,22 +26,20 @@
                         <select id="result" name="activityresult_<%=activity.id%>">
                             <option value="0">Didn't do it</option>
                             <option value="1">Really struggled</option>
-                            <option value="2">Hard at the end<option>
+                            <option value="2">Hard at the end</option>
                             <option value="3">Seemed fine</option>
                         </select>    
                     </td>
                 </tr>
-
-
-       
-
     <%end%>
 
 
 </table>
 
+<br>
+
     <input type="hidden" name="id" value="<%=@workout.id%>" />
-    <p><input type='submit' value="Complete workout"/></p>
+    <input class="complete-workout-button" type='submit' value="Complete workout"/>
 
 </form>
 
