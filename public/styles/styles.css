@@ -52,17 +52,26 @@ nav li {
     font-size: 18px;
 }
 
-main {
+
+body {
     background-color: #f4f4f4;
+    
+}
+
+main {
+    margin: 10px;
+
 }
 
 footer {
     font-size: 14px;
-    position: relative;
+    position: absolute;
     bottom: 0;
-    height: 50px;
-    width: 100%;
+    right: 0;
+    height: 30px;
+    align-items: center;
     text-align: center;
+    margin-right: 10px;
   }
 
 footer p {
