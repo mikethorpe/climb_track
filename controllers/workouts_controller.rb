@@ -34,6 +34,12 @@ get '/workouts/:id/run' do
     erb(:"workouts/run")
 end
 
+post '/run' do
+    @workout_id = params['id']
+    @activity_results = params.keep_if{ |key, value| key.include?("activityresult_") }
+    erb(:"workouts/run_confirmation")
+end
+
 post '/' do
     workout = Workout.find(params['id'])
     update_activity_results(workout, params)
@@ -90,7 +96,6 @@ end
 
 # add activity to workout during edit
 post '/workouts/:workout_id/add_activity' do
-    # binding.pry
     # check we have an exercise to add to an activity, then add it
     if (params['exercise_id'] != nil)
         activity = Activity.new(params)

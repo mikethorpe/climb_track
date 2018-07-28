@@ -1,0 +1,22 @@
+<br>
+
+<p class="centered-p"> Are you sure you want to complete the workout?
+You will not be able to make changes to the results or workout after confirming. The results will be permanently saved to your past sessions. </p>
+
+<br>
+
+<center>
+<form class="delete-confirm-button" action="/" method="post">
+    <input type="submit" value="Yes">
+
+    <input type="hidden" name="id" value="<%=@workout_id%>" />
+    <%@activity_results.each do | activity_string, activity_result |%>
+        <input type="hidden" name="<%=activity_string%>" value="<%=activity_result%>">
+    <%end%>
+</form>
+
+<form class="confirm-buttons" action="/workouts/<%=@workout_id%>/run" method="get">
+    <input type="submit" value="No">
+</form>
+
+</center>
