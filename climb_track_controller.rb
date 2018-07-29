@@ -2,6 +2,7 @@ require('sinatra')
 require('sinatra/contrib/all')
 require_relative('controllers/exercises_controller.rb')
 require_relative('controllers/workouts_controller.rb')
+require_relative('controllers/helpers.rb')
 require_relative('models/image_map')
 
 also_reload('./models/*')

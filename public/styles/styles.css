@@ -52,6 +52,9 @@ nav li {
     font-size: 18px;
 }
 
+.currentpage {
+    text-decoration: underline;
+}
 
 body {
     background-color: #f4f4f4;
