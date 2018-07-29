@@ -16,8 +16,8 @@ Bugs to fix:
 Additional to do:
     * Confirmation view for run workout (DONE)
     * Ensure when we return to run workout from confirmation view our result
-        dropdowns are populated as previously selected by the user
-    * Workout result icons with +/- or number symbols
+        dropdowns are populated as previously selected by the user (DONE)
+    * Workout result icons with +/- or number symbols (DONE)
     * Seed the exercises with beast maker workouts
     * Write a help section
     * Consider the original wireframe - do we want to match this? - regardless, 
