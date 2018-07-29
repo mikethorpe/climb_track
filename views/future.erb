@@ -19,6 +19,7 @@
                 <input type="submit" value="view details">    
             </form>
         </td>
+        <%= "<td> </td>" if Date.today().to_s != workout.date%>
         
         <%if Date.today().to_s == workout.date%>
             <td>
