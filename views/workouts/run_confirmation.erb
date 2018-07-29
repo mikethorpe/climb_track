@@ -15,8 +15,11 @@ You will not be able to make changes to the results or workout after confirming.
     <%end%>
 </form>
 
-<form class="confirm-buttons" action="/workouts/<%=@workout_id%>/run" method="get">
+<form class="confirm-buttons" action="/workouts/<%=@workout_id%>/run" method="post">
     <input type="submit" value="No">
+    <%@activity_results.each do | activity_string, activity_result |%>
+        <input type="hidden" name="<%=activity_string%>" value="<%=activity_result%>">
+    <%end%>
 </form>
 
 </center>

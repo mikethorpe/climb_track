@@ -24,10 +24,10 @@
                     <td><%=activity.exercise().sets%></td>
                     <td>
                         <select id="result" name="activityresult_<%=activity.id%>">
-                            <option value="0">Didn't do it</option>
-                            <option value="1">Really struggled</option>
-                            <option value="2">Hard at the end</option>
-                            <option value="3">Seemed fine</option>
+                            <option value="0" <%= " selected" if @activity_results != nil && @activity_results["activityresult_" + activity.id] == "0" %>>Didn't do it</option>
+                            <option value="1" <%= " selected" if @activity_results != nil && @activity_results["activityresult_" + activity.id] == "1" %>>Really struggled</option>
+                            <option value="2" <%= " selected" if @activity_results != nil && @activity_results["activityresult_" + activity.id] == "2" %>>Hard at the end</option>
+                            <option value="3" <%= " selected" if @activity_results != nil && @activity_results["activityresult_" + activity.id] == "3" %>>Seemed fine</option> 
                         </select>    
                     </td>
                 </tr>

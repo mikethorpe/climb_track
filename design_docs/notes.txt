@@ -14,7 +14,9 @@ Bugs to fix:
     * Trying to add exercise to workout when no exercises exist causes error (DONE)
 
 Additional to do:
-    * Confirmation view for run workout
+    * Confirmation view for run workout (DONE)
+    * Ensure when we return to run workout from confirmation view our result
+        dropdowns are populated as previously selected by the user
     * Workout result icons with +/- or number symbols
     * Seed the exercises with beast maker workouts
     * Write a help section

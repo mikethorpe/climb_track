@@ -28,18 +28,32 @@ end
 
 
 # run workout
+
+# display run page with list of activities
 get '/workouts/:id/run' do
     @workout = Workout.find(params['id'])
     @exercises = @workout.exercises()
+    @activity_results = nil
     erb(:"workouts/run")
 end
 
+# post activity results back to run view
+post '/workouts/:id/run' do
+    @workout = Workout.find(params['id'])
+    @exercises = @workout.exercises()
+    @activity_results = params.keep_if{ |key, value| key.include?("activityresult_") }
+    erb(:"workouts/run")
+end
+
+# post individual activity results and the workout id to confirmation view
 post '/run' do
     @workout_id = params['id']
     @activity_results = params.keep_if{ |key, value| key.include?("activityresult_") }
     erb(:"workouts/run_confirmation")
 end
 
+# when results posted to '/' the average workout result is calculated and the 
+# individual activity results are updated in the db
 post '/' do
     workout = Workout.find(params['id'])
     update_activity_results(workout, params)
