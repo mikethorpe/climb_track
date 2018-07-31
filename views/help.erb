@@ -1,1 +1,134 @@
-<h1>help</h1>
+
+
+<h3>Welcome to climb_track..!</h3>
+
+<br>
+
+<h4>What is climb_track?</h4>
+
+<br>
+
+<p>climb_track is an interactive web app for climbers who want to improve their
+physical capabilities through specific training. climb_track allows climbers to
+plan their future workout sessions, log results against those workout sessions 
+and then quickly view those results in a simple format, allowing them to gauge
+the effectiveness of training.</p>
+
+<br>
+
+<p>Please note that training for climbing has risks. Please consult a professional coach and General Practitioner before embarking on a training programme.</p>
+
+<br>
+
+<h4>Getting started</h4>
+
+<br>
+
+<p>To get started with climb track we need to create some exercises from which we can build workouts. 
+We can then create a workout and add some exercises to it.</p>
+
+<p>We have created a sample workout with two exercises based on those on 
+the Beastmaker website to demonstrate this - see <a href="https://www.beastmaker.co.uk/pages/training">https://www.beastmaker.co.uk/pages/training</a> 
+ for further information.</p>
+
+<br>
+
+<h5>To create an exercise</h5>
+<ol>
+    <li>Visit the exercise page.</li>
+    <li>Choose create exercise.</li>
+    <li>Give the exercise a name, number of reps, sets and any notes that you think might be useful.</li>
+    <li>Choose 'Create exercise'.</li>
+    <li>The details of your exercise can be viewed, edited and deleted from the future sessions page.</li>
+</ol>
+
+<br>
+<p>Please note only exercises that are not currently associated with a workout can be deleted.</p>
+<br>
+
+<h5>To create a workout </h5>
+
+<ol>
+    <li>Visit the future sessions page.</li>
+    <li>Choose create workout.</li>
+    <li>Give the workout a name and date. If a date earlier than the current date is entered, the current date is defaulted to.</li>
+    <li>Add exercises to your workout.</li>
+    <li>The details of your workout can be viewed, edited and deleted from the future sessions page. </li>
+</ol>
+
+<br>
+
+<h5> Running a workout </h5>
+
+<ol>
+    <li>Visit the future sessions page.</li>
+    <li>Click run on a workout. Note: only workouts dated 'today' can be run!</li>
+    <li>Enjoy doing the exercise in your workout.</li>
+    <li>As you perform your workout grade how you got on with each exercise.</li>
+    <li>Complete the workout - this will move your workout to the past sessions page.</li>
+
+    <p>Please note that once a workout is completed the logged workout cannot be removed from the past sessions page.</p>
+    <p>If a workout is scheduled but not run it will end up on the past sessions page with a clock icon as the result to indicate
+    that the session was not run.</p>
+
+</ol>
+
+<br>
+
+<h5> Viewing workout results </h5>
+
+<p>
+    Workout results can be viewed from the Past Sessions page
+    climb_track has been designed such that you can quickly gain an overall 
+    understanding of your workout progress. An icon is displayed next to 
+    every past workout indicating the overall result of the session. The key below
+    indicates what the various icons mean.
+    By viewing the details of the workout we can see a breakdown of how the 
+    individual exercises in the workout went.
+</p>
+
+<br>
+
+<table>
+    <tr>
+        <td> Icon </td>
+        <td> Meaning </td>
+    </tr>
+
+    <tr>
+        <td> <img src="<%=@icon_hash[-1]%>"> </td>
+        <td> You forgot about / didn't do this workout </td>
+    </tr>
+
+    <tr>
+        <td> <img src="<%=@icon_hash[0]%>"> </td>
+        <td> You didn't attempt this exercise / most of the exercises in the workout</td>
+
+    </tr>
+
+    <tr>
+        <td> <img src="<%=@icon_hash[1]%>"> </td>
+        <td> Really struggled with this exercise / most of the exercises in the workout (consider making your workout a little easier) </td>
+    </tr>
+
+    <tr>
+        <td> <img src="<%=@icon_hash[2]%>"> </td>
+        <td> Hard towards the end of the exercise / most of the exercises in the workout (getting stronger)</td>
+    </tr>
+
+    <tr>
+        <td> <img src="<%=@icon_hash[3]%>"> </td>
+        <td> The exercise / most of the exercises in the workout seemed fine (consider making your workout a little harder) </td>
+    </tr>
+
+</table>
+
+<br>
+
+<h4>Frequently asked questions</h4>
+
+<br>
+
+<h5>Can I add a workout retrospectively?</h5>
+<p>Unfortunately there is currently no support for this feature. However, it may appear in a future release of climb_track</p>
+<br>

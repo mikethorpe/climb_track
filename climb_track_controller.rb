@@ -22,5 +22,6 @@ end
 
 # help
 get '/help' do
+    @icon_hash = ImageMap.icons();
     erb(:help)
 end
