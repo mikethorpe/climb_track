@@ -6,10 +6,10 @@
 
 .header-nav {
     display: grid;
-    border-bottom: 5px solid #798486;
+    border-bottom: 5px solid #cccccc;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     align-items: center;
-    background-color: #3b6fc4;
+    background-color: #008CBA;
     min-height: 70px;
     padding-bottom: 8px;
 }
@@ -17,6 +17,7 @@
 header {
     text-align: center;
     margin: 5px;
+    color: #f1e3dd
 }
 
 nav {
@@ -58,7 +59,7 @@ nav li {
 
 body {
     background-color: #f4f4f4;
-    
+    color: #595959;
 }
 
 main {
@@ -191,7 +192,7 @@ input[type="submit"] {
 
 
 .help-section {
-    margin: 10px 15% 10px 15%;
+    margin: 10px 6% 10px 6%;
     list-style-position: inside;
 }
 .help-section p, .help-section ol, .help-section table {
