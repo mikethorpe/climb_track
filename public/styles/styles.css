@@ -188,3 +188,44 @@ input[type="submit"] {
 .complete-workout-button {
     float: right;
 }
+
+
+.help-section {
+    margin: 10px 15% 10px 15%;
+    list-style-position: inside;
+}
+.help-section p, .help-section ol, .help-section table {
+    font-size: 12pt;
+    margin-left: 25px;
+    margin-right: 25px;
+    padding: 5px;
+    line-height: 2.0em;
+    word-spacing: 0.1em;
+}
+
+.help-section table {
+    text-align: center;
+}
+
+.help-section th {
+    width: 50%;
+}
+
+.help-section h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.help-section h4 {
+    margin-top: 30px;
+    margin-bottom: 7px;
+}
+
+.help-section .important {
+    color: red;
+    font-weight: 500;
+}
+
+.help-section .climb-track {
+    font-weight: bold;
+}
