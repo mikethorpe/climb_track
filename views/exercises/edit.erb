@@ -1,4 +1,4 @@
-
+<h2>Editing exercise</h2>
 <%if @exercise.activities().count != 0%>
     <p class="warning">Warning: the exercise is associated with at least one workout. Updating will update the exercise in all associated past and present workouts.</p>
     
@@ -6,18 +6,18 @@
 
 <form class="input-block" action="/exercises/<%=@exercise.id%>/edit" method="post">
     
-    <label for="Name">name:</label>
+    <label for="Name">Name:</label>
     <input id="Name" type="text" name="name" value ="<%=@exercise.name%>" >
 
-    <label for="Sets">sets:</label>
+    <label for="Sets">Sets:</label>
     <input id="Sets" type="number" name="sets" value ="<%=@exercise.sets%>">
 
-    <label for="Reps">reps:</label>
+    <label for="Reps">Reps:</label>
     <input id="Reps" type="number" name="reps" value ="<%=@exercise.reps%>">
 
-    <p><label for="Notes">notes:</label><p>
+    <p><label for="Notes">Notes:</label><p>
     <textarea class="input-notes" id="Notes" name="notes"><%=@exercise.notes%></textarea>
     
-    <p><input type="submit" value="update exercise"></p>
+    <p><input type="submit" value="Update exercise"></p>
 
 </form>

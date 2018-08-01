@@ -1,12 +1,11 @@
-<p> Editing workout: <%=@workout.name%></p>
+<h2> Editing workout: <%=@workout.name%></h2>
 
-<br>
 
 <form class="input-block" action="/workouts/<%=@workout.id%>/edit" method="post">
-    <label for="name">name: </label>
+    <label for="name">Name: </label>
     <input id="name" type="text" name="name" value ="<%=@workout.name%>" >
 
-    <label for="date">workout date: </label>
+    <label for="date">Workout date: </label>
     <input type="date" id="date" name="date" value="<%=@workout.date%>">
 
     <input type="submit" value="Next">

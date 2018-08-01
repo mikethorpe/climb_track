@@ -1,10 +1,10 @@
-<p>adding exercises to workout...</p>
+<h2>Adding exercises to workout...</h2>
 
 <br>
 
 <form class="" action="/workouts/<%=@workout.id%>/add_activity" method="post">
     
-    <input type="submit" value="add exercise">
+    <input type="submit" value="Add exercise">
     
     <select id="exercise-id" name="exercise_id">
         <%for exercise in @exercises%>
@@ -18,9 +18,9 @@
 <table>
   
     <tr>
-        <th>exercise</th>
-        <th>sets</th>
-        <th>reps</th>
+        <th>Exercise</th>
+        <th>Sets</th>
+        <th>Reps</th>
         <th></th>
     </tr>     
 
@@ -44,7 +44,7 @@
 
 
 <form class="" action="/workouts/<%=@workout.id%>" method="get">
-    <input type="submit" value="view workout">
+    <input type="submit" value="View workout">
 </form>
 
 

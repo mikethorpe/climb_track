@@ -1,14 +1,14 @@
 
-<p class="centered-p">workout: <%=@workout.name%></p>
-<p class="centered-p">target date: <%=@workout.date%></p>
+<h2 class="centered-p">Workout: <%=@workout.name%></h2>
+<h2 class="centered-p">Target date: <%=@workout.date%></h2>
 
 <br>
 
 <table>        
     <tr>
-        <th>exercise</th>
-        <th>sets</th>
-        <th>reps</th>
+        <th>Exercise</th>
+        <th>Sets</th>
+        <th>Reps</th>
     </tr>  
 
     <%for exercise in @exercises%>
@@ -24,11 +24,11 @@
 <br>
 
 <form class="delete-buttons" action="/workouts/<%=@workout.id %>/delete" method="get">
-  <input type="submit" value="delete workout">
+  <input type="submit" value="Delete workout">
 </form>
 
 <form class="edit-workout-button" action="/workouts/<%=@workout.id%>/edit" method="get">
-  <input type="submit" value="edit workout">
+  <input type="submit" value="Edit workout">
 </form>
 
 

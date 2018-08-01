@@ -1,11 +1,11 @@
 <form class="create-buttons"action="/workouts/create" method="get">
-    <input type="submit" value="create workout">    
+    <input type="submit" value="Create workout">    
 </form>
 
 <table class="overview">
     <tr>
-        <th>name</th>
-        <th>target date</th>
+        <th>Name</th>
+        <th>Target date</th>
         <th></th>
         <th></th>
     </tr>
@@ -16,7 +16,7 @@
         <td><%=workout.name%></td>
         <td> <%=workout.date%></td>
         <td><form action="/workouts/<%=workout.id%>" method="get">
-                <input type="submit" value="view details">    
+                <input type="submit" value="View details">    
             </form>
         </td>
         <%= "<td> </td>" if Date.today().to_s != workout.date%>
@@ -24,7 +24,7 @@
         <%if Date.today().to_s == workout.date%>
             <td>
                 <form class="run-buttons" action="/workouts/<%=workout.id%>/run" method="get">
-                    <input type="submit" value="run">    
+                    <input type="submit" value="Run">    
                 </form>            
         <%end%>
     </tr>

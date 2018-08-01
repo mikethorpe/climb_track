@@ -1,14 +1,14 @@
-<h1><img src="<%=@result_icons[@workout.overall_result]%>"> workout result for: <%=@workout.name%></h1> 
-<p>date: <%=@workout.date%> </p>
-
+<h2 class ="centered-p"> Workout result for: <%=@workout.name%></h2> 
+<h2 class ="centered-p">Date: <%=@workout.date%> </h2>
+<p class="centered-p"><img src="<%=@result_icons[@workout.overall_result]%>"></p>
 
 <table>
   
     <tr>
-        <th>exercise</th>
-        <th>sets</th>
-        <th>reps</th>
-        <th>result</th>
+        <th>Exercise</th>
+        <th>Sets</th>
+        <th>Reps</th>
+        <th>Result</th>
     </tr>     
 
     <%for activity in @workout.activities()%>
