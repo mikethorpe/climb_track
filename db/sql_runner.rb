@@ -5,13 +5,9 @@ class SqlRunner
     def self.run(sql, values = [])
         
         begin
-            db = PG.connect({
-                dbname: 'd3j9p3drbina54', 
-                host: 'ec2-54-235-177-183.compute-1.amazonaws.com',
-                port: 5432, 
-                user: 'wynmmomzjvpexn', 
-                password: '44f1e6d68c7b1c22fc9c4d7216cff72f9ea8bd113646c22bb4fb0af4882ac382'
-            })
+            db = PG.connect( {dbname: 'ddv9dqgfhacosg',
+                host: 'ec2-50-16-195-131.compute-1.amazonaws.com',
+                port: 5432, user: 'zchicsmqeyppsm', password: 'b607972720b4dedf55dd8b4babf01a4455e192eea109b556df2846f46257c87a'})
             db.prepare("query", sql)
             result = db.exec_prepared("query", values)
         ensure 
