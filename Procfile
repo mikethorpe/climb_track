@@ -1,3 +1,3 @@
 # Procfile
 
-web: ruby climb_track_controller.rb
+web: ruby app.rb

@@ -1,4 +1,4 @@
 # config.ru
 
-require './climb_track_controller'
+require './app.rb'
 run Sinatra::Application
