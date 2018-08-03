@@ -1,5 +1,3 @@
-# Mike Thorpe 2018
-# SqlRunner class runs query on PostgreSQL database
 require('pg')
 
 class SqlRunner
