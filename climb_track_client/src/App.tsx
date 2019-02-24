@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {GetExercises} from './actions/Exercises';
+import './actions/Exercises';
+import { GetExercise, GetExercises, CreateExercise } from './actions/Exercises';
 
 class App extends Component {
-  render() {
-    GetExercises();
+  
+  testGetExercises(){
+
+  }
+
+  testCreateExercise(){
+    CreateExercise(
+      {
+        Name: 'Awesome exercise',
+        Reps: 1,
+        Sets: 3
+      }
+    ) 
+  }
+      render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <button onClick={this.testCreateExercise}>CreateExercise</button>
+        <button onClick={this.testGetExercises}>GetExercises</button>
+        <button onClick={this.testGetExercises}>GetExercise</button>
+        <button onClick={this.testGetExercises}>UpdateExercise</button>
+        <button onClick={this.testGetExercises}>DeleteExercise</button>
       </div>
     );
   }

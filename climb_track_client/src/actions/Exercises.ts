@@ -16,6 +16,8 @@ interface IExercise {
 
 export const CreateExercise = async (exercise: IExercise) => {
   try {
+    let stringifiedExercise = JSON.stringify(exercise);
+    console.log(stringifiedExercise); 
     return await axios.post(`${baseDomain}${baseExercisesApi}`, exercise);
   } catch (error) {
     console.log(error);
@@ -24,8 +26,9 @@ export const CreateExercise = async (exercise: IExercise) => {
 
 export const GetExercises = async () => {
     try {
-        return await axios.get(`${baseDomain}${baseExercisesApi}`);
-    } catch (error) {
+        const response = await axios.get(`${baseDomain}${baseExercisesApi}`);
+        return response.data;
+      } catch (error) {
         console.log(error);
     };
 }
@@ -40,7 +43,8 @@ export const GetExercise = async (Id: Number) => {
 
 export const UpdateExercise = async (exercise: IExerciseId) => {
   try {
-    return await axios.put(`${baseDomain}${baseExercisesApi}/${exercise.Id}`, exercise);
+    let stringifiedExercise = JSON.stringify(exercise);
+    return await axios.put(`${baseDomain}${baseExercisesApi}/${exercise.Id}`, stringifiedExercise);
   } catch (error) {
     console.log(error);
   };
