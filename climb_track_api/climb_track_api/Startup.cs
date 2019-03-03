@@ -23,11 +23,19 @@ namespace climb_track_api
         }
 
         public IConfiguration Configuration { get; }
+        readonly string ReactOrigins = "_reactOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(ReactOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+                });
+            });
             services.AddDbContext<ClimbTrackContext>(opt =>
                opt.UseInMemoryDatabase("ClimbTrack"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -36,18 +44,16 @@ namespace climb_track_api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:3000"));
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(ReactOrigins);
             }
             else
             {
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseMvc();
         }

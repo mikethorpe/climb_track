@@ -2,10 +2,8 @@ import axios from 'axios';
 const baseDomain  = 'https://localhost:44380';
 const baseExercisesApi = '/api/exercises';
 
-// Add some interfaces here
-
 interface IExerciseId extends IExercise {
-  Id : string
+  ID : Number
 }
 
 interface IExercise {
@@ -16,9 +14,8 @@ interface IExercise {
 
 export const CreateExercise = async (exercise: IExercise) => {
   try {
-    let stringifiedExercise = JSON.stringify(exercise);
-    console.log(stringifiedExercise); 
-    return await axios.post(`${baseDomain}${baseExercisesApi}`, exercise);
+    const response = await axios.post(`${baseDomain}${baseExercisesApi}`, exercise);
+    return response.data;
   } catch (error) {
     console.log(error);
   };
@@ -35,16 +32,17 @@ export const GetExercises = async () => {
 
 export const GetExercise = async (Id: Number) => {
   try {
-    return await axios.get(`${baseDomain}${baseExercisesApi}/${Id}`);
+    const response = await axios.get(`${baseDomain}${baseExercisesApi}/${Id}`);
+    return response.data;
   } catch (error) {
     console.log(error);
   };
 }
 
-export const UpdateExercise = async (exercise: IExerciseId) => {
+export const UpdateExercise = async (id : Number, exercise: IExerciseId) => {
   try {
-    let stringifiedExercise = JSON.stringify(exercise);
-    return await axios.put(`${baseDomain}${baseExercisesApi}/${exercise.Id}`, stringifiedExercise);
+    const response = await axios.put(`${baseDomain}${baseExercisesApi}/${exercise.ID}`, exercise);
+    return response.data;
   } catch (error) {
     console.log(error);
   };
@@ -52,7 +50,8 @@ export const UpdateExercise = async (exercise: IExerciseId) => {
 
 export const DeleteExercise = async (Id: Number) => {
   try {
-    return await axios.delete(`${baseDomain}${baseExercisesApi}/${Id}`);
+    const response = await axios.delete(`${baseDomain}${baseExercisesApi}/${Id}`);
+    return response.data;
   } catch (error) {
     console.log(error);
   };
