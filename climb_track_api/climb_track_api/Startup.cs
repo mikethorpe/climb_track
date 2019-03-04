@@ -36,8 +36,11 @@ namespace climb_track_api
                     builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
                 });
             });
+
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=ClimbTrack.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ClimbTrackContext>(opt =>
-               opt.UseInMemoryDatabase("ClimbTrack"));
+               //opt.UseInMemoryDatabase("ClimbTrack"));
+               opt.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
