@@ -51,6 +51,7 @@ namespace climb_track_api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                // Switch on CORS only in developer mode
                 app.UseCors(ReactOrigins);
             }
             else
