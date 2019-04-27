@@ -10,7 +10,7 @@ export interface ExerciseProps {
 
 class Exercises extends Component<ExerciseProps> {
     constructor(props: ExerciseProps) {
-        super(props)
+        super(props);
     }
     
     static propTypes = {
@@ -21,23 +21,13 @@ class Exercises extends Component<ExerciseProps> {
     componentWillMount() {
         this.props.fetchExercises();
     };
-    
-    // const exercises = [
-    //     {
-    //         name: 'mike',
-    //         sets: 1,
-    //         reps: 2,
-    //         notes: 'some notes'
-    //     },
-    //     {
-    //         name: 'mike 2',
-    //         sets: 3,
-    //         reps: 4,
-    //         notes: 'some notes 2'
-    //     }
-    // ];
-    
+
+    componentDidMount() {
+        console.log(`props: ${this.props.exercises}`);
+    }
+        
     render() {
+        // console.log(this.props);
         const listExercises = this.props.exercises.map(exercise => <div>{exercise.name}, </div>);
         return(
             <>
