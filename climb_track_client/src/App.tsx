@@ -4,6 +4,7 @@ import './actions/Exercises';
 import { Provider } from 'react-redux';
 import store from './store';
 import Exercises from './components/Exercises';
+import ExerciseForm from './components/ExerciseForm'; 
 
 class App extends Component {
   
@@ -50,6 +51,7 @@ class App extends Component {
     return (
       
       <Provider store={store}>
+        <ExerciseForm/>
         <Exercises/>
       </Provider>
 
