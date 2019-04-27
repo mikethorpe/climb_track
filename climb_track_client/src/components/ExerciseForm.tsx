@@ -1,17 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { createExercise } from '../actions/exerciseActions';
+import { createExercise } from '../actions/ExerciseActions';
+import IExercise from '../interfaces/IExercise';
 
 export interface ExerciseFormProps {
     createExercise(exercise: IExercise)
 }
 
-interface IExercise {
-    Name: string,
-    Reps?: Number,
-    Sets?: Number
-    Notes: string
-  }
 
 class ExerciseForm extends Component<ExerciseFormProps, IExercise> {
     constructor(props){
@@ -25,7 +20,6 @@ class ExerciseForm extends Component<ExerciseFormProps, IExercise> {
     }
 
     handleTextFieldChange = name => event => {
-        console.log('handletextfieldchange')
         this.setState({
           ...this.state,
           [name]: event.target.value,
@@ -34,7 +28,6 @@ class ExerciseForm extends Component<ExerciseFormProps, IExercise> {
     
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(`called create exercise ${this.state}`);
         this.props.createExercise(this.state);
         event.target.reset();
     }

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import { fetchExercises } from '../actions/exerciseActions';
-import PropTypes from 'prop-types';
+import { fetchExercises } from '../actions/ExerciseActions';
 
 export interface ExerciseProps {
     fetchExercises(),
@@ -15,24 +14,14 @@ class Exercises extends Component<ExerciseProps> {
     }
     
     componentWillMount() {
-        console.log('component will mount');
         this.props.fetchExercises();
     };
-
-    componentDidMount() {
-        console.log(`component did mount: props: ${this.props.exercises}`);
-    }
     
     componentWillReceiveProps(nextProps) {
-        console.log(`will receive props ${nextProps.name}`)
         if (nextProps) {
             this.props.exercises.unshift(nextProps.newExercise);
         }
     } 
-
-    componentDidUpdate() {
-        console.log(`DID UPDATE: ${this.props.newExercise.Name}`);
-    }
         
     render() {
         const listExercises = this.props.exercises.map(exercise => <div>Name: {exercise.name}, Reps: {exercise.reps}, Sets: {exercise.sets}, Notes: {exercise.notes} </div>);

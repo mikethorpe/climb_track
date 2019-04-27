@@ -1,15 +1,10 @@
 import axios from 'axios';
 const baseDomain  = 'https://localhost:44380';
 const baseExercisesApi = '/api/exercises';
+import IExercise from '../interfaces/IExercise';
 
 interface IExerciseId extends IExercise {
   ID : Number
-}
-
-interface IExercise {
-  Name: string,
-  Reps: Number,
-  Sets: Number
 }
 
 export const CreateExercise = async (exercise: IExercise) => {
