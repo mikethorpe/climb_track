@@ -12,6 +12,10 @@
     "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.5",
+    "redux": "^4.0.1",
+    "redux-starter-kit": "^0.4.3",
+    "redux-thunk": "^2.3.0",
+    "thunk": "0.0.1",
     "typescript": "3.3.3333"
   },
   "scripts": {
