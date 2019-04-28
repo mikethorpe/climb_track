@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './actions/Exercises';
 // import { GetExercise, GetExercises, CreateExercise, UpdateExercise, DeleteExercise } from './actions/Exercises';
 import { Provider } from 'react-redux';
+import ProviderWrapper from './store/provider';
 import store from './store';
 import Exercises from './components/Exercises';
 import ExerciseForm from './components/ExerciseForm'; 
@@ -50,10 +51,10 @@ class App extends Component {
   render() {
     return (
       
-      <Provider store={store}>
+      <ProviderWrapper store={store}>
         <ExerciseForm/>
         <Exercises/>
-      </Provider>
+      </ProviderWrapper>
 
        // {/* <div className="App">
           // <button onClick={this.testCreateExercise}>CreateExercise</button>

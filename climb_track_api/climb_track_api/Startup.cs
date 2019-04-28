@@ -33,7 +33,9 @@ namespace climb_track_api
                 options.AddPolicy(ReactOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+                    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader(); // React app
+                    builder.WithOrigins("http://localhost:9010").AllowAnyMethod().AllowAnyHeader(); // Storybook
+
                 });
             });
 
