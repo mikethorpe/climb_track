@@ -10,11 +10,11 @@ storiesOf('ExerciseForm', module)
     <ProviderWrapper store={Store}>
       <ExerciseForm/>
     </ProviderWrapper>
-  ))
+  ));
 
   storiesOf('Exercises', module)
   .add('default', () => (
     <ProviderWrapper store={Store}>
       <Exercises/>
     </ProviderWrapper>
-  ))
+  ));

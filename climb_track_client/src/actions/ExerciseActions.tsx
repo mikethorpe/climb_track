@@ -1,4 +1,4 @@
-import { FETCH_EXERCISES, CREATE_EXERCISE } from '../actions/types';
+import { FETCH_EXERCISES, CREATE_EXERCISE, DELETE_EXERCISE } from '../actions/types';
 import axios from 'axios';
 import IExercise from '../interfaces/IExercise';
 
@@ -25,3 +25,12 @@ export const createExercise = (exercise: IExercise) => dispatch => {
         }));
 };
 
+export const deleteExercise = (Id: Number) => dispatch => {
+    console.log(`action deleting exercise ${Id}`);
+      axios.delete(`${baseDomain}${baseExercisesApi}/${Id}`)
+      .then(() =>
+        dispatch({
+            type: DELETE_EXERCISE,
+            payload: Id
+        }));
+  };
