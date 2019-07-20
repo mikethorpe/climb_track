@@ -28,9 +28,12 @@ namespace ClimbTrackApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<ClimbTrackContext>(opt =>
-                opt.UseInMemoryDatabase("ClimbTrackContext"));
+            services.AddEntityFrameworkNpgsql()
+               .AddDbContext<ClimbTrackContext>()
+               .BuildServiceProvider();
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
