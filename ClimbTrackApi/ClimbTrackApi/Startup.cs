@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ClimbTrackApi.Domain.Repositories;
+using ClimbTrackApi.Domain.Services;
 using ClimbTrackApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using AutoMapper;
 
 namespace ClimbTrackApi
 {
@@ -31,6 +26,9 @@ namespace ClimbTrackApi
             services.AddEntityFrameworkNpgsql()
                .AddDbContext<ClimbTrackContext>()
                .BuildServiceProvider();
+            services.AddScoped<IExerciseService, ExerciseService>();
+            services.AddScoped<IExerciseRepository, ExerciseRepository>();
+            services.AddAutoMapper();
         }
 
 

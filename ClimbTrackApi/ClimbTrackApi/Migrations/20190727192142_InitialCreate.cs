@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ClimbTrackApi.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +62,16 @@ namespace ClimbTrackApi.Migrations
                         principalTable: "Workouts",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Exercises",
+                columns: new[] { "Id", "Name", "Notes", "Reps", "Sets" },
+                values: new object[,]
+                {
+                    { -1, "Situps", null, 2, 1 },
+                    { -2, "Super Thigh burn", null, 12, 2 },
+                    { -3, "Super extra exercise", null, 12, 2 }
                 });
 
             migrationBuilder.CreateIndex(

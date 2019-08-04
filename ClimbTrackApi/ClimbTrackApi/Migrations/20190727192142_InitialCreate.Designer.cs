@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ClimbTrackApi.Migrations
 {
     [DbContext(typeof(ClimbTrackContext))]
-    [Migration("20190720103715_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20190727192142_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace ClimbTrackApi.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("ClimbTrackApi.Models.Activity", b =>
+            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Activity", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -39,7 +39,7 @@ namespace ClimbTrackApi.Migrations
                     b.ToTable("Activities");
                 });
 
-            modelBuilder.Entity("ClimbTrackApi.Models.Exercise", b =>
+            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Exercise", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -55,9 +55,32 @@ namespace ClimbTrackApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Exercises");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Name = "Situps",
+                            Reps = 2,
+                            Sets = 1
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Name = "Super Thigh burn",
+                            Reps = 12,
+                            Sets = 2
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Name = "Super extra exercise",
+                            Reps = 12,
+                            Sets = 2
+                        });
                 });
 
-            modelBuilder.Entity("ClimbTrackApi.Models.Workout", b =>
+            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Workout", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -72,14 +95,14 @@ namespace ClimbTrackApi.Migrations
                     b.ToTable("Workouts");
                 });
 
-            modelBuilder.Entity("ClimbTrackApi.Models.Activity", b =>
+            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Activity", b =>
                 {
-                    b.HasOne("ClimbTrackApi.Models.Exercise", "Exercise")
+                    b.HasOne("ClimbTrackApi.Domain.Models.Exercise", "Exercise")
                         .WithMany()
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ClimbTrackApi.Models.Workout", "workout")
+                    b.HasOne("ClimbTrackApi.Domain.Models.Workout", "workout")
                         .WithMany()
                         .HasForeignKey("workoutID")
                         .OnDelete(DeleteBehavior.Cascade);

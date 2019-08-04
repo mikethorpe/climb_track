@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using ClimbTrackApi.Models;
+using AutoMapper;
+using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Domain.Services;
+using ClimbTrackApi.Resources;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ClimbTrackApi.Controllers
 {
@@ -11,30 +12,40 @@ namespace ClimbTrackApi.Controllers
     [ApiController]
     public class ExerciseController : ControllerBase
     {
-        private readonly ClimbTrackContext _context;
-        public ExerciseController(ClimbTrackContext context)
-        {
-            _context = context;
+        private readonly IExerciseService _exerciseService;
+        private readonly IMapper _mapper;
 
-            if (_context.Exercises.Count() == 0)
-            {
-                _context.Exercises.Add(new Exercise { Name = "Situps", Sets = 1, Reps = 2 });
-                _context.Exercises.Add(new Exercise { Name = "Super Thigh burn", Sets = 2, Reps = 12 });
-                _context.SaveChanges();
-            }
-        }
-
-        public async Task<ActionResult<List<Exercise>>> GetExercises()
+        public ExerciseController(IExerciseService exerciseService)
         {
-            return await _context.Exercises.ToListAsync();
+            _exerciseService = exerciseService;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Exercise>> GetAsync(int id)
+        public async Task<ExerciseResource> GetExercise(int id)
         {
-            var exercise = await _context.Exercises.FindAsync(id);
-            if (exercise == null) return NotFound();
-            return exercise;
+            var exercise = await _exerciseService.GetExercise(id);
+            var resource = _mapper.Map<Exercise, ExerciseResource>(exercise); 
+            return resource;
         }
+
+        [HttpGet]
+        public async Task<ICollection<Exercise>> GetExercises()
+        {
+            return await _exerciseService.ListAsync();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateExercise([FromBody] ExerciseResource exercise)
+        {
+            return Ok();
+        }
+
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Exercise>> GetAsync(int id)
+        //{
+        //    var exercise = await _context.Exercises.FindAsync(id);
+        //    if (exercise == null) return NotFound();
+        //    return exercise;
+        //}
     }
 }
