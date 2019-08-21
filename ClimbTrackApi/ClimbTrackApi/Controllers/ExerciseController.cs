@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Domain.Services;
+using ClimbTrackApi.Extensions;
 using ClimbTrackApi.Resources;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,16 +36,30 @@ namespace ClimbTrackApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateExercise([FromBody] ExerciseResource exercise)
+        public async Task<IActionResult> CreateExercise([FromBody] ExerciseResource exerciseResource)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var exercise = _mapper.Map<ExerciseResource, Exercise>(exerciseResource);
+            var result = await _exerciseService.SaveAsync(exercise);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Exercise);
+            return Ok(exerciseResource);
         }
 
-        //[HttpGet("{id}")]
+        //[HttpGet("{id}")]hib
         //public async Task<ActionResult<Exercise>> GetAsync(int id)
         //{
         //    var exercise = await _context.Exercises.FindAsync(id);
-        //    if (exercise == null) return NotFound();
+        //    if (exercise == null) return NotFound(); 
         //    return exercise;
         //}
     }

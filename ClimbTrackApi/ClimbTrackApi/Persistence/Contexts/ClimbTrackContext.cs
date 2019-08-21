@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WorkoutExercise = ClimbTrackApi.Domain.Models.WorkoutExercise;
 
-namespace ClimbTrackApi.Models
+namespace ClimbTrackApi.Persistence.Contexts
 {
     public class ClimbTrackContext: DbContext
     {

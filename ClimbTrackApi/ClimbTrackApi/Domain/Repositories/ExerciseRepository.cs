@@ -1,7 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Models;
-using ClimbTrackApi.Models;
+using ClimbTrackApi.Persistence.Contexts;
 using ClimbTrackApi.Persistence.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,6 +12,11 @@ namespace ClimbTrackApi.Domain.Repositories
         public ExerciseRepository(ClimbTrackContext context): base(context)
         {
 
+        }
+
+        public async Task AddExercise(Exercise exercise)
+        {
+            await _context.AddAsync(exercise);
         }
 
         public async Task<Exercise> GetExercise(int id)

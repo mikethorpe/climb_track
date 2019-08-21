@@ -1,5 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Domain.Repositories;
+using ClimbTrackApi.Domain.Services.Communication;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -25,5 +26,9 @@ namespace ClimbTrackApi.Domain.Services
             return await _exerciseRepository.ListAsync();
         }
 
+        public Task<SaveExerciseResponse> SaveAsync(Exercise exercise)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
