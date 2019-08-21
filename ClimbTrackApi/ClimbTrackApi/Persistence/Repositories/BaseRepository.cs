@@ -1,4 +1,4 @@
-﻿using ClimbTrackApi.Models;
+﻿using ClimbTrackApi.Persistence.Contexts;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {

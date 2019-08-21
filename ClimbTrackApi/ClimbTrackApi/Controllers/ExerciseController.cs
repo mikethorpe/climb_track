@@ -36,14 +36,14 @@ namespace ClimbTrackApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateExercise([FromBody] ExerciseResource exerciseResource)
+        public async Task<IActionResult> CreateExercise([FromBody] ExerciseResource resource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            var exercise = _mapper.Map<ExerciseResource, Exercise>(exerciseResource);
+            var exercise = _mapper.Map<ExerciseResource, Exercise>(resource);
             var result = await _exerciseService.SaveAsync(exercise);
 
             if (!result.Success)

@@ -9,7 +9,7 @@ namespace ClimbTrackApi.Domain.Repositories
 {
     public class ExerciseRepository : BaseRepository, IExerciseRepository
     {
-        public ExerciseRepository(ClimbTrackContext context): base(context)
+        public ExerciseRepository(ClimbTrackContext context) : base(context)
         {
 
         }

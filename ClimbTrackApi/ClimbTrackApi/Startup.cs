@@ -1,12 +1,13 @@
 ﻿using ClimbTrackApi.Domain.Repositories;
 using ClimbTrackApi.Domain.Services;
-using ClimbTrackApi.Models;
+using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
+
 
 namespace ClimbTrackApi
 {
