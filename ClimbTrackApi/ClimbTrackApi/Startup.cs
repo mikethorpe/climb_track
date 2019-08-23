@@ -29,6 +29,7 @@ namespace ClimbTrackApi
                .BuildServiceProvider();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
+            services.AddScoped<IUnitOfWork, IUnitOfWork>();
             services.AddAutoMapper();
         }
 

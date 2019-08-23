@@ -8,6 +8,6 @@ namespace ClimbTrackApi.Domain.Repositories
     {
         Task<ICollection<Exercise>> ListAsync();
         Task<Exercise> GetExercise(int id);
-        Task AddExercise(Exercise exercise);
+        Task AddAsync(Exercise exercise);
     }    
 }

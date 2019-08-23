@@ -2,7 +2,7 @@
 
 namespace ClimbTrackApi.Domain.Repositories
 {
-    interface IUnitOfWork
+    public interface IUnitOfWork
     {
         Task CompleteAsync();
     }

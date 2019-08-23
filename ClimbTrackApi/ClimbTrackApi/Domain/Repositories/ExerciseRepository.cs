@@ -14,7 +14,7 @@ namespace ClimbTrackApi.Domain.Repositories
 
         }
 
-        public async Task AddExercise(Exercise exercise)
+        public async Task AddAsync(Exercise exercise)
         {
             await _context.AddAsync(exercise);
         }

@@ -1,6 +1,7 @@
 ﻿using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Domain.Repositories;
 using ClimbTrackApi.Domain.Services.Communication;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,10 +11,12 @@ namespace ClimbTrackApi.Domain.Services
     {
 
         IExerciseRepository _exerciseRepository;
+        IUnitOfWork _unitOfWork;
 
-        public ExerciseService(IExerciseRepository exerciseRepository)
+        public ExerciseService(IExerciseRepository exerciseRepository, IUnitOfWork unitOfWork)
         {
             _exerciseRepository = exerciseRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public Task<Exercise> GetExercise(int id)
@@ -26,9 +29,19 @@ namespace ClimbTrackApi.Domain.Services
             return await _exerciseRepository.ListAsync();
         }
 
-        public Task<SaveExerciseResponse> SaveAsync(Exercise exercise)
+        public async Task<SaveExerciseResponse> SaveAsync(Exercise exercise)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                await _exerciseRepository.AddAsync(exercise);
+                await _unitOfWork.CompleteAsync();
+                return new SaveExerciseResponse(exercise);
+
+            }
+            catch (Exception ex)
+            {
+                return new SaveExerciseResponse($"Error saving category: {ex.Message}");
+            }
         }
     }
 }
