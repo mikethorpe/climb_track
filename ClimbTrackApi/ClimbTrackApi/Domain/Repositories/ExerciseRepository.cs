@@ -19,7 +19,7 @@ namespace ClimbTrackApi.Domain.Repositories
             await _context.AddAsync(exercise);
         }
 
-        public async Task<Exercise> GetExercise(int id)
+        public async Task<Exercise> FindByIdAsync(int id)
         {
             return await _context.Exercises.FindAsync(id);
         }
@@ -27,6 +27,11 @@ namespace ClimbTrackApi.Domain.Repositories
         public async Task<ICollection<Exercise>> ListAsync()
         {
             return await _context.Exercises.ToListAsync();
+        }
+
+        public void UpdateAsync(Exercise exercise)
+        {
+             _context.Exercises.Update(exercise);
         }
     }
 }

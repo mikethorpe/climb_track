@@ -21,7 +21,7 @@ namespace ClimbTrackApi.Domain.Services
 
         public Task<Exercise> GetExercise(int id)
         {
-            return _exerciseRepository.GetExercise(id);
+            return _exerciseRepository.FindByIdAsync(id);
         }
 
         public async Task<ICollection<Exercise>> ListAsync()
@@ -41,6 +41,29 @@ namespace ClimbTrackApi.Domain.Services
             catch (Exception ex)
             {
                 return new SaveExerciseResponse($"Error saving category: {ex.Message}");
+            }
+        }
+
+        public async Task<SaveExerciseResponse> UpdateAsync(int id, Exercise exercise)
+        {
+            var existingExercise = await _exerciseRepository.FindByIdAsync(id);
+
+            if (existingExercise == null) return new SaveExerciseResponse("Exercise not found");
+
+            existingExercise.Name = exercise.Name;
+            existingExercise.Reps = exercise.Reps;
+            existingExercise.Sets = exercise.Sets;
+            existingExercise.Notes = exercise.Notes;
+
+            try
+            {
+                _exerciseRepository.UpdateAsync(existingExercise);
+                await _unitOfWork.CompleteAsync();
+                return new SaveExerciseResponse(existingExercise);
+            }
+            catch (Exception ex)
+            {
+                return new SaveExerciseResponse($"Error updating exercise: ${ex.Message}");
             }
         }
     }

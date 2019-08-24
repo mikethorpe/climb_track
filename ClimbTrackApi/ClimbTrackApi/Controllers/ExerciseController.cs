@@ -26,7 +26,7 @@ namespace ClimbTrackApi.Controllers
         public async Task<ExerciseResource> GetExercise(int id)
         {
             var exercise = await _exerciseService.GetExercise(id);
-            var resource = _mapper.Map<Exercise, ExerciseResource>(exercise); 
+            var resource = _mapper.Map<Exercise, ExerciseResource>(exercise);
             return resource;
         }
 
@@ -44,18 +44,7 @@ namespace ClimbTrackApi.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            Exercise exercise;
-
-            try
-            {
-
-            exercise =_mapper.Map<SaveExerciseResource, Exercise>(resource);
-            }
-            catch (System.Exception ex)
-            {
-                var dsalkfds = ex.Message;
-                throw;
-            }
+            var exercise = _mapper.Map<SaveExerciseResource, Exercise>(resource);
             var result = await _exerciseService.SaveAsync(exercise);
 
             if (!result.Success)
@@ -67,12 +56,25 @@ namespace ClimbTrackApi.Controllers
             return Ok(exerciseResource);
         }
 
-        //[HttpGet("{id}")]hib
-        //public async Task<ActionResult<Exercise>> GetAsync(int id)
-        //{
-        //    var exercise = await _context.Exercises.FindAsync(id);
-        //    if (exercise == null) return NotFound(); 
-        //    return exercise;
-        //}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveExerciseResource resource)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var exercise = _mapper.Map<SaveExerciseResource, Exercise>(resource);
+            var result = await _exerciseService.UpdateAsync(id, exercise);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Exercise);
+            return Ok(exerciseResource);
+        }
+
     }
 }
