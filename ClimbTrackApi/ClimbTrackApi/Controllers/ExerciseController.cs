@@ -16,9 +16,10 @@ namespace ClimbTrackApi.Controllers
         private readonly IExerciseService _exerciseService;
         private readonly IMapper _mapper;
 
-        public ExerciseController(IExerciseService exerciseService)
+        public ExerciseController(IExerciseService exerciseService, IMapper mapper)
         {
             _exerciseService = exerciseService;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -36,14 +37,25 @@ namespace ClimbTrackApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateExercise([FromBody] ExerciseResource resource)
+        public async Task<IActionResult> CreateExercise([FromBody] SaveExerciseResource resource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            var exercise = _mapper.Map<ExerciseResource, Exercise>(resource);
+            Exercise exercise;
+
+            try
+            {
+
+            exercise =_mapper.Map<SaveExerciseResource, Exercise>(resource);
+            }
+            catch (System.Exception ex)
+            {
+                var dsalkfds = ex.Message;
+                throw;
+            }
             var result = await _exerciseService.SaveAsync(exercise);
 
             if (!result.Success)

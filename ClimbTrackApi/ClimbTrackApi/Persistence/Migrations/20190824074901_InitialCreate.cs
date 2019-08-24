@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ClimbTrackApi.Migrations
+namespace ClimbTrackApi.Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -14,7 +14,7 @@ namespace ClimbTrackApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: true, defaultValue: ""),
                     Reps = table.Column<int>(nullable: false),
                     Sets = table.Column<int>(nullable: false),
                     Notes = table.Column<string>(nullable: true)
@@ -28,28 +28,26 @@ namespace ClimbTrackApi.Migrations
                 name: "Workouts",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    name = table.Column<string>(nullable: false),
-                    date = table.Column<DateTime>(nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: true, defaultValue: ""),
+                    Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workouts", x => x.ID);
+                    table.PrimaryKey("PK_Workouts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Activities",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     ExerciseId = table.Column<int>(nullable: false),
-                    workoutID = table.Column<int>(nullable: false)
+                    WorkoutId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Activities", x => x.ID);
+                    table.PrimaryKey("PK_Activities", x => new { x.WorkoutId, x.ExerciseId });
                     table.ForeignKey(
                         name: "FK_Activities_Exercises_ExerciseId",
                         column: x => x.ExerciseId,
@@ -57,10 +55,10 @@ namespace ClimbTrackApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Activities_Workouts_workoutID",
-                        column: x => x.workoutID,
+                        name: "FK_Activities_Workouts_WorkoutId",
+                        column: x => x.WorkoutId,
                         principalTable: "Workouts",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -70,19 +68,24 @@ namespace ClimbTrackApi.Migrations
                 values: new object[,]
                 {
                     { -1, "Situps", null, 2, 1 },
-                    { -2, "Super Thigh burn", null, 12, 2 },
+                    { -2, "Super thigh burn", null, 12, 2 },
                     { -3, "Super extra exercise", null, 12, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Workouts",
+                columns: new[] { "Id", "Date", "Name" },
+                values: new object[,]
+                {
+                    { -1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Workout1" },
+                    { -2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Workout2" },
+                    { -3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Workout3" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Activities_ExerciseId",
                 table: "Activities",
                 column: "ExerciseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Activities_workoutID",
-                table: "Activities",
-                column: "workoutID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

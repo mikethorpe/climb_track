@@ -9,7 +9,7 @@ namespace ClimbTrackApi.Domain.Models
         public int Reps { get; set; }
         public int Sets { get; set; }
         public string Notes { get; set; }
-        public ICollection<WorkoutExercise> WorkoutExercises { get; set; }        
+        public virtual ICollection<WorkoutExercise> WorkoutExercises { get; set; }        
 
     }
 }

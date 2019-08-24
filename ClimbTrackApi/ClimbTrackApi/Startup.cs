@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
-
+using ClimbTrackApi.Persistence.Repositories;
+using ClimbTrackApi.Mapping;
 
 namespace ClimbTrackApi
 {
@@ -29,8 +30,8 @@ namespace ClimbTrackApi
                .BuildServiceProvider();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
-            services.AddScoped<IUnitOfWork, IUnitOfWork>();
-            services.AddAutoMapper();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
         }
 
 

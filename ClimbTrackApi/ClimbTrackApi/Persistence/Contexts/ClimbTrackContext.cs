@@ -1,5 +1,4 @@
-﻿using System;
-using ClimbTrackApi.Domain.Models;
+﻿using ClimbTrackApi.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WorkoutExercise = ClimbTrackApi.Domain.Models.WorkoutExercise;
@@ -51,7 +50,7 @@ namespace ClimbTrackApi.Persistence.Contexts
 
             // Define join table between Workout and Exercise
             modelBuilder.Entity<WorkoutExercise>()
-                .HasKey(we => new { we.WorkoutId, we.ExerciseID });
+                .HasKey(we => new { we.WorkoutId, we.ExerciseId });
 
             modelBuilder.Entity<WorkoutExercise>()
                 .HasOne(we => we.Workout)
@@ -61,7 +60,7 @@ namespace ClimbTrackApi.Persistence.Contexts
             modelBuilder.Entity<WorkoutExercise>()
                 .HasOne(we => we.Exercise)
                 .WithMany(e => e.WorkoutExercises)
-                .HasForeignKey(we => we.Exercise);
+                .HasForeignKey(we => we.ExerciseId);
 
         }
     }
