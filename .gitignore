@@ -1,4 +1,7 @@
-.vs/
-obj/
+App_Data/
+packages/
 bin/
+obj/
+.vs/
+.vscode/
 *.user
