@@ -23,11 +23,15 @@ namespace ClimbTrackApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ExerciseResource> GetExercise(int id)
+        public async Task<IActionResult> GetExercise(int id)
         {
             var exercise = await _exerciseService.GetExercise(id);
+
+            if (exercise == null) return NotFound();
+
             var resource = _mapper.Map<Exercise, ExerciseResource>(exercise);
-            return resource;
+
+            return Ok(resource);
         }
 
         [HttpGet]
@@ -71,6 +75,22 @@ namespace ClimbTrackApi.Controllers
             {
                 return BadRequest(result.Message);
             }
+
+            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Exercise);
+            return Ok(exerciseResource);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var result = await _exerciseService.DeleteAsync(id);
+
+            if (!result.Success) return BadRequest(result.Message);
 
             var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Exercise);
             return Ok(exerciseResource);

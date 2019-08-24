@@ -29,9 +29,14 @@ namespace ClimbTrackApi.Domain.Repositories
             return await _context.Exercises.ToListAsync();
         }
 
-        public void UpdateAsync(Exercise exercise)
+        public void Update(Exercise exercise)
         {
              _context.Exercises.Update(exercise);
+        }
+
+        public void Remove(Exercise exercise)
+        {
+            _context.Exercises.Remove(exercise);
         }
     }
 }

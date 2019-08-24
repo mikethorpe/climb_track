@@ -9,7 +9,8 @@ namespace ClimbTrackApi.Domain.Services
     {
         Task<ICollection<Exercise>> ListAsync();
         Task<Exercise> GetExercise(int id);
-        Task<SaveExerciseResponse> SaveAsync(Exercise exercise);
-        Task<SaveExerciseResponse> UpdateAsync(int id, Exercise exercise);
+        Task<ExerciseResponse> SaveAsync(Exercise exercise);
+        Task<ExerciseResponse> UpdateAsync(int id, Exercise exercise);
+        Task<ExerciseResponse> DeleteAsync(int id);
     }
 }
