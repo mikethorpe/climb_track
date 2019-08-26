@@ -35,17 +35,10 @@ namespace ClimbTrackApi.Controllers
 
             if (!result.Success) return BadRequest(result.Message);
 
-            try
-            {
-                var userResource = _mapper.Map<User, UserResource>(result.Entity);
-                return Ok(userResource);
+            // TODO: user resource should contain list of roles - user may have multiple
+            var userResource = _mapper.Map<User, UserResource>(result.Entity);
 
-            }
-            catch (System.Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
-                throw;
-            }
+            return Ok(userResource);
 
         }
     }

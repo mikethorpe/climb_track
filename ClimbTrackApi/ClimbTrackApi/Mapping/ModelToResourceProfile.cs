@@ -9,7 +9,8 @@ namespace ClimbTrackApi.Mapping
         public ModelToResourceProfile()
         {
             CreateMap<Exercise, ExerciseResource>();
-            CreateMap<User, UserResource>();
+            CreateMap<User, UserResource>()
+                .ForMember(ur => ur.Role, opt => opt.MapFrom(u => u.Role.ToString()));
         }
     }
     
