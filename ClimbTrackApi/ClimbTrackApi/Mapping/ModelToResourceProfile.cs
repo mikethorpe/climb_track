@@ -10,7 +10,6 @@ namespace ClimbTrackApi.Mapping
         {
             CreateMap<Exercise, ExerciseResource>();
             CreateMap<User, UserResource>();
-                //.ForMember(ur => ur.EmailAddress, opt => opt.MapFrom(u => @u.EmailAddress));
         }
     }
     
