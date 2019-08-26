@@ -29,7 +29,10 @@ namespace ClimbTrackApi
                .AddDbContext<ClimbTrackContext>()
                .BuildServiceProvider();
             services.AddScoped<IExerciseService, ExerciseService>();
+
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
         }

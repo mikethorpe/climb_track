@@ -56,7 +56,7 @@ namespace ClimbTrackApi.Controllers
                 return BadRequest(result.Message);
             }
 
-            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Exercise);
+            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Entity);
             return Ok(exerciseResource);
         }
 
@@ -76,7 +76,7 @@ namespace ClimbTrackApi.Controllers
                 return BadRequest(result.Message);
             }
 
-            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Exercise);
+            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Entity);
             return Ok(exerciseResource);
         }
 
@@ -92,7 +92,7 @@ namespace ClimbTrackApi.Controllers
 
             if (!result.Success) return BadRequest(result.Message);
 
-            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Exercise);
+            var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Entity);
             return Ok(exerciseResource);
         }
 
