@@ -19,6 +19,8 @@ class ExerciseForm extends Component<ExerciseFormProps, IExercise> {
         }
     }
 
+    // This is me doing some super coding
+
     handleTextFieldChange = name => event => {
         this.setState({
           ...this.state,

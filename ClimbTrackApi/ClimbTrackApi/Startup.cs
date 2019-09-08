@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using ClimbTrackApi.Persistence.Repositories;
 using ClimbTrackApi.Mapping;
+using Microsoft.AspNetCore.Identity;
 
 namespace ClimbTrackApi
 {
@@ -34,6 +35,7 @@ namespace ClimbTrackApi
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
             services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
         }
 

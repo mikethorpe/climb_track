@@ -11,11 +11,13 @@ namespace ClimbTrackApi.Domain.Services
     {
         private IUserRepository _userRepository { get; set; }
         private IUnitOfWork _unitOfWork { get; set; }
+        private IPasswordHasher<User> _passwordHasher { get; set; }
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<ServiceResponse<User>> CreateUserAsync(RoleEnum role, User user)
@@ -24,8 +26,7 @@ namespace ClimbTrackApi.Domain.Services
 
             if (existingUser != null) return new ServiceResponse<User>($"A user with the address {user.EmailAddress} is already registered");
 
-            var passwordHasher = new PasswordHasher<User>();
-            user.Password = passwordHasher.HashPassword(user, user.Password);
+            user.Password = _passwordHasher.HashPassword(user, user.Password);
             user.Role = role;
 
             try
