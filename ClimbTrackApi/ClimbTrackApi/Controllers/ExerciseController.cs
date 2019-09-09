@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ClimbTrackApi.Domain.Models;
@@ -35,9 +36,11 @@ namespace ClimbTrackApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ICollection<Exercise>> GetExercises()
+        public async Task<IEnumerable<ExerciseResource>> GetExercises()
         {
-            return await _exerciseService.ListAsync();
+            var result = await _exerciseService.ListAsync();
+            var exercises = result.Select(exercise => _mapper.Map<Exercise, ExerciseResource>(exercise));
+            return exercises;
         }
 
         [HttpPost]

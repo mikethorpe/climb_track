@@ -2,8 +2,8 @@ import { FETCH_EXERCISES, CREATE_EXERCISE, DELETE_EXERCISE } from '../actions/ty
 import axios from 'axios';
 import IExercise from '../interfaces/IExercise';
 
-const baseDomain  = 'https://localhost:44380';
-const baseExercisesApi = '/api/exercises';
+const baseDomain  = 'https://localhost:44323';
+const baseExercisesApi = '/api/exercise';
 
 export const fetchExercises = () => dispatch => {
     axios.get(`${baseDomain}${baseExercisesApi}`)
