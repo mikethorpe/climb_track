@@ -23,7 +23,7 @@ class Exercises extends Component<ExerciseProps> {
             this.props.exercises.unshift(nextProps.newExercise);
         }
     }
-    
+
 
     handleDeleteExercise = (id) => {
         console.log(id);
