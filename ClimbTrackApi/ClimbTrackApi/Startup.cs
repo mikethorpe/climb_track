@@ -37,6 +37,13 @@ namespace ClimbTrackApi
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
             services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
+            services.AddCors(
+                c =>  c.AddPolicy(
+                    "AllowOrigin", options => 
+                        options
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()));
         }
 
 
@@ -54,6 +61,7 @@ namespace ClimbTrackApi
                 app.UseHsts();
             }
 
+            app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
             app.UseMvc();
         }
