@@ -3,7 +3,6 @@ using ClimbTrackApi.Domain.Repositories;
 using ClimbTrackApi.Domain.Services.Communication;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Domain.Services
 {

@@ -1,4 +1,6 @@
-﻿namespace ClimbTrackApi.Domain.Models
+﻿using System.Collections.Generic;
+
+namespace ClimbTrackApi.Domain.Models
 {
     public class User
     {

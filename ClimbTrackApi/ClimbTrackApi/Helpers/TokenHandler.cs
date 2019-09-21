@@ -1,4 +1,5 @@
 ﻿using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -18,10 +19,12 @@ namespace ClimbTrackApi.Helpers
         private const double ExpirationPeriodSeconds = 30;
         private const double AccessTokenExpirationPeriod = 60;
 
-        public TokenHandler(IPasswordHasher<User> passwordHasher, IConfiguration configuration)
+        public IRefreshTokenRepository _refreshTokenRepository { get; set; }
+        public TokenHandler(IPasswordHasher<User> passwordHasher, IConfiguration configuration, IRefreshTokenRepository refreshTokenRepository)
         {
             _passwordHasher = passwordHasher;
             _configuration = configuration;
+            _refreshTokenRepository = refreshTokenRepository;
         }
 
 
@@ -33,6 +36,8 @@ namespace ClimbTrackApi.Helpers
             var refreshToken = BuildRefreshToken(user);
             var accessToken = BuildAccessToken(user, refreshToken);
 
+            // TO DO: use refresh token repository to store refresh tokens
+            // need delete method and add method and to finish interface
             // TODO: add to list of valid refresh tokens in the db
 
             return accessToken;

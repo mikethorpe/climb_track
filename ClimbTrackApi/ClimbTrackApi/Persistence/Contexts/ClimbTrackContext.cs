@@ -12,6 +12,7 @@ namespace ClimbTrackApi.Persistence.Contexts
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         private IConfiguration _configuration;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -71,6 +72,9 @@ namespace ClimbTrackApi.Persistence.Contexts
             modelBuilder.Entity<User>()
                 .Property(u => u.Role)
                 .HasConversion(roleConverter);
+
+            
+
         }
     }
 }
