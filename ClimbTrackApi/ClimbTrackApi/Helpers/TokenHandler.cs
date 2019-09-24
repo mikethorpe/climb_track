@@ -2,17 +2,20 @@
 using ClimbTrackApi.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace ClimbTrackApi.Helpers
 {
-    public class TokenHandler
+    public class TokenHandler: ITokenHandler
     {
         private IPasswordHasher<User> _passwordHasher;
         private IConfiguration _configuration; 
+        private readonly SigningConfigurations _signingConfigurations;
 
         // grab these from the appsettings.json file
         // overwrite using env variables in production
@@ -20,11 +23,14 @@ namespace ClimbTrackApi.Helpers
         private const double AccessTokenExpirationPeriod = 60;
 
         public IRefreshTokenRepository _refreshTokenRepository { get; set; }
-        public TokenHandler(IPasswordHasher<User> passwordHasher, IConfiguration configuration, IRefreshTokenRepository refreshTokenRepository)
+        public IUnitOfWork _unitOfWork { get; set; }
+        public TokenHandler(IPasswordHasher<User> passwordHasher, IConfiguration configuration, IRefreshTokenRepository refreshTokenRepository, IUnitOfWork unitOfWork, SigningConfigurations signingConfigurations)
         {
             _passwordHasher = passwordHasher;
             _configuration = configuration;
             _refreshTokenRepository = refreshTokenRepository;
+            _unitOfWork = unitOfWork;
+            _signingConfigurations = signingConfigurations;
         }
 
 
@@ -35,10 +41,9 @@ namespace ClimbTrackApi.Helpers
         {
             var refreshToken = BuildRefreshToken(user);
             var accessToken = BuildAccessToken(user, refreshToken);
-
-            // TO DO: use refresh token repository to store refresh tokens
-            // need delete method and add method and to finish interface
-            // TODO: add to list of valid refresh tokens in the db
+            // TODO: Hash / encrypt refresh tokens
+            _refreshTokenRepository.AddAsync(refreshToken);
+            _unitOfWork.CompleteAsync();
 
             return accessToken;
         }
@@ -64,8 +69,8 @@ namespace ClimbTrackApi.Helpers
                 audience: jwtConfigurationSection.GetValue<string>("Audience"),
                 claims: GetClaims(user),
                 expires: accessTokenExpiration,
-                notBefore: DateTime.UtcNow
-                // TODO: add signing credentials
+                notBefore: DateTime.UtcNow,
+                signingCredentials: _signingConfigurations.SigningCredentials
             );
 
             var handler = new JwtSecurityTokenHandler();
@@ -86,4 +91,20 @@ namespace ClimbTrackApi.Helpers
 
     }
 
+    //TODO: extract this out into its own file
+    public class SigningConfigurations
+    {
+        public SecurityKey Key { get; set; }
+        public SigningCredentials SigningCredentials { get; set; }
+
+        public SigningConfigurations()
+        {
+            using (var provider = new RSACryptoServiceProvider(2048))
+            {
+                Key = new RsaSecurityKey(provider.ExportParameters(true));
+            }
+
+            SigningCredentials = new SigningCredentials(Key, SecurityAlgorithms.RsaSha256Signature);
+        }
+    }
 }

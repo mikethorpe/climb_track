@@ -11,7 +11,8 @@ namespace ClimbTrackApi.Mapping
             CreateMap<Exercise, ExerciseResource>();
             CreateMap<User, UserResource>()
                 .ForMember(ur => ur.Role, opt => opt.MapFrom(u => u.Role.ToString()));
-        }
+            CreateMap<AccessToken, AccessTokenResource>();
+        } 
     }
     
 }

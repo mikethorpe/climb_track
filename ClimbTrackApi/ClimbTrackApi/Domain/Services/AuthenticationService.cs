@@ -1,23 +1,30 @@
 ﻿using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Domain.Repositories;
 using ClimbTrackApi.Domain.Services.Communication;
+using ClimbTrackApi.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Domain.Services
 {
-    public class AuthenticationService
+    public class AuthenticationService: IAuthenticationService
     {
         private IPasswordHasher<User> _passwordHasher;
         private IUserRepository _userRepository;
+        private ITokenHandler _tokenHandler;
 
-        public AuthenticationService(IPasswordHasher<User> passwordHasher, IUserRepository userRepository)
+        public AuthenticationService(
+            IPasswordHasher<User> passwordHasher, 
+            IUserRepository userRepository, 
+            ITokenHandler tokenHandler)
         {
             _passwordHasher = passwordHasher;
             _userRepository = userRepository;
+            _tokenHandler = tokenHandler;
         }
 
-        public ServiceResponse<AccessToken> CreateAccessTokenAsync(string emailAddress, string password)
+        public async Task<ServiceResponse<AccessToken>> CreateAccessTokenAsync(string emailAddress, string password)
         {
 
             try
@@ -30,6 +37,9 @@ namespace ClimbTrackApi.Domain.Services
 
                 if (passwordVerification != PasswordVerificationResult.Success) return new ServiceResponse<AccessToken>($"Error: invalid credentials");
 
+                var token = _tokenHandler.GenerateAccessToken(existingUser);
+
+                return new ServiceResponse<AccessToken>(token);
 
             }
             catch (Exception ex)

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ClimbTrackApi.Domain.Models;
 
 namespace ClimbTrackApi.Helpers
 {
     public interface ITokenHandler
     {
+        AccessToken GenerateAccessToken(User user);
     }
 }

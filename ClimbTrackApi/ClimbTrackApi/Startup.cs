@@ -10,6 +10,7 @@ using AutoMapper;
 using ClimbTrackApi.Persistence.Repositories;
 using ClimbTrackApi.Mapping;
 using Microsoft.AspNetCore.Identity;
+using ClimbTrackApi.Helpers;
 
 namespace ClimbTrackApi
 {
@@ -32,10 +33,14 @@ namespace ClimbTrackApi
             services.AddScoped<IExerciseService, ExerciseService>();
 
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<ITokenHandler, TokenHandler>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
+            services.AddSingleton(new SigningConfigurations());
             services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
             services.AddCors(
                 c =>  c.AddPolicy(
