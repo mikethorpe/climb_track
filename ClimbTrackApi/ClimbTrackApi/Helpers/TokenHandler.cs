@@ -19,8 +19,8 @@ namespace ClimbTrackApi.Helpers
 
         // grab these from the appsettings.json file
         // overwrite using env variables in production
-        private const double ExpirationPeriodSeconds = 30;
-        private const double AccessTokenExpirationPeriod = 60;
+        private const double ExpirationPeriodSeconds = 100;
+        private const double AccessTokenExpirationPeriod = 200;
 
         public IRefreshTokenRepository _refreshTokenRepository { get; set; }
         public IUnitOfWork _unitOfWork { get; set; }
@@ -62,7 +62,7 @@ namespace ClimbTrackApi.Helpers
 
         private AccessToken BuildAccessToken(User user, RefreshToken refreshToken)
         {
-            var jwtConfigurationSection = _configuration.GetSection("JWTAuthorization");
+            var jwtConfigurationSection = _configuration.GetSection("TokenOptions");
 
             var accessTokenExpiration = DateTime.UtcNow.AddSeconds(AccessTokenExpirationPeriod);
 

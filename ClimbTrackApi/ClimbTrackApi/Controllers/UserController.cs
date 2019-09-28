@@ -22,6 +22,13 @@ namespace ClimbTrackApi.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> TestAuth()
+        {
+            return Ok("Access granted");
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserCredentialResource userCredentialResource)
         {
@@ -41,13 +48,6 @@ namespace ClimbTrackApi.Controllers
 
             return Ok(userResource);
 
-        }
-
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> TestAuth()
-        {
-            return Ok("Access granted");
         }
     }
 }
