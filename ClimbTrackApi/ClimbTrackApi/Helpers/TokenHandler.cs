@@ -40,10 +40,12 @@ namespace ClimbTrackApi.Helpers
         public AccessToken GenerateAccessToken(User user)
         {
             var refreshToken = BuildRefreshToken(user);
-            var accessToken = BuildAccessToken(user, refreshToken);
             // TODO: Hash / encrypt refresh tokens
             _refreshTokenRepository.AddAsync(refreshToken);
             _unitOfWork.CompleteAsync();
+
+            // Built after refresh token saved so has refresh token id
+            var accessToken = BuildAccessToken(user, refreshToken);
 
             return accessToken;
         }
@@ -53,7 +55,8 @@ namespace ClimbTrackApi.Helpers
             return new RefreshToken
             {
                 Token = _passwordHasher.HashPassword(user, Guid.NewGuid().ToString()),
-                Expiration = DateTime.UtcNow.AddSeconds(ExpirationPeriodSeconds)
+                Expiration = DateTime.UtcNow.AddSeconds(ExpirationPeriodSeconds),
+                UserId = user.Id
             };
         }
 

@@ -4,6 +4,7 @@ using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Domain.Services;
 using ClimbTrackApi.Extensions;
 using ClimbTrackApi.Resources;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClimbTrackApi.Controllers
@@ -40,6 +41,13 @@ namespace ClimbTrackApi.Controllers
 
             return Ok(userResource);
 
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> TestAuth()
+        {
+            return Ok("Access granted");
         }
     }
 }

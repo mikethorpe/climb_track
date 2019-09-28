@@ -26,7 +26,7 @@ namespace ClimbTrackApi.Domain.Services
 
         public async Task<ServiceResponse<AccessToken>> CreateAccessTokenAsync(string emailAddress, string password)
         {
-
+            // TODO: wrap all in transaction to account for failures
             try
             {
                 var existingUser = _userRepository.FindByEmailAddress(emailAddress);
