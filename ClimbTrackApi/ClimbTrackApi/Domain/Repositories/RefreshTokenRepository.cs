@@ -42,8 +42,7 @@ namespace ClimbTrackApi.Domain.Repositories
 
         public void Remove(RefreshToken refreshToken)
         {
-            refreshToken.Deleted = DateTime.Now;
-            _context.Update(refreshToken);
+            _context.RefreshTokens.Remove(refreshToken);
         }
     }
 }

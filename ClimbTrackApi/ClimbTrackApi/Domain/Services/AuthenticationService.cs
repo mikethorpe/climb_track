@@ -65,5 +65,10 @@ namespace ClimbTrackApi.Domain.Services
             return new ServiceResponse<AccessToken>(accessToken);
         }
 
+        public async Task<ServiceResponse<object>> RevokeRefreshTokenAsync(string refreshToken)
+        {
+            await _tokenHandler.RevokeRefreshToken(refreshToken);
+            return new ServiceResponse<object>(new Object());
+        }
     }
 }

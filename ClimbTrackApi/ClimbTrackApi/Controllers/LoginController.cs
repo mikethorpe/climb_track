@@ -42,7 +42,7 @@ namespace ClimbTrackApi.Controllers
         }
 
         // add route to request new access token by providing refresh token
-        [HttpGet("/token/refresh")]
+        [HttpPost("api/token/refresh")]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenResource refreshTokenResource)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -55,6 +55,13 @@ namespace ClimbTrackApi.Controllers
             return Ok(tokenResource);
         }
 
-        // add route to revoke access token by providing refresh token      
+        [HttpPost("api/token/revoke")]
+        public async Task<IActionResult> RevokeRefreshTokenAsync([FromBody] RevokeTokenResource revokeTokenResource)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            await _authenticationService.RevokeRefreshTokenAsync(revokeTokenResource.Token);
+            return NoContent();
+        }
+
     }
 }

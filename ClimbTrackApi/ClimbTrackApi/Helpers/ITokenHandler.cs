@@ -7,5 +7,6 @@ namespace ClimbTrackApi.Helpers
     {
         AccessToken GenerateAccessToken(User user);
         Task<RefreshToken> GetRefreshTokenAsync(string token);
+        Task RevokeRefreshToken(string refreshToken);
     }
 }

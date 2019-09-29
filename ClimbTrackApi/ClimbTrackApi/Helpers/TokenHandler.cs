@@ -59,7 +59,15 @@ namespace ClimbTrackApi.Helpers
 
             // Refresh token is good for one use
             if (refreshToken != null) _refreshTokenRepository.Remove(refreshToken);
+            await _unitOfWork.CompleteAsync();
             return refreshToken;
+        }
+
+        public async Task RevokeRefreshToken(string refreshToken)
+        {
+            var token = await _refreshTokenRepository.FindByToken(refreshToken);
+            _refreshTokenRepository.Remove(token);
+            await _unitOfWork.CompleteAsync();
         }
 
         private RefreshToken BuildRefreshToken(User user)
