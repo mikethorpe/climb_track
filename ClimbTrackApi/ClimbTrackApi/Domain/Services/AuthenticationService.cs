@@ -46,7 +46,23 @@ namespace ClimbTrackApi.Domain.Services
             {
                 return new ServiceResponse<AccessToken>($"Error when creating authentication token: {ex.Message}");
             }
+        }
 
+        public async Task<ServiceResponse<AccessToken>> RefreshTokenAsync(string refreshToken, string emailAddress)
+        {
+            var token = await _tokenHandler.GetRefreshTokenAsync(refreshToken);
+
+            if (token == null) return new ServiceResponse<AccessToken>("Invalid refresh token");
+
+            if (token.IsExpired()) return new ServiceResponse<AccessToken>("Refresh token expired");
+
+            var user = _userRepository.FindByEmailAddress(emailAddress);
+
+            if (user == null) return new ServiceResponse<AccessToken>("Invalid refresh token for user");
+
+            var accessToken = _tokenHandler.GenerateAccessToken(user);
+
+            return new ServiceResponse<AccessToken>(accessToken);
         }
 
     }

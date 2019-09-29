@@ -25,6 +25,13 @@ namespace ClimbTrackApi.Domain.Repositories
             return await _context.RefreshTokens.FindAsync(id);
         }
 
+        public async Task<RefreshToken> FindByToken(string token)
+        {
+            return await _context.RefreshTokens
+                .Where(rt => rt.Token == token)
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<RefreshToken> FindByUserIdAsync(int userID)
         {
             return await _context.RefreshTokens
@@ -40,3 +47,4 @@ namespace ClimbTrackApi.Domain.Repositories
         }
     }
 }
+ 

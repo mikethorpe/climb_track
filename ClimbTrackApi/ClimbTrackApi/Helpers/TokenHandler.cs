@@ -1,5 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Domain.Repositories;
+using ClimbTrackApi.Domain.Services.Communication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Helpers
 {
@@ -19,8 +21,8 @@ namespace ClimbTrackApi.Helpers
 
         // grab these from the appsettings.json file
         // overwrite using env variables in production
-        private const double ExpirationPeriodSeconds = 100;
-        private const double AccessTokenExpirationPeriod = 200;
+        private const double RefreshTokenExpirationPeriod = 500;
+        private const double AccessTokenExpirationPeriod = 60;
 
         public IRefreshTokenRepository _refreshTokenRepository { get; set; }
         public IUnitOfWork _unitOfWork { get; set; }
@@ -50,12 +52,22 @@ namespace ClimbTrackApi.Helpers
             return accessToken;
         }
 
+        public async Task<RefreshToken> GetRefreshTokenAsync(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token)) return null;
+            RefreshToken refreshToken = await _refreshTokenRepository.FindByToken(token);
+
+            // Refresh token is good for one use
+            if (refreshToken != null) _refreshTokenRepository.Remove(refreshToken);
+            return refreshToken;
+        }
+
         private RefreshToken BuildRefreshToken(User user)
         {
             return new RefreshToken
             {
                 Token = _passwordHasher.HashPassword(user, Guid.NewGuid().ToString()),
-                Expiration = DateTime.UtcNow.AddSeconds(ExpirationPeriodSeconds),
+                Expiration = DateTime.UtcNow.AddSeconds(RefreshTokenExpirationPeriod),
                 UserId = user.Id
             };
         }

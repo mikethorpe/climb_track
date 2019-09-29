@@ -7,5 +7,7 @@ namespace ClimbTrackApi.Domain.Services
     public interface IAuthenticationService
     {
         Task<ServiceResponse<AccessToken>> CreateAccessTokenAsync(string emailAddress, string password);
+        Task<ServiceResponse<AccessToken>> RefreshTokenAsync(string refreshToken, string emailAddress);
+
     }
 }
