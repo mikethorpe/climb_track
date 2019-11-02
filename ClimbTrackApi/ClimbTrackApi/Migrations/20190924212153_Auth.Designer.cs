@@ -3,15 +3,17 @@ using System;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ClimbTrackApi.Persistence.Migrations
+namespace ClimbTrackApi.Migrations
 {
     [DbContext(typeof(ClimbTrackContext))]
-    partial class ClimbTrackContextModelSnapshot : ModelSnapshot
+    [Migration("20190924212153_Auth")]
+    partial class Auth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,6 +63,41 @@ namespace ClimbTrackApi.Persistence.Migrations
                             Reps = 12,
                             Sets = 2
                         });
+                });
+
+            modelBuilder.Entity("ClimbTrackApi.Domain.Models.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<DateTime>("Expiration");
+
+                    b.Property<string>("Token");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("ClimbTrackApi.Domain.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EmailAddress");
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Role")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ClimbTrackApi.Domain.Models.Workout", b =>

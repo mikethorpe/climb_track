@@ -1,5 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using WorkoutExercise = ClimbTrackApi.Domain.Models.WorkoutExercise;
 
@@ -10,6 +11,8 @@ namespace ClimbTrackApi.Persistence.Contexts
         public DbSet<WorkoutExercise> Activities { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Workout> Workouts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         private IConfiguration _configuration;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -61,6 +64,16 @@ namespace ClimbTrackApi.Persistence.Contexts
                 .HasOne(we => we.Exercise)
                 .WithMany(e => e.WorkoutExercises)
                 .HasForeignKey(we => we.ExerciseId);
+
+            modelBuilder.Entity<User>().HasKey(u => u.Id);
+
+            var roleConverter = new EnumToStringConverter<RoleEnum>();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Role)
+                .HasConversion(roleConverter);
+
+            
 
         }
     }

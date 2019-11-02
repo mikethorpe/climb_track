@@ -19,21 +19,21 @@ namespace ClimbTrackApi.Domain.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ExerciseResponse> DeleteAsync(int id)
+        public async Task<ServiceResponse<Exercise>> DeleteAsync(int id)
         {
             var exercise = await _exerciseRepository.FindByIdAsync(id);
 
-            if (exercise == null) return new ExerciseResponse("Exercise not found");
+            if (exercise == null) return new ServiceResponse<Exercise>("Exercise not found");
 
             try
             {
                 _exerciseRepository.Remove(exercise);
                 await _unitOfWork.CompleteAsync();
-                return new ExerciseResponse(exercise);
+                return new ServiceResponse<Exercise>(exercise);
             }
             catch (Exception ex)
             {
-                return new ExerciseResponse($"Error when deleting exercise: {ex.Message}");
+                return new ServiceResponse<Exercise>($"Error when deleting exercise: {ex.Message}");
             }
         }
 
@@ -47,26 +47,26 @@ namespace ClimbTrackApi.Domain.Services
             return await _exerciseRepository.ListAsync();
         }
 
-        public async Task<ExerciseResponse> SaveAsync(Exercise exercise)
+        public async Task<ServiceResponse<Exercise>> SaveAsync(Exercise exercise)
         {
             try
             {
                 await _exerciseRepository.AddAsync(exercise);
                 await _unitOfWork.CompleteAsync();
-                return new ExerciseResponse(exercise);
+                return new ServiceResponse<Exercise>(exercise);
 
             }
             catch (Exception ex)
             {
-                return new ExerciseResponse($"Error saving category: {ex.Message}");
+                return new ServiceResponse<Exercise>($"Error saving category: {ex.Message}");
             }
         }
 
-        public async Task<ExerciseResponse> UpdateAsync(int id, Exercise exercise)
+        public async Task<ServiceResponse<Exercise>> UpdateAsync(int id, Exercise exercise)
         {
             var existingExercise = await _exerciseRepository.FindByIdAsync(id);
 
-            if (existingExercise == null) return new ExerciseResponse("Exercise not found");
+            if (existingExercise == null) return new ServiceResponse<Exercise>("Exercise not found");
 
             existingExercise.Name = exercise.Name;
             existingExercise.Reps = exercise.Reps;
@@ -77,11 +77,11 @@ namespace ClimbTrackApi.Domain.Services
             {
                 _exerciseRepository.Update(existingExercise);
                 await _unitOfWork.CompleteAsync();
-                return new ExerciseResponse(existingExercise);
+                return new ServiceResponse<Exercise>(existingExercise);
             }
             catch (Exception ex)
             {
-                return new ExerciseResponse($"Error updating exercise: ${ex.Message}");
+                return new ServiceResponse<Exercise>($"Error updating exercise: ${ex.Message}");
             }
         }
     }

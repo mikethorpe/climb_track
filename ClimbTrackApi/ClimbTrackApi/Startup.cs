@@ -5,10 +5,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using ClimbTrackApi.Persistence.Repositories;
 using ClimbTrackApi.Mapping;
+using Microsoft.AspNetCore.Identity;
+using ClimbTrackApi.Helpers;
+using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace ClimbTrackApi
 {
@@ -29,9 +34,39 @@ namespace ClimbTrackApi
                .AddDbContext<ClimbTrackContext>()
                .BuildServiceProvider();
             services.AddScoped<IExerciseService, ExerciseService>();
+
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<ITokenHandler, Helpers.TokenHandler>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
+
+            var signingConfigurations = new SigningConfigurations();
+            services.AddSingleton(signingConfigurations);
             services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
+
+
+            services.Configure<TokenOptions>(Configuration.GetSection("TokenOptions"));
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(jwtBearerOptions =>
+                {
+                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "ClimbTrackApi",
+                        ValidAudience = "ClimbTrackClient",
+                        IssuerSigningKey = signingConfigurations.Key,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                }
+             );
             services.AddCors(
                 c =>  c.AddPolicy(
                     "AllowOrigin", options => 
@@ -55,6 +90,8 @@ namespace ClimbTrackApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
 
             app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
