@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using ClimbTrackApi.Domain.Models;
-using ClimbTrackApi.Domain.Models.Auth;
-using ClimbTrackApi.Domain.Services;
+using ClimbTrackApi.Auth.Interfaces;
+using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Extensions;
 using ClimbTrackApi.Resources;
 using Microsoft.AspNetCore.Authorization;
