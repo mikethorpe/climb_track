@@ -1,4 +1,4 @@
-﻿using ClimbTrackApi.Domain.Models;
+﻿using ClimbTrackApi.Domain.Models.Auth;
 using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Helpers

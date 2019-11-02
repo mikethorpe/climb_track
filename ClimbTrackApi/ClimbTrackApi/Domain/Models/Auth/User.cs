@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ClimbTrackApi.Domain.Models
+namespace ClimbTrackApi.Domain.Models.Auth
 {
     public class User
     {

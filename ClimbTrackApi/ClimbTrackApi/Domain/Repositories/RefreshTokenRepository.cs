@@ -1,4 +1,4 @@
-﻿using ClimbTrackApi.Domain.Models;
+﻿using ClimbTrackApi.Domain.Models.Auth;
 using ClimbTrackApi.Persistence.Contexts;
 using ClimbTrackApi.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;

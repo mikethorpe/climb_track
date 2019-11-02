@@ -1,5 +1,6 @@
 using AutoMapper;
 using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Domain.Models.Auth;
 using ClimbTrackApi.Resources;
 
 namespace ClimbTrackApi.Mapping

@@ -1,4 +1,5 @@
 ﻿using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Domain.Models.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;

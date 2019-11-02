@@ -1,4 +1,4 @@
-﻿namespace ClimbTrackApi.Domain.Models
+﻿namespace ClimbTrackApi.Domain.Models.Auth
 {
     public enum RoleEnum
     {
