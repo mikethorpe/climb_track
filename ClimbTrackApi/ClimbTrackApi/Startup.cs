@@ -1,6 +1,4 @@
-﻿using ClimbTrackApi.Domain.Repositories;
-using ClimbTrackApi.Domain.Services;
-using ClimbTrackApi.Persistence.Contexts;
+﻿using ClimbTrackApi.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +6,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
-using ClimbTrackApi.Persistence.Repositories;
 using ClimbTrackApi.Mapping;
 using Microsoft.AspNetCore.Identity;
-using ClimbTrackApi.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using ClimbTrackApi.Auth.Helpers;
+using ClimbTrackApi.Domain.Interfaces;
+using ClimbTrackApi.Auth.Services;
+using ClimbTrackApi.Auth.Interfaces;
+using ClimbTrackApi.Persistence.Repositories;
+using TokenHandler = ClimbTrackApi.Auth.Helpers.TokenHandler;
+using ClimbTrackApi.Persistence.Contexts;
 
 namespace ClimbTrackApi
 {
@@ -38,7 +41,7 @@ namespace ClimbTrackApi
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<ITokenHandler, Helpers.TokenHandler>();
+            services.AddScoped<ITokenHandler, TokenHandler>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

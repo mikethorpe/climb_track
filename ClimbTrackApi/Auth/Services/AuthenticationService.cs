@@ -1,6 +1,7 @@
 ﻿using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Common.Communication;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
 
