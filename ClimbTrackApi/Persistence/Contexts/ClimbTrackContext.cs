@@ -14,11 +14,8 @@ namespace ClimbTrackApi.Persistence.Contexts
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-
+        
         private IConfiguration _configuration;
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
-
 
         public ClimbTrackContext(DbContextOptions<ClimbTrackContext> options, IConfiguration configuration) : base(options)
         {

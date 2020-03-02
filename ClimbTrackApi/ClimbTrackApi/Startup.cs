@@ -17,6 +17,7 @@ using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Persistence.Repositories;
 using TokenHandler = ClimbTrackApi.Auth.Helpers.TokenHandler;
 using ClimbTrackApi.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClimbTrackApi
 {
@@ -33,11 +34,10 @@ namespace ClimbTrackApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddEntityFrameworkNpgsql()
-               .AddDbContext<ClimbTrackContext>()
-               .BuildServiceProvider();
+            services.AddDbContext<ClimbTrackContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ClimbTrackDb")));
+            
             services.AddScoped<IExerciseService, ExerciseService>();
-
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
