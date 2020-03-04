@@ -14,16 +14,16 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    projects: '$(Build.SourcesDirectory)\ClimbTrackApi\*.sln'
+    projects: '$(Build.SourcesDirectory)/ClimbTrackApi/*.sln'
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '$(Build.SourcesDirectory)\ClimbTrackApi\*.sln'
+    projects: '$(Build.SourcesDirectory)/ClimbTrackApi/*.sln'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: '$(Build.SourcesDirectory)\ClimbTrackApi\*.sln'
+    projects: '$(Build.SourcesDirectory)/ClimbTrackApi/*.sln'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
