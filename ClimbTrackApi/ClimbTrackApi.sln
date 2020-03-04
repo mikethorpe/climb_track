@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{C63DDD0D-2B46-48BA-964A-2EEA71E09470}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "Auth\Auth.csproj", "{2E038CB2-7A02-420F-86DE-479EE99A876A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth", "Auth\Auth.csproj", "{2E038CB2-7A02-420F-86DE-479EE99A876A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Tests", "Api.Tests\Api.Tests.csproj", "{EAD5424B-79D3-4CB8-A352-81102277ECDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{2E038CB2-7A02-420F-86DE-479EE99A876A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E038CB2-7A02-420F-86DE-479EE99A876A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E038CB2-7A02-420F-86DE-479EE99A876A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAD5424B-79D3-4CB8-A352-81102277ECDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAD5424B-79D3-4CB8-A352-81102277ECDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAD5424B-79D3-4CB8-A352-81102277ECDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAD5424B-79D3-4CB8-A352-81102277ECDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
