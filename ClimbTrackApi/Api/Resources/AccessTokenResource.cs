@@ -1,6 +1,6 @@
 ﻿using ClimbTrackApi.Auth.Models;
 
-namespace ClimbTrackApi.Resources
+namespace ClimbTrackApi.Api.Resources
 {
     public class AccessTokenResource
     {

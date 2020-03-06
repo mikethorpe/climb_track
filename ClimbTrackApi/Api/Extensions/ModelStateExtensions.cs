@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace ClimbTrackApi.Extensions
+namespace ClimbTrackApi.Api.Extensions
 {
     public static class ModelStateExtensions
     {

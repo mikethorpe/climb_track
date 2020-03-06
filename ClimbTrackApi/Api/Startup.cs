@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
-using ClimbTrackApi.Mapping;
+using ClimbTrackApi.Api.Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -19,7 +19,7 @@ using TokenHandler = ClimbTrackApi.Auth.Helpers.TokenHandler;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClimbTrackApi
+namespace ClimbTrackApi.Api
 {
     public class Startup
     {

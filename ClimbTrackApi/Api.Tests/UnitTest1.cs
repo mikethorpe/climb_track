@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Api.Tests
+namespace ClimbTrackApi.Tests
 {
     [TestFixture]
     public class Tests

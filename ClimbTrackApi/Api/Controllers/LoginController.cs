@@ -2,10 +2,10 @@
 using AutoMapper;
 using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Auth.Models;
-using ClimbTrackApi.Resources;
+using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ClimbTrackApi.Controllers
+namespace ClimbTrackApi.Api.Controllers
 {
     [Route("api/login")]
     [ApiController]

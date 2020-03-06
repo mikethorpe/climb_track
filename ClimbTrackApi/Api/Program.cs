@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace ClimbTrackApi
+namespace ClimbTrackApi.Api
 {
     public class Program
     {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ClimbTrackApi.Resources
+namespace ClimbTrackApi.Api.Resources
 {
     public class SaveExerciseResource
     {

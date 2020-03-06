@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Domain.Models;
-using ClimbTrackApi.Resources;
+using ClimbTrackApi.Api.Resources;
 
-namespace ClimbTrackApi.Mapping
+namespace ClimbTrackApi.Api.Mapping
 {
     public class ResourceToModelProfile : Profile
     {
