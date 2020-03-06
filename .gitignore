@@ -2,6 +2,8 @@ App_Data/
 packages/
 bin/
 obj/
+node_modules/
+build/
 .vs/
 .vscode/
 *.user

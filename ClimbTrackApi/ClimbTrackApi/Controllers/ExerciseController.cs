@@ -98,6 +98,5 @@ namespace ClimbTrackApi.Controllers
             var exerciseResource = _mapper.Map<Exercise, ExerciseResource>(result.Entity);
             return Ok(exerciseResource);
         }
-
     }
 }

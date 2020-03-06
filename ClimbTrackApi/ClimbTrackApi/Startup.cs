@@ -77,9 +77,12 @@ namespace ClimbTrackApi
                             .AllowAnyOrigin()
                             .AllowAnyHeader()
                             .AllowAnyMethod()));
+
+            //Todo: serve up static files from somewhere in production
+            services.AddSpaStaticFiles(configuration => {
+                configuration.RootPath = "C:\\projects\\ClimbTrack\\ClimbTrackClient\\build";
+            });
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -95,10 +98,18 @@ namespace ClimbTrackApi
             }
 
             app.UseAuthentication();
-
             app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseSpaStaticFiles();
+            app.UseSpa(spa =>
+            {
+                if (env.IsDevelopment())
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000/");
+                }
+            });
         }
     }
 }
