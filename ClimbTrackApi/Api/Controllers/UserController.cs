@@ -26,7 +26,7 @@ namespace ClimbTrackApi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> TestAuth()
         {
-            return Ok("Access granted");
+            return await Task.FromResult<IActionResult>(Ok("Access granted"));
         }
 
         [HttpPost]
