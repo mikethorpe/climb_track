@@ -46,7 +46,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: 'ClimbTrackClient'
-    customCommand: 'build'
+    customCommand: 'run build'
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: 'ClimbTrackClient\build'
