@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseDomain  = 'https://localhost:44380';
+const baseDomain  = process.env.NODE_ENV === 'production' ? 'https://climbtrack.azurewebsites.net' : 'https://localhost:44380';
 const baseExercisesApi = '/api/exercises';
 import IExercise from '../interfaces/IExercise';
 
