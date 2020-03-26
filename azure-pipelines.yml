@@ -24,6 +24,22 @@ steps:
   inputs:
     command: 'test'
     projects: '**\*.sln'
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'ClimbTrackClient'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'ClimbTrackClient'
+    customCommand: 'run build'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'ClimbTrackClient\build'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient.zip'
+    replaceExistingArchive: true
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
