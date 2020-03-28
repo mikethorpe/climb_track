@@ -31,13 +31,8 @@ steps:
     rootFolderOrFile: '$(Build.SourcesDirectory)/ClimbTrackApi/publish'
     includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackApi$(Build.BuildId).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrack$(Build.BuildId).zip'
     replaceExistingArchive: true
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClimbTrackApi$(Build.BuildId).zip'
-    ArtifactName: 'climbtrack-drop'
-    publishLocation: 'Container'
 
 - task: Npm@1
   inputs:
@@ -53,11 +48,12 @@ steps:
     rootFolderOrFile: '$(Build.SourcesDirectory)/ClimbTrackClient/build'
     includeRootFolder: true
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrack$(Build.BuildId).zip'
+    replaceExistingArchive: false
     verbose: true
+    
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient$(Build.BuildId).zip'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClimbTrack$(Build.BuildId).zip'
     ArtifactName: 'climbtrack-drop'
     publishLocation: 'Container'
