@@ -14,17 +14,22 @@ export const fetchExercises = () => dispatch => {
         type: FETCH_EXERCISES,
         payload: exericses.data
         });
+    })
+    .catch(error => {
+        console.error(`Unable to fetch exercises, ${error}`)
     });
 };
 
 export const createExercise = (exercise: IExercise) => dispatch => {
-    debug;
     axios.post(`${baseDomain}${baseExercisesApi}`, exercise)
     .then(exercise => 
         dispatch({
             type: CREATE_EXERCISE,
             payload: exercise.data
-        }));
+        }))
+    .catch(error => {
+        console.error(`Unable to create exercise, ${error}`)
+    });
 };
 
 export const deleteExercise = (Id: Number) => dispatch => {
@@ -34,5 +39,8 @@ export const deleteExercise = (Id: Number) => dispatch => {
         dispatch({
             type: DELETE_EXERCISE,
             payload: Id
-        }));
+        }))
+    .catch(error => {
+        console.error(`Unable to delete exercise, ${error}`)
+    });
   };
