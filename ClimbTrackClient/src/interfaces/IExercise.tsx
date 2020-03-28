@@ -1,6 +1,6 @@
 export default interface IExercise {
-    Name: string,
-    Reps?: Number,
-    Sets?: Number
-    Notes: string
+    name: string,
+    reps?: number,
+    sets?: number
+    notes: string
 }

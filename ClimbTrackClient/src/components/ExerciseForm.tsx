@@ -11,17 +11,17 @@ class ExerciseForm extends Component<ExerciseFormProps, IExercise> {
     constructor(props){
         super(props);
         this.state = {
-            Name:'',
-            Reps: undefined,
-            Sets: undefined,
-            Notes:''
+            name:'',
+            reps: undefined,
+            sets: undefined,
+            notes:''
         }
     }
 
-    handleTextFieldChange = name => event => {
+    handleTextFieldChange = (propName: string) => event => {
         this.setState({
-          ...this.state,
-          [name]: event.target.value,
+            ...this.state,
+            [propName]: event.currentTarget.value,
         });
       };
     
