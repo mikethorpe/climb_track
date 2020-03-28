@@ -23,11 +23,22 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
+    arguments: '-c release -o ClimbTrackApi'
+    zipAfterPublish: false
+    modifyOutputPath: false
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackApi/ClimbTrackApi'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackApi$(Build.BuildId).zip'
+    replaceExistingArchive: true
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'climbtrackapi-drop'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClimbTrackApi$(Build.BuildId).zip'
+    ArtifactName: 'climbtrackclient-drop'
     publishLocation: 'Container'
+
 - task: Npm@1
   inputs:
     command: 'install'
@@ -39,7 +50,7 @@ steps:
     customCommand: 'run build'
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: 'ClimbTrackClient\build'
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient/build'
     includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient$(Build.BuildId).zip'
@@ -48,5 +59,5 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient$(Build.BuildId).zip'
-    ArtifactName: 'climbtrackapi-drop'
+    ArtifactName: 'climbtrackclient-drop'
     publishLocation: 'Container'
