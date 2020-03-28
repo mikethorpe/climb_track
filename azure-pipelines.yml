@@ -23,7 +23,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '-c release -o $(Build.SourcesDirectory)/publish'
+    arguments: '-c release -o $(Build.SourcesDirectory)/ClimbTrackApi/publish'
     zipAfterPublish: false
     modifyOutputPath: true
 - task: ArchiveFiles@2
