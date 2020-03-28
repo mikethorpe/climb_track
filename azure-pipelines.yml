@@ -51,9 +51,6 @@ steps:
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)/ClimbTrackClient/build'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
     includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient$(Build.BuildId).zip'
