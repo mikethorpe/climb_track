@@ -28,7 +28,7 @@ steps:
     modifyOutputPath: true
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/ClimbTrackApi/publish'
+    rootFolderOrFile: '$(Build.SourcesDirectory)/ClimbTrackApi/publish/Api'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrack$(Build.BuildId).zip'
