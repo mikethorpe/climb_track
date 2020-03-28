@@ -19,20 +19,15 @@ steps:
   inputs:
     command: 'test'
     projects: '$(Build.SourcesDirectory)/ClimbTrackApi/*.sln'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: true
-    zipAfterPublish: false
-- task: ArchiveFiles@2
+- task: PublishBuildArtifacts@1
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackApi$(Build.BuildId).zip'
-    replaceExistingArchive: true
-    verbose: true
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'climbtrackapi-drop'
+    publishLocation: 'Container'
 - task: Npm@1
   inputs:
     command: 'install'
@@ -44,19 +39,14 @@ steps:
     customCommand: 'run build'
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: 'ClimbTrackClient/build'
+    rootFolderOrFile: 'ClimbTrackClient\build'
     includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient$(Build.BuildId).zip'
-    replaceExistingArchive: false
+    replaceExistingArchive: true
     verbose: true
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClimbTrackApi$(Build.BuildId).zip'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClimbTrackClient$(Build.BuildId).zip'
     ArtifactName: 'climbtrackapi-drop'
-    publishLocation: 'Container'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClimbTrackApi$(Build.BuildId).zip'
-    ArtifactName: 'climbtrackclient-drop'
     publishLocation: 'Container'
