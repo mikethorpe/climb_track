@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import KnobControl from '../../molecules/KnobControl/KnobControl';
+import Knob from '../../atoms/Knob/Knob';
 
 const grades = [
     '3',
@@ -30,8 +30,9 @@ const style = [
 const ClimbLogger = () => {
 
     const [currentLogItem, setCurrentLogItem] = useState({
-        grade: '6a',
-        style: 'Slab'
+        grade: null,
+        style: null,
+        id: -1
     });
     const [log, setLog] = useState([]);
 
@@ -39,19 +40,27 @@ const ClimbLogger = () => {
         console.log(log);
     }, [log]);
 
-    const addLogItemToLog = (logItem) => {
-        setLog([...log, currentLogItem]);
-        setCurrentLogItem({ grade: null, style: null })
+    const setCurrentLogItemGrade = (grade) => setCurrentLogItem({ ...currentLogItem, grade: grade });
+
+    const setCurrentLogItemStyleAndAddToLog = (style) => {
+        setLog([...log, { ...currentLogItem, style: style }]);
+        setCurrentLogItem({ grade: null, style: null, id: currentLogItem.id - 1 });
     }
+    const deleteLogItem = (id) => {
+        let updatedLogItems = log.filter((logItem) => logItem.id != id);
+        setLog(updatedLogItems);
+    };
 
     const gradeKnobControlText = 'What was the grade of your climb?';
-    const styleKnobControlText = 'What was the style of the climb';
-    const yourClimbsList = log.map((logItem) => <li>{logItem.grade + logItem.style}</li>)
+    const styleKnobControlText = 'What was the style of your climb?';
+    const yourClimbsList = log.map((logItem) => <li index={logItem.id}>{logItem.grade + ' ' + logItem.style}<button onClick={() => deleteLogItem(logItem.id)}>Remove</button></li>)
+
+    let displayGradeKnob = currentLogItem.grade == null;
+    let displayStyleKnob = currentLogItem.grade !== null && currentLogItem.style == null;
     return (
         <div>
-            <KnobControl selection={grades} headerText={gradeKnobControlText} />
-            <button onClick={() => addLogItemToLog(currentLogItem)}>Add</button>
-            <KnobControl selection={style} headerText={styleKnobControlText} />
+            {displayGradeKnob && <Knob selection={grades} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemGrade} />}
+            {displayStyleKnob && <Knob selection={style} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemStyleAndAddToLog} />}
             <div>
                 <p>Your climbs</p>
                 <ul>
