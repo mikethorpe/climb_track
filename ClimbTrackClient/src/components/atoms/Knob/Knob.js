@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Donut } from 'react-dial-knob';
-import { useEffect } from "react";
 
 const Knob = ({ getValueText }) => {
     const [value, setValue] = useState(50);

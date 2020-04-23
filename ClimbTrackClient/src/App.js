@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import GradeControl from './components/organisms/GradeControl/GradeControl';
+import ClimbLogger from './components/organisms/ClimbLogger/ClimbLogger';
 
 function App() {
   return (
     <div className="App">
-      <GradeControl />
+      <ClimbLogger />
     </div>
   );
 }
