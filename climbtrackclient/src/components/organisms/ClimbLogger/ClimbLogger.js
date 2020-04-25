@@ -43,14 +43,6 @@ const calculateMaxGrade = (climbs) => {
     return grades[maxGradeIndex];
 }
 
-// todo: move into store and fetch from api
-// const style = [
-//     'Overhanging',
-//     'Slab',
-//     'Crimpy face climbing',
-// ];
-
-
 const ClimbLogger = () => {
 
     const stylesSelector = createSelector(
