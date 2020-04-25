@@ -13,9 +13,8 @@ const storeWithSessions = {
 };
 
 const defaultStore = createStore(storeWithSessions);
-console.log(`defaultstore ${defaultStore}`);
 storiesOf('ClimbLogger', module)
-    .add('default', () => (
+    .add('Default', () => (
         <Provider store={defaultStore}>
             <ClimbLogger />
         </Provider >
