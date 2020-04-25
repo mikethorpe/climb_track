@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import SessionItems from '../../organisms/SessionItems/SessionItems';
 import ClimbLogger from '../../organisms/ClimbLogger/ClimbLogger';
+import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 
-function TabPanel(props) {
+const TabPanel = (props) => {
     const { children, value, index } = props;
-
     return (<div hidden={value !== index}>{children}</div>);
-}
+};
 
 const ClimbLog = () => {
 
-    const [value, setValue] = React.useState(0);
+    const fetchClimbingSessions = useFetchClimbingSessions();
+    useEffect(() => {
+        fetchClimbingSessions();
+    }, []);
 
+    const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
 
     return (
         <div>

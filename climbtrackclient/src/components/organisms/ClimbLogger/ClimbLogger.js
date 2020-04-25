@@ -4,12 +4,10 @@ import { useCreateClimbingSession } from '../../../dataLayer/actions/climbingSes
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import newId from '../../../helpers/newid';
 
-// move into the store and fetch
+// todo: move into the store and fetch
 const grades = [
     '3',
     '3+',
@@ -31,7 +29,7 @@ const grades = [
     '7c+'
 ];
 
-// move into a separate method
+// todo: move into a separate method
 const calculateMaxGrade = (climbs) => {
     let maxGradeIndex = 0;
     climbs.forEach(climb => {
@@ -40,11 +38,10 @@ const calculateMaxGrade = (climbs) => {
             maxGradeIndex = gradeIndex;
         }
     });
-
     return grades[maxGradeIndex];
 }
 
-// move into store and fetch from api
+// todo: move into store and fetch from api
 const style = [
     'Overhanging',
     'Slab',
@@ -56,13 +53,17 @@ const ClimbLogger = () => {
     const [currentLogItem, setCurrentLogItem] = useState({
         grade: null,
         style: null,
-        id: -1
+        id: null
     });
     const setCurrentLogItemStyleAndAddToLog = (style) => {
         setLog([...log, { ...currentLogItem, style: style }]);
-        setCurrentLogItem({ grade: null, style: null, id: currentLogItem.id - 1 });
+        setCurrentLogItem({ grade: null, style: null, id: null });
     }
-    const setCurrentLogItemGrade = (grade) => setCurrentLogItem({ ...currentLogItem, grade: grade });
+    const setCurrentLogItemGrade = (grade) => setCurrentLogItem({
+        ...currentLogItem,
+        grade: grade,
+        id: newId()
+    });
     const deleteLogItem = (id) => {
         let updatedLogItems = log.filter((logItem) => logItem.id != id);
         setLog(updatedLogItems);
@@ -81,7 +82,7 @@ const ClimbLogger = () => {
     const createClimbingSession = useCreateClimbingSession();
     const storeClimbingSession = () => {
         createClimbingSession({
-            id: 1,
+            id: newId(),
             dateTime: selectedDate.toDateString(),
             maxGrade: calculateMaxGrade(log),
             log: log
