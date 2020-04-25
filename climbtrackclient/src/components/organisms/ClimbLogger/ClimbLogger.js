@@ -8,42 +8,13 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import newId from '../../../helpers/newid';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
-
-// todo: move into the store and fetch
-const grades = [
-    '3',
-    '3+',
-    '4',
-    '4+',
-    '5',
-    '5+',
-    '6a',
-    '6a+',
-    '6b',
-    '6b+',
-    '6c',
-    '6c+',
-    '7a',
-    '7a+',
-    '7b',
-    '7b+',
-    '7c',
-    '7c+'
-];
-
-// todo: move into a separate method
-const calculateMaxGrade = (climbs) => {
-    let maxGradeIndex = 0;
-    climbs.forEach(climb => {
-        let gradeIndex = grades.indexOf(climb.grade);
-        if (gradeIndex > maxGradeIndex) {
-            maxGradeIndex = gradeIndex;
-        }
-    });
-    return grades[maxGradeIndex];
-}
+import calculateMaxGradeFromClimbs from '../../../helpers/calculateMaxGradeFromClimbs';
+import mockApi from '../../../dataLayer/mockApi/mockApi';
 
 const ClimbLogger = () => {
+
+    //ToDo: fetch this from the back-end
+    const grades = mockApi.grades.frenchSport;
 
     const stylesSelector = createSelector(
         state => state.styles,
@@ -85,7 +56,7 @@ const ClimbLogger = () => {
         createClimbingSession({
             id: newId(),
             dateTime: selectedDate.toDateString(),
-            maxGrade: calculateMaxGrade(log),
+            maxGrade: calculateMaxGradeFromClimbs(log, grades),
             log: log
         });
         clearLog();
