@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Knob from '../../atoms/Knob/Knob';
-import { createClimbingSession } from '../../../dataLayer/actions/climbingSessionsActions';
-import { useDispatch } from 'react-redux';
+import { useCreateClimbingSession } from '../../../dataLayer/actions/climbingSessionsActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from '@date-io/date-fns';
@@ -10,7 +9,7 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-
+// move into the store and fetch
 const grades = [
     '3',
     '3+',
@@ -32,6 +31,7 @@ const grades = [
     '7c+'
 ];
 
+// move into a separate method
 const calculateMaxGrade = (climbs) => {
     let maxGradeIndex = 0;
     climbs.forEach(climb => {
@@ -44,11 +44,13 @@ const calculateMaxGrade = (climbs) => {
     return grades[maxGradeIndex];
 }
 
+// move into store and fetch from api
 const style = [
     'Overhanging',
     'Slab',
     'Crimpy face climbing',
 ];
+
 const ClimbLogger = () => {
 
     const [currentLogItem, setCurrentLogItem] = useState({
@@ -56,40 +58,19 @@ const ClimbLogger = () => {
         style: null,
         id: -1
     });
-    const [log, setLog] = useState([]);
-    const clearLog = () => {
-        setLog([]);
-    };
-
-    const setCurrentLogItemGrade = (grade) => setCurrentLogItem({ ...currentLogItem, grade: grade });
-
     const setCurrentLogItemStyleAndAddToLog = (style) => {
         setLog([...log, { ...currentLogItem, style: style }]);
         setCurrentLogItem({ grade: null, style: null, id: currentLogItem.id - 1 });
     }
+    const setCurrentLogItemGrade = (grade) => setCurrentLogItem({ ...currentLogItem, grade: grade });
     const deleteLogItem = (id) => {
         let updatedLogItems = log.filter((logItem) => logItem.id != id);
         setLog(updatedLogItems);
     };
 
-    const gradeKnobControlText = 'What was the grade of your climb?';
-    const styleKnobControlText = 'What was the style of your climb?';
-    const yourClimbsList = log.map((logItem) => <li index={logItem.id}>{logItem.grade + ' ' + logItem.style} <button onClick={() => deleteLogItem(logItem.id)}>Remove</button></li>)
-
-    let displayGradeKnob = currentLogItem.grade == null;
-    let displayStyleKnob = currentLogItem.grade !== null && currentLogItem.style == null;
-
-    const dispatch = useDispatch();
-
-    const storeClimbingSession = () => {
-        let session = createClimbingSession({
-            id: 1,
-            dateTime: selectedDate.toDateString(),
-            maxGrade: calculateMaxGrade(log),
-            log: log
-        });
-        dispatch(session);
-        clearLog();
+    const [log, setLog] = useState([]);
+    const clearLog = () => {
+        setLog([]);
     };
 
     const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
@@ -97,13 +78,31 @@ const ClimbLogger = () => {
         setSelectedDate(date);
     };
 
+    const createClimbingSession = useCreateClimbingSession();
+    const storeClimbingSession = () => {
+        createClimbingSession({
+            id: 1,
+            dateTime: selectedDate.toDateString(),
+            maxGrade: calculateMaxGrade(log),
+            log: log
+        });
+        clearLog();
+    };
+
+    let displayGradeKnob = currentLogItem.grade == null;
+    let displayStyleKnob = currentLogItem.grade !== null && currentLogItem.style == null;
+
+    const yourClimbsList = log.map((logItem) => <li index={logItem.id}>{logItem.grade + ' ' + logItem.style} <button onClick={() => deleteLogItem(logItem.id)}>Remove</button></li>)
+    const gradeKnobControlText = 'What was the grade of your climb?';
+    const styleKnobControlText = 'What was the style of your climb?';
+
     return (
         <div>
             {displayGradeKnob && <Knob selection={grades} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemGrade} />}
             {displayStyleKnob && <Knob selection={style} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemStyleAndAddToLog} />}
             {log.length > 0 &&
                 <div>
-                    <Typography>Your climbs</Typography>
+                    <Typography>Your climbs:</Typography>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                             margin="normal"
@@ -123,7 +122,6 @@ const ClimbLogger = () => {
                         {yourClimbsList}
                     </ul>
                 </div>}
-
         </div>
     );
 };
