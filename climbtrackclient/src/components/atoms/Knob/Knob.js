@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Donut } from 'react-dial-knob';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
 
@@ -11,7 +13,7 @@ const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
 
     return (
         <div>
-            <p>{headerText}</p>
+            <Typography>{headerText}</Typography>
             <Donut
                 diameter={200}
                 min={0}
@@ -19,11 +21,6 @@ const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
                 step={1}
                 theme={{
                     donutColor: 'lightcoral'
-                }}
-                style={{
-                    position: 'relative',
-                    margin: '100px auto',
-                    width: '200px'
                 }}
                 value={value}
                 onValueChange={setValue}
@@ -35,9 +32,9 @@ const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
                     width: '200px',
                     display: 'block',
                     padding: '10px 0'
-                }}>{getValueText(value)}</label>
+                }}><Typography>{getValueText(value)}</Typography></label>
             </Donut>
-            <button onClick={() => onButtonClick(getValueText(value))}>{buttonText}</button>
+            <Button variant="outlined" onClick={() => onButtonClick(getValueText(value))}>{buttonText}</Button>
         </div>
 
 

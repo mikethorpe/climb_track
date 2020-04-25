@@ -9,8 +9,6 @@ const SessionItems = () => {
         sessions => sessions
     );
     const sessionItems = useSelector(climbingSessionsSelector);
-    console.log(typeof sessionItems);
-    console.log(sessionItems);
     const displayItems = sessionItems.map((item) => {
         return <li><SessionItem climbingSession={item} /></li>
     });
