@@ -27,5 +27,10 @@ export default {
                 { id: 2, grade: '9b++', style: 'Arete' }
             ]
         }
+    ],
+    styles: [
+        'Overhang',
+        'Slab',
+        'Crimpy',
     ]
 };

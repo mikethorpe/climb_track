@@ -5,6 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import SessionItems from '../../organisms/SessionItems/SessionItems';
 import ClimbLogger from '../../organisms/ClimbLogger/ClimbLogger';
 import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
+import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
 
 const TabPanel = (props) => {
     const { children, value, index } = props;
@@ -14,8 +15,10 @@ const TabPanel = (props) => {
 const ClimbLog = () => {
 
     const fetchClimbingSessions = useFetchClimbingSessions();
+    const fetchStyles = useFetchStyles();
     useEffect(() => {
         fetchClimbingSessions();
+        fetchStyles();
     }, []);
 
     const [value, setValue] = React.useState(0);

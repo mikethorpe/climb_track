@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import newId from '../../../helpers/newid';
+import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 
 // todo: move into the store and fetch
 const grades = [
@@ -42,13 +44,20 @@ const calculateMaxGrade = (climbs) => {
 }
 
 // todo: move into store and fetch from api
-const style = [
-    'Overhanging',
-    'Slab',
-    'Crimpy face climbing',
-];
+// const style = [
+//     'Overhanging',
+//     'Slab',
+//     'Crimpy face climbing',
+// ];
+
 
 const ClimbLogger = () => {
+
+    const stylesSelector = createSelector(
+        state => state.styles,
+        styles => styles
+    );
+    const styles = useSelector(stylesSelector);
 
     const [currentLogItem, setCurrentLogItem] = useState({
         grade: null,
@@ -100,7 +109,7 @@ const ClimbLogger = () => {
     return (
         <div>
             {displayGradeKnob && <Knob selection={grades} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemGrade} />}
-            {displayStyleKnob && <Knob selection={style} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemStyleAndAddToLog} />}
+            {displayStyleKnob && <Knob selection={styles} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemStyleAndAddToLog} />}
             {log.length > 0 &&
                 <div>
                     <Typography>Your climbs:</Typography>

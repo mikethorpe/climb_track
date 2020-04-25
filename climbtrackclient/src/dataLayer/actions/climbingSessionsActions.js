@@ -17,4 +17,4 @@ export const useFetchClimbingSessions = () => {
         //await axios.get('/climbingsessions');
         dispatch({ type: SET_CLIMBING_SESSIONS, payload: fetchedClimbingSessions });
     }
-}
+};
