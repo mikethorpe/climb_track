@@ -12,14 +12,12 @@ const SessionItems = () => {
     const sessionItems = useSelector(climbingSessionsSelector);
 
     const displayItems = sessionItems.slice(0).reverse().map((item) => {
-        return <li key={item.id}><SessionItem climbingSession={item} /></li>
+        return <SessionItem key={item.id} climbingSession={item} />
     });
 
     return (
         <div>
-            <ul>
-                {displayItems}
-            </ul>
+            {displayItems}
         </div >
     );
 };

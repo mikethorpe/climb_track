@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import calculateMaxGradeFromClimbs from '../../../helpers/calculateMaxGradeFromClimbs';
 import mockApi from '../../../dataLayer/mockApi/mockApi';
+import Paper from '@material-ui/core/Paper';
 
 const ClimbLogger = () => {
 
@@ -65,7 +66,10 @@ const ClimbLogger = () => {
     let displayGradeKnob = currentLogItem.grade == null;
     let displayStyleKnob = currentLogItem.grade !== null && currentLogItem.style == null;
 
-    const yourClimbsList = log.map((logItem) => <li index={logItem.id}>{logItem.grade + ' ' + logItem.style} <button onClick={() => deleteLogItem(logItem.id)}>Remove</button></li>)
+    const yourClimbsList = log.map((logItem) => <Paper key={logItem.id}>
+        {logItem.grade + ' ' + logItem.style}
+        <Button variant="outlined" onClick={() => deleteLogItem(logItem.id)}>Remove</Button>
+    </Paper>);
     const gradeKnobControlText = 'What was the grade of your climb?';
     const styleKnobControlText = 'What was the style of your climb?';
 
@@ -91,9 +95,7 @@ const ClimbLogger = () => {
                         />
                     </MuiPickersUtilsProvider>
                     <Button variant="contained" color="secondary" onClick={storeClimbingSession}>Add climbs to logbook</Button>
-                    <ul>
-                        {yourClimbsList}
-                    </ul>
+                    {yourClimbsList}
                 </div>}
         </div>
     );
