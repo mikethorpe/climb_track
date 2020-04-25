@@ -61,8 +61,6 @@ const ClimbLogger = () => {
         setLog([]);
     };
 
-    const dispatch = useDispatch();
-
     const setCurrentLogItemGrade = (grade) => setCurrentLogItem({ ...currentLogItem, grade: grade });
 
     const setCurrentLogItemStyleAndAddToLog = (style) => {
@@ -81,10 +79,12 @@ const ClimbLogger = () => {
     let displayGradeKnob = currentLogItem.grade == null;
     let displayStyleKnob = currentLogItem.grade !== null && currentLogItem.style == null;
 
+    const dispatch = useDispatch();
+
     const storeClimbingSession = () => {
         let session = createClimbingSession({
             id: 1,
-            dateTime: selectedDate,
+            dateTime: selectedDate.toDateString(),
             maxGrade: calculateMaxGrade(log),
             log: log
         });
@@ -93,7 +93,6 @@ const ClimbLogger = () => {
     };
 
     const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
-
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
@@ -110,7 +109,7 @@ const ClimbLogger = () => {
                             margin="normal"
                             id="date-picker-dialog"
                             label="Select session date"
-                            format="MM/dd/yyyy"
+                            format="dd/MM/yyyy"
                             value={selectedDate}
                             onChange={handleDateChange}
                             KeyboardButtonProps={{
