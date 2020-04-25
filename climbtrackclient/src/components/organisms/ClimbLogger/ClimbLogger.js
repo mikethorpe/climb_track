@@ -35,7 +35,6 @@ const grades = [
 const calculateMaxGrade = (climbs) => {
     let maxGradeIndex = 0;
     climbs.forEach(climb => {
-        debugger;
         let gradeIndex = grades.indexOf(climb.grade);
         if (gradeIndex > maxGradeIndex) {
             maxGradeIndex = gradeIndex;
@@ -117,6 +116,7 @@ const ClimbLogger = () => {
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
                             }}
+                            maxDate={new Date()}
                         />
                     </MuiPickersUtilsProvider>
                     <Button variant="contained" color="secondary" onClick={storeClimbingSession}>Add climbs to logbook</Button>
