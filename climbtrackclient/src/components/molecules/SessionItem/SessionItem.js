@@ -21,7 +21,9 @@ const SessionItem = ({ climbingSession }) => {
                 aria-controls="panel1a-content"
                 id="panel1a-header">
                 <Typography>
-                    {`Date: ${climbingSession.dateTime}, Total climbs: ${climbingSession.log.length}`}
+                    {`Date: ${climbingSession.dateTime}, 
+                    Total climbs: ${climbingSession.log.length}, 
+                    Maximum grade: ${climbingSession.maxGrade}`}
                 </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>

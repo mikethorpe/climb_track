@@ -5,6 +5,7 @@ import { storiesOf } from '@storybook/react';
 const climbingSession = {
     id: 1,
     dateTime: '24th April',
+    maxGrade: '7b',
     log: [
         { id: 1, grade: '7a', style: 'Overhanging' },
         { id: 2, grade: '7b', style: 'Slab' }
