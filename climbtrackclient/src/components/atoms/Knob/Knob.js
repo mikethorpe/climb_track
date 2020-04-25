@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Donut } from 'react-dial-knob';
 
 const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
