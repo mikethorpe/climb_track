@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Knob from '../../atoms/Knob/Knob';
 import { createClimbingSession } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useDispatch } from 'react-redux';
