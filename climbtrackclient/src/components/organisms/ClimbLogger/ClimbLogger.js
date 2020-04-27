@@ -9,13 +9,10 @@ import newId from '../../../helpers/newid';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import calculateMaxGradeFromClimbs from '../../../helpers/calculateMaxGradeFromClimbs';
-import mockApi from '../../../dataLayer/mockApi/mockApi';
 import Paper from '@material-ui/core/Paper';
+import grades from '../../../dataLayer/constants/grades';
 
 const ClimbLogger = () => {
-
-    //ToDo: fetch this from the back-end
-    const grades = mockApi.grades.frenchSport;
 
     const stylesSelector = createSelector(
         state => state.styles,
@@ -60,7 +57,7 @@ const ClimbLogger = () => {
         createClimbingSession({
             id: newId(),
             dateTime: selectedDate.toDateString(),
-            maxGrade: calculateMaxGradeFromClimbs(log, grades),
+            maxGrade: calculateMaxGradeFromClimbs(log, grades.frenchSport),
             log: log
         });
         clearLog();
@@ -78,7 +75,7 @@ const ClimbLogger = () => {
 
     return (
         <div>
-            {displayGradeKnob && <Knob selection={grades} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemGrade} />}
+            {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemGrade} />}
             {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemStyleAndAddToLog} />}
             {log.length > 0 &&
                 <div>
