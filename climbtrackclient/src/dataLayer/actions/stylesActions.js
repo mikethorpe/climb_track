@@ -5,9 +5,10 @@ import { SET_STYLES } from './types';
 
 export const useFetchStyles = () => {
     const dispatch = useDispatch();
-    return () => {
+    return async () => {
+        const response = await axios.get('/api/style');
         const fetchedStyles = mockApi.styles;
-        //await axios.get('/styles');
+        // const fetchedStyles = response.data;
         dispatch({ type: SET_STYLES, payload: fetchedStyles });
     }
 };

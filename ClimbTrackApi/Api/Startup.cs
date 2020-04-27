@@ -106,14 +106,14 @@ namespace ClimbTrackApi.Api
             // Can this be stripped down?
             app.UseMvc();
 
-            //app.UseSpaStaticFiles();
-            //app.UseSpa(spa =>
-            //{
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseProxyToSpaDevelopmentServer("http://localhost:3000/");
-            //    }
-            //});
+            app.UseSpaStaticFiles();
+            app.UseSpa(spa =>
+            {
+                if (env.IsDevelopment())
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000/");
+                }
+            });
         }
     }
 }
