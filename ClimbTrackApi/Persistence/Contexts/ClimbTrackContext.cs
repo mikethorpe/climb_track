@@ -10,6 +10,8 @@ namespace ClimbTrackApi.Persistence.Contexts
     public class ClimbTrackContext: DbContext
     {
         public DbSet<Style> Styles { get; set; }
+        public DbSet<Style> Climbs { get; set; }
+        public DbSet<ClimbingSession> ClimbingSessions { get; set; }
         public DbSet<WorkoutExercise> Activities { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Workout> Workouts { get; set; }
@@ -66,15 +68,16 @@ namespace ClimbTrackApi.Persistence.Contexts
 
             modelBuilder.Entity<User>().HasKey(u => u.Id);
             modelBuilder.Entity<Style>().HasKey(s => s.Id);
-
+            modelBuilder.Entity<Climb>().HasKey(s => s.Id);
+            modelBuilder.Entity<ClimbingSession>().HasKey(s => s.Id);
+            modelBuilder.Entity<ClimbingSession>()
+                .HasMany(cs => cs.Climbs)
+                .WithOne(c => c.ClimbingSession);
             var roleConverter = new EnumToStringConverter<RoleEnum>();
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Role)
                 .HasConversion(roleConverter);
-
-            
-
         }
     }
 }
