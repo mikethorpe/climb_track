@@ -12,8 +12,8 @@ const storeWithClimbingSessions = {
             dateTime: '24th April',
             maxGrade: '7b',
             log: [
-                { id: 1, grade: '7a', style: 'Overhanging' },
-                { id: 2, grade: '7b', style: 'Slab' }
+                { id: 1, grade: '7a', style: { id: 1, description: 'Overhang' } },
+                { id: 2, grade: '7b', style: { id: 2, description: 'Slab' } }
             ]
         },
         {
@@ -21,8 +21,8 @@ const storeWithClimbingSessions = {
             dateTime: '28th April',
             maxGrade: '9b++',
             log: [
-                { id: 1, grade: '7a', style: 'Overhanging' },
-                { id: 2, grade: '9b++', style: 'Arete' }
+                { id: 1, grade: '7a', style: { id: 1, description: 'Overhang' } },
+                { id: 2, grade: '9b++', style: { id: 3, description: 'Arete' } }
             ]
         }
     ]

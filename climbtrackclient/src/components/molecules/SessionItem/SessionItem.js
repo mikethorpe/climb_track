@@ -39,7 +39,7 @@ const SessionItem = ({ climbingSession }) => {
                             {climbingSession.log.map((logItem) => (
                                 <TableRow key={logItem.id}>
                                     <TableCell align="center">{logItem.grade}</TableCell>
-                                    <TableCell align="center">{logItem.style}</TableCell>
+                                    <TableCell align="center">{logItem.style.description}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

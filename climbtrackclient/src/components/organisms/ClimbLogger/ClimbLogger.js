@@ -28,7 +28,10 @@ const ClimbLogger = () => {
         style: null,
         id: null
     });
-    const setCurrentLogItemStyleAndAddToLog = (style) => {
+    const setCurrentLogItemStyleAndAddToLog = (selectedStyleDescription) => {
+        console.log(`style ${selectedStyleDescription}`);
+        let style = styles.filter(s => s.description === selectedStyleDescription)[0];
+        console.dir(style);
         setLog([...log, { ...currentLogItem, style: style }]);
         setCurrentLogItem({ grade: null, style: null, id: null });
     }
@@ -67,7 +70,7 @@ const ClimbLogger = () => {
     let displayStyleKnob = currentLogItem.grade !== null && currentLogItem.style == null;
 
     const yourClimbsList = log.map((logItem) => <Paper key={logItem.id}>
-        {logItem.grade + ' ' + logItem.style}
+        {logItem.grade + ' ' + logItem.style.description}
         <Button variant="outlined" onClick={() => deleteLogItem(logItem.id)}>Remove</Button>
     </Paper>);
     const gradeKnobControlText = 'What was the grade of your climb?';
@@ -76,7 +79,7 @@ const ClimbLogger = () => {
     return (
         <div>
             {displayGradeKnob && <Knob selection={grades} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemGrade} />}
-            {displayStyleKnob && <Knob selection={styles} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemStyleAndAddToLog} />}
+            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setCurrentLogItemStyleAndAddToLog} />}
             {log.length > 0 &&
                 <div>
                     <Typography>Your climbs:</Typography>

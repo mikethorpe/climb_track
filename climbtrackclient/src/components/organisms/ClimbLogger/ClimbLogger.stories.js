@@ -7,8 +7,12 @@ import createStore from '../../../dataLayer/store/store';
 
 const storeWithSessions = {
     climbingSessions: [
-        { id: 1, dateTime: '24th April', grade: '7a', style: 'Overhanging' },
-        { id: 2, dateTime: '22th April', grade: '7b', style: 'Overhanging' }
+        { id: 1, dateTime: '24th April', grade: '7a', style: { id: 1, description: 'Overhang' } },
+        { id: 2, dateTime: '22th April', grade: '7b', style: { id: 2, description: 'Slab' } }
+    ],
+    styles: [
+        { id: 1, description: 'Overhang' },
+        { id: 2, description: 'Slab' }
     ]
 };
 

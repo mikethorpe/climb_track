@@ -25,8 +25,7 @@ const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
                 value={value}
                 onValueChange={setValue}
                 ariaLabelledBy={'my-label'}
-                spaceMaxFromZero={false}
-            >
+                spaceMaxFromZero={false}>
                 <label id={'my-label'} style={{
                     textAlign: 'center',
                     width: '200px',
