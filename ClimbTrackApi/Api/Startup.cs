@@ -18,6 +18,7 @@ using ClimbTrackApi.Persistence.Repositories;
 using TokenHandler = ClimbTrackApi.Auth.Helpers.TokenHandler;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Repositories;
 
 namespace ClimbTrackApi.Api
 {
@@ -49,6 +50,7 @@ namespace ClimbTrackApi.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IStyleRepository, StyleRepository>();
             services.AddScoped<IStyleService, StyleService>();
+            services.AddScoped<IClimbingSessionRepository, ClimbingSessionRepository>();
             services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
 
             var signingConfigurations = new SigningConfigurations();
