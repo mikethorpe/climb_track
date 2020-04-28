@@ -6,15 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Persistence.Repositories
+namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class ClimbingSessionRepository : IClimbingSessionRepository
+    public class ClimbingSessionRepository : BaseRepository, IClimbingSessionRepository
     {
-        private readonly ClimbTrackContext context;
-
-        public ClimbingSessionRepository(ClimbTrackContext context)
+        public ClimbingSessionRepository(ClimbTrackContext context) : base(context)
         {
-            this.context = context;
+
         }
 
         public async Task AddAsync(ClimbingSession climbingSession)

@@ -17,17 +17,17 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public async Task AddAsync(Style style)
         {
-            await _context.AddAsync(style);
+            await context.AddAsync(style);
         }
 
         public async Task<Style> FindByIdAsync(int id)
         {
-            return await _context.Styles.FindAsync(id);
+            return await context.Styles.FindAsync(id);
         }
 
         public async Task<ICollection<Style>> ListAsync()
         {
-            return await _context.Styles.
+            return await context.Styles.
                 Select(s => new Style
                 {
                     Id = s.Id,
@@ -38,12 +38,12 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public void Update(Style style)
         {
-            _context.Styles.Update(style);
+            context.Styles.Update(style);
         }
 
         public void Remove(Style style)
         {
-            _context.Styles.Remove(style);
+            context.Styles.Remove(style);
         }
     }
 

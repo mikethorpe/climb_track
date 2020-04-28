@@ -16,27 +16,27 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public async Task AddAsync(Exercise exercise)
         {
-            await _context.AddAsync(exercise);
+            await context.AddAsync(exercise);
         }
 
         public async Task<Exercise> FindByIdAsync(int id)
         {
-            return await _context.Exercises.FindAsync(id);
+            return await context.Exercises.FindAsync(id);
         }
 
         public async Task<ICollection<Exercise>> ListAsync()
         {
-            return await _context.Exercises.ToListAsync();
+            return await context.Exercises.ToListAsync();
         }
 
         public void Update(Exercise exercise)
         {
-             _context.Exercises.Update(exercise);
+             context.Exercises.Update(exercise);
         }
 
         public void Remove(Exercise exercise)
         {
-            _context.Exercises.Remove(exercise);
+            context.Exercises.Remove(exercise);
         }
     }
 }

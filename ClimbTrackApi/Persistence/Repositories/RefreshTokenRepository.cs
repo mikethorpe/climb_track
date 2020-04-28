@@ -16,24 +16,24 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public async Task AddAsync(RefreshToken exercise)
         {
-            await _context.AddAsync(exercise);
+            await context.AddAsync(exercise);
         }
 
         public async Task<RefreshToken> FindByIdAsync(int id)
         {
-            return await _context.RefreshTokens.FindAsync(id);
+            return await context.RefreshTokens.FindAsync(id);
         }
 
         public async Task<RefreshToken> FindByToken(string token)
         {
-            return await _context.RefreshTokens
+            return await context.RefreshTokens
                 .Where(rt => rt.Token == token)
                 .SingleOrDefaultAsync();
         }
 
         public async Task<RefreshToken> FindByUserIdAsync(int userID)
         {
-            return await _context.RefreshTokens
+            return await context.RefreshTokens
                 .Where(t => t.UserId == userID)
                 .Where(t => t.Deleted == null)
                 .SingleOrDefaultAsync();
@@ -41,7 +41,7 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public void Remove(RefreshToken refreshToken)
         {
-            _context.RefreshTokens.Remove(refreshToken);
+            context.RefreshTokens.Remove(refreshToken);
         }
     }
 }
