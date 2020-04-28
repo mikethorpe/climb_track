@@ -6,7 +6,7 @@ const climbingSession = {
     id: 1,
     dateTime: '24th April',
     maxGrade: '7b',
-    log: [
+    climbs: [
         { id: 1, grade: '7a', style: { id: 1, description: 'Overhang' } },
         { id: 2, grade: '7b', style: { id: 1, description: 'Slab' } }
     ]

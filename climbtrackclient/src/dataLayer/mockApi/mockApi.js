@@ -4,7 +4,7 @@ export default {
             id: 1,
             dateTime: '22th April 2019',
             maxGrade: '7b',
-            log: [
+            climbs: [
                 { id: 1, grade: '7a', style: { id: 1, description: 'Overhang' } },
                 { id: 2, grade: '7b', style: { id: 2, description: 'Slab' } }
             ]
@@ -13,7 +13,7 @@ export default {
             id: 2,
             dateTime: '24th April 2019',
             maxGrade: '8a+',
-            log: [
+            climbs: [
                 { id: 1, grade: '7a', style: { id: 1, description: 'Overhang' } },
                 { id: 2, grade: '9b++', style: { id: 2, description: 'Slab' } }
             ]
@@ -22,7 +22,7 @@ export default {
             id: 3,
             dateTime: '22th May 2019',
             maxGrade: '9a+',
-            log: [
+            climbs: [
                 { id: 1, grade: '7a', style: { id: 1, description: 'Overhang' } },
                 { id: 2, grade: '9b++', style: { id: 3, description: 'Arete' } }
             ]

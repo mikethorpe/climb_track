@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 
 
 const SessionItem = ({ climbingSession }) => {
+    console.log(climbingSession);
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary
@@ -22,7 +23,7 @@ const SessionItem = ({ climbingSession }) => {
                 id="panel1a-header">
                 <Typography>
                     {`Date: ${climbingSession.dateTime}, 
-                    Total climbs: ${climbingSession.log.length}, 
+                    Total climbs: ${climbingSession.climbs.length}, 
                     Maximum grade: ${climbingSession.maxGrade}`}
                 </Typography>
             </ExpansionPanelSummary>
@@ -36,10 +37,10 @@ const SessionItem = ({ climbingSession }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {climbingSession.log.map((logItem) => (
-                                <TableRow key={logItem.id}>
-                                    <TableCell align="center">{logItem.grade}</TableCell>
-                                    <TableCell align="center">{logItem.style.description}</TableCell>
+                            {climbingSession.climbs.map((climb) => (
+                                <TableRow key={climb.id}>
+                                    <TableCell align="center">{climb.grade}</TableCell>
+                                    <TableCell align="center">{climb.style.description}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
