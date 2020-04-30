@@ -24,7 +24,16 @@ namespace ClimbTrackApi.Api.Controllers
             IEnumerable<ClimbingSession> climbingSessions = await climbingSessionService.ListAsync();
             if (climbingSessions.Any())
             {
-                return Ok(climbingSessions);
+
+                var climbingSessionsDto = climbingSessions.Select(cs => new
+                {
+                    Id = cs.Id,
+                    DateTime = cs.DateTime.ToString("ddd MMM dd yyyy"),
+                    Climbs = cs.Climbs,
+                    MaxGrade = cs.MaxGrade
+                });
+
+                return Ok(climbingSessionsDto);
             }
             return NoContent();
         }
