@@ -27,7 +27,6 @@ const ClimbLogger = () => {
     });
     const setClimbStyleAndAddToClimbs = (selectedStyleDescription) => {
         let style = styles.filter(s => s.description === selectedStyleDescription)[0];
-        console.dir(style);
         setClimbs([...climbs, { ...climb, style: style }]);
         setClimb({ grade: null, style: null, id: null });
     }

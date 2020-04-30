@@ -14,7 +14,6 @@ import Paper from '@material-ui/core/Paper';
 
 
 const SessionItem = ({ climbingSession }) => {
-    console.log(climbingSession);
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary
