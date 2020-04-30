@@ -7,6 +7,6 @@ namespace ClimbTrackApi.Domain.Interfaces
     public interface IClimbingSessionRepository
     {
         Task<ICollection<ClimbingSession>> ListAsync();
-        Task AddAsync(ClimbingSession climbingSession);
+        Task<ClimbingSession> AddAsync(ClimbingSession climbingSession);
     }
 }

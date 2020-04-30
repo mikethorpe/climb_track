@@ -24,9 +24,9 @@ namespace ClimbTrackApi.Domain.Services
 
         public async Task<ClimbingSession> SaveAsync(ClimbingSession climbingSession)
         {
-            await climbingSessionRepository.AddAsync(climbingSession);
+            ClimbingSession savedClimbingSession =  await climbingSessionRepository.AddAsync(climbingSession);
             await unitOfWork.CompleteAsync();
-            return climbingSession;
+            return savedClimbingSession;
         }
     }
 }

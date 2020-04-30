@@ -15,9 +15,20 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         }
 
-        public async Task AddAsync(ClimbingSession climbingSession)
+        public async Task<ClimbingSession> AddAsync(ClimbingSession climbingSession)
         {
-            await context.ClimbingSessions.AddAsync(climbingSession);
+            var climbingSessionToSave = new ClimbingSession
+            {
+                DateTime = climbingSession.DateTime,
+                MaxGrade = climbingSession.MaxGrade,
+                Climbs = climbingSession.Climbs.Select(c => new Climb
+                {
+                    Grade = c.Grade,
+                    Style = context.Styles.Single(s => s.Id == c.Style.Id)
+                }).ToList()
+            };
+            await context.ClimbingSessions.AddAsync(climbingSessionToSave);
+            return climbingSessionToSave;
         }
 
         public async Task<ICollection<ClimbingSession>> ListAsync()
@@ -37,7 +48,7 @@ namespace ClimbTrackApi.Persistence.Repositories
                             Id = c.Style.Id,
                             Description = c.Style.Description
                         }
-                    })
+                    }).ToList()
                 }).ToListAsync();
         }
     }
