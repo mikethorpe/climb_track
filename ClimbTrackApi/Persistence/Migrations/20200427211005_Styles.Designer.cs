@@ -4,14 +4,16 @@ using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ClimbTrackContext))]
-    partial class ClimbTrackContextModelSnapshot : ModelSnapshot
+    [Migration("20200427211005_Styles")]
+    partial class Styles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,42 +56,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Climb", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ClimbingSessionId");
-
-                    b.Property<string>("Grade");
-
-                    b.Property<int?>("StyleId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClimbingSessionId");
-
-                    b.HasIndex("StyleId");
-
-                    b.ToTable("Climb");
-                });
-
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.ClimbingSession", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateTime");
-
-                    b.Property<string>("MaxGrade");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ClimbingSessions");
                 });
 
             modelBuilder.Entity("ClimbTrackApi.Domain.Models.Exercise", b =>
@@ -147,7 +113,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Style");
+                    b.ToTable("Styles");
                 });
 
             modelBuilder.Entity("ClimbTrackApi.Domain.Models.Workout", b =>
@@ -199,17 +165,6 @@ namespace Persistence.Migrations
                     b.HasIndex("ExerciseId");
 
                     b.ToTable("Activities");
-                });
-
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Climb", b =>
-                {
-                    b.HasOne("ClimbTrackApi.Domain.Models.ClimbingSession", "ClimbingSession")
-                        .WithMany("Climbs")
-                        .HasForeignKey("ClimbingSessionId");
-
-                    b.HasOne("ClimbTrackApi.Domain.Models.Style", "Style")
-                        .WithMany()
-                        .HasForeignKey("StyleId");
                 });
 
             modelBuilder.Entity("ClimbTrackApi.Domain.Models.WorkoutExercise", b =>
