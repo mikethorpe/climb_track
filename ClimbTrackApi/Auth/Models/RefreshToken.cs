@@ -4,6 +4,7 @@ namespace ClimbTrackApi.Auth.Models
 {
     public class RefreshToken
     {
+        // ToDo: Should the Ids here be serialized?
         public int Id { get; set; }
         public string Token { get; set; }
         public DateTime Expiration { get; set; }

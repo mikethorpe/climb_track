@@ -13,10 +13,7 @@ namespace ClimbTrackApi.Auth.Services
         private IUserRepository _userRepository;
         private ITokenHandler _tokenHandler;
 
-        public AuthenticationService(
-            IPasswordHasher<User> passwordHasher, 
-            IUserRepository userRepository, 
-            ITokenHandler tokenHandler)
+        public AuthenticationService(IPasswordHasher<User> passwordHasher, IUserRepository userRepository,  ITokenHandler tokenHandler)
         {
             _passwordHasher = passwordHasher;
             _userRepository = userRepository;
@@ -28,18 +25,21 @@ namespace ClimbTrackApi.Auth.Services
             // TODO: wrap all in transaction to account for failures
             try
             {
-                var existingUser = _userRepository.FindByEmailAddress(emailAddress);
+                User existingUser = _userRepository.FindByEmailAddress(emailAddress);
 
-                if (existingUser == null) return new ServiceResponse<AccessToken>($"Error: cannot find user with email address: {emailAddress}");
+                if (existingUser == null)
+                {
+                    return new ServiceResponse<AccessToken>($"Error: cannot find user with email address: {emailAddress}");
+                }
+                PasswordVerificationResult passwordVerification =_passwordHasher.VerifyHashedPassword(existingUser, existingUser.Password, password);
+                if (passwordVerification == PasswordVerificationResult.Success)
+                {
+                    AccessToken token = _tokenHandler.GenerateAccessToken(existingUser);
 
-                var passwordVerification =_passwordHasher.VerifyHashedPassword(existingUser, existingUser.Password, password);
-
-                if (passwordVerification != PasswordVerificationResult.Success) return new ServiceResponse<AccessToken>($"Error: invalid credentials");
-
-                var token = _tokenHandler.GenerateAccessToken(existingUser);
-
-                return new ServiceResponse<AccessToken>(token);
-
+                    // call save async here on the context here?
+                    return new ServiceResponse<AccessToken>(token);
+                }
+                return new ServiceResponse<AccessToken>($"Error: invalid credentials");
             }
             catch (Exception ex)
             {
@@ -49,18 +49,23 @@ namespace ClimbTrackApi.Auth.Services
 
         public async Task<ServiceResponse<AccessToken>> RefreshTokenAsync(string refreshToken, string emailAddress)
         {
-            var token = await _tokenHandler.GetRefreshTokenAsync(refreshToken);
+            RefreshToken refreshTokenEntity = await _tokenHandler.GetRefreshTokenAsync(refreshToken);
+            
+            if (refreshTokenEntity == null)
+            {
+                return new ServiceResponse<AccessToken>("Invalid refresh token");
+            }
+            if (refreshTokenEntity.IsExpired())
+            {
+                return new ServiceResponse<AccessToken>("Refresh token expired");
+            }
+            User user = _userRepository.FindByEmailAddress(emailAddress);
 
-            if (token == null) return new ServiceResponse<AccessToken>("Invalid refresh token");
-
-            if (token.IsExpired()) return new ServiceResponse<AccessToken>("Refresh token expired");
-
-            var user = _userRepository.FindByEmailAddress(emailAddress);
-
-            if (user == null) return new ServiceResponse<AccessToken>("Invalid refresh token for user");
-
+            if (user == null)
+            {
+                return new ServiceResponse<AccessToken>("Invalid refresh token for user");
+            }
             var accessToken = _tokenHandler.GenerateAccessToken(user);
-
             return new ServiceResponse<AccessToken>(accessToken);
         }
 

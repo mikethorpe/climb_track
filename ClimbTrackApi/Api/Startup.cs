@@ -20,6 +20,7 @@ using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Domain.Interfaces;
 using Microsoft.Extensions.Hosting;
+using ClimbTrackApi.Auth.Models;
 
 namespace ClimbTrackApi.Api
 {
@@ -40,6 +41,8 @@ namespace ClimbTrackApi.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddDbContext<ClimbTrackContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ClimbTrackDb")));
+            
+            // Inject services
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
@@ -53,15 +56,13 @@ namespace ClimbTrackApi.Api
             services.AddScoped<IClimbingSessionRepository, ClimbingSessionRepository>();
             services.AddScoped<IClimbingSessionService, ClimbingSessionService>();
             services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
-            var signingConfigurations = new SigningConfigurations();
-
-            services.AddSingleton(signingConfigurations);
             services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
-
-
+            
+            // JWT authentication
+            var signingConfigurations = new SigningConfigurations();
+            services.AddSingleton(signingConfigurations);
             services.Configure<TokenOptions>(Configuration.GetSection("TokenOptions"));
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(jwtBearerOptions =>
                 {
@@ -76,7 +77,9 @@ namespace ClimbTrackApi.Api
                         ClockSkew = TimeSpan.Zero
                     };
                 }
-             );
+            );
+
+            // CORS configuration
             services.AddCors(
                 c =>  c.AddPolicy(
                     "AllowOrigin", options => 
@@ -84,6 +87,8 @@ namespace ClimbTrackApi.Api
                             .AllowAnyOrigin()
                             .AllowAnyHeader()
                             .AllowAnyMethod()));
+
+            // Serve spa static files
             services.AddSpaStaticFiles(configuration => {
                 configuration.RootPath = Configuration.GetSection("StaticFiles").GetSection("ClientBuildFolder").Value;
             });

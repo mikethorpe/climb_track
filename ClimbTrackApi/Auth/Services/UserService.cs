@@ -25,7 +25,10 @@ namespace ClimbTrackApi.Auth.Services
         {
             var existingUser = _userRepository.FindByEmailAddress(user.EmailAddress);
 
-            if (existingUser != null) return new ServiceResponse<User>($"A user with the address {user.EmailAddress} is already registered");
+            if (existingUser != null)
+            {
+                return new ServiceResponse<User>($"A user with the address {user.EmailAddress} is already registered");
+            }
 
             user.Password = _passwordHasher.HashPassword(user, user.Password);
             user.Role = role;
@@ -34,6 +37,9 @@ namespace ClimbTrackApi.Auth.Services
             {
                 await _userRepository.AddAsync(user);
                 await _unitOfWork.CompleteAsync();
+                // In the controller we map this to a user resource
+                // We are returning the hashed password into the controller method here which is potentially dangerous
+                // Should it ever be returned from this method???
                 return new ServiceResponse<User>(user);
             }
             catch (Exception ex)
