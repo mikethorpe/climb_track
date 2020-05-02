@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 
@@ -19,6 +19,7 @@ namespace ClimbTrackApi.Api.Controllers
             this.styleService = styleService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetStylesAsync()
         {

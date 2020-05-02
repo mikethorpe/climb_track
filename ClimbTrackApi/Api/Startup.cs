@@ -107,10 +107,11 @@ namespace ClimbTrackApi.Api
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
             app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             app.UseSpaStaticFiles();

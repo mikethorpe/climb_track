@@ -21,7 +21,6 @@ namespace ClimbTrackApi.Api.Controllers
             this.mapper = mapper;
         }
 
-        [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] UserCredentialResource userCredentialResource)
         {
 
@@ -39,7 +38,7 @@ namespace ClimbTrackApi.Api.Controllers
             return Ok(accessTokenResource);
         }
 
-        [HttpPost("api/token/refresh")]
+        [HttpPost("refresh")]
         public async Task<IActionResult> RefreshAccessToken([FromBody] RefreshTokenResource refreshTokenResource)
         {
             if (!ModelState.IsValid)
@@ -56,7 +55,7 @@ namespace ClimbTrackApi.Api.Controllers
             return Ok(tokenResource);
         }
 
-        [HttpPost("api/token/revoke")]
+        [HttpPost("revoke")]
         public async Task<IActionResult> RevokeRefreshTokenAsync([FromBody] RevokeTokenResource revokeTokenResource)
         {
             if (!ModelState.IsValid)
