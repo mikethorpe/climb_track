@@ -23,6 +23,7 @@ namespace ClimbTrackApi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStylesAsync()
         {
+            //User.Identity
             IEnumerable<Style> styles = await styleService.ListAsync();
             if (styles.Any())
             {
