@@ -3,6 +3,7 @@ import LogonForm from '../../organisms/LogonForm/LogonForm';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import ClimbLog from '../../pages/ClimbLog/ClimbLog';
+import LogOffButton from '../../atoms/LogOffButton/LogOffButton';
 
 const TemporaryWrapper = () => {
 
@@ -21,6 +22,7 @@ const TemporaryWrapper = () => {
         <>
             {authenticationObject?.authenticated && <ClimbLog />}
             {!authenticationObject?.authenticated && <LogonForm />}
+            <LogOffButton />
         </>
     );
 };

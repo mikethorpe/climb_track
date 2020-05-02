@@ -69,7 +69,7 @@ namespace ClimbTrackApi.Auth.Helpers
             {
                 // why does this method take a user - would be nice to know?
                 Token = passwordHasher.HashPassword(user, Guid.NewGuid().ToString()),
-                Expiration = DateTime.UtcNow.AddSeconds(jwtConfigurationSection.GetValue<int>("RefreshTokenExpiration")),
+                Expiration = DateTime.UtcNow.AddSeconds(jwtConfigurationSection.GetValue<int>("RefreshTokenExpirationMins")*60),
                 UserId = user.Id
             };
         }
@@ -77,7 +77,7 @@ namespace ClimbTrackApi.Auth.Helpers
         private AccessToken BuildAccessToken(User user, RefreshToken refreshToken)
         {
             var jwtConfigurationSection = configuration.GetSection("TokenOptions");
-            DateTime accessTokenExpiration = DateTime.UtcNow.AddSeconds(jwtConfigurationSection.GetValue<int>("AccessTokenExpiration"));
+            DateTime accessTokenExpiration = DateTime.UtcNow.AddSeconds(jwtConfigurationSection.GetValue<int>("AccessTokenExpirationMins")*60);
             var securityToken = new JwtSecurityToken
             (
                 issuer: jwtConfigurationSection.GetValue<string>("Issuer"),

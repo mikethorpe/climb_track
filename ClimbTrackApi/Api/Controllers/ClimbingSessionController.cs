@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClimbTrackApi.Domain.Models;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClimbTrackApi.Api.Controllers
@@ -18,6 +19,7 @@ namespace ClimbTrackApi.Api.Controllers
             this.climbingSessionService = climbingSessionService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetClimbingSessionsAsync()
         {
@@ -38,6 +40,7 @@ namespace ClimbTrackApi.Api.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateClimbingSessionAsync([FromBody] ClimbingSession climbingSession)
         {
