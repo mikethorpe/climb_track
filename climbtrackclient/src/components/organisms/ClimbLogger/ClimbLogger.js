@@ -54,7 +54,7 @@ const ClimbLogger = () => {
     const storeClimbingSession = () => {
         createClimbingSession({
             id: newId(),
-            dateTime: selectedDate.toDateString(),
+            dateTime: selectedDate,
             maxGrade: calculateMaxGradeFromClimbs(climbs, grades.frenchSport),
             climbs: climbs
         });

@@ -19,13 +19,14 @@ using TokenHandler = ClimbTrackApi.Auth.Helpers.TokenHandler;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Domain.Interfaces;
+using Microsoft.Extensions.Hosting;
 
 namespace ClimbTrackApi.Api
 {
     public class Startup
     {
-        private IHostingEnvironment env;
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        private IWebHostEnvironment env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             this.env = env;
@@ -36,10 +37,9 @@ namespace ClimbTrackApi.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddDbContext<ClimbTrackContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ClimbTrackDb")));
-            
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
@@ -53,8 +53,8 @@ namespace ClimbTrackApi.Api
             services.AddScoped<IClimbingSessionRepository, ClimbingSessionRepository>();
             services.AddScoped<IClimbingSessionService, ClimbingSessionService>();
             services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
-
             var signingConfigurations = new SigningConfigurations();
+
             services.AddSingleton(signingConfigurations);
             services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
 
@@ -105,9 +105,8 @@ namespace ClimbTrackApi.Api
             app.UseAuthentication();
             app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
-
-            // Can this be stripped down?
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             app.UseSpaStaticFiles();
             app.UseSpa(spa =>
