@@ -14,14 +14,14 @@ export const configureRefreshAccessTokenInterceptor = () => {
                 const refreshToken = localStorage.getItem('refreshToken');
 
                 return axios.post('/api/login/refresh', { token: refreshToken })
-                    .then(async (res) => {
+                    .then(res => {
                         if (res.status === 200) {
                             localStorage.setItem('accessToken', res.data.token);
                             localStorage.setItem('refreshToken', res.data.refreshToken.token);
                             localStorage.setItem('refreshTokenExpiration', res.data.refreshToken.expiration);
                             axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
                             originalRequest.headers.Authorization = `Bearer ${res.data.token}`;
-                            return await axios(originalRequest);
+                            return axios(originalRequest);
                         }
                         if (res.status === 400) {
                             // clear the access token
