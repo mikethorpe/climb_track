@@ -1,4 +1,4 @@
-﻿using ClimbTrackApi.Auth.Models;
+﻿using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Common.Communication;
 using System.Threading.Tasks;
 

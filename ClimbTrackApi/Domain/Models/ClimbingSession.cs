@@ -9,5 +9,6 @@ namespace ClimbTrackApi.Domain.Models
         public DateTime DateTime { get; set; }
         public string MaxGrade { get; set; }
         public IEnumerable<Climb> Climbs { get; set; }
+        public int UserId { get; set; }
     }
 }

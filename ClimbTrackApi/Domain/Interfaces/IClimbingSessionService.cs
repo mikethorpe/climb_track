@@ -6,7 +6,7 @@ namespace Domain.Interfaces
 {
     public interface IClimbingSessionService
     {
-        Task<ClimbingSession> SaveAsync(ClimbingSession climbingSession);
-        Task<ICollection<ClimbingSession>> ListAsync();
+        Task<ClimbingSession> SaveAsync(ClimbingSession climbingSession, string emailAddress);
+        Task<ICollection<ClimbingSession>> ListAsync(string emailAddress);
     }
 }

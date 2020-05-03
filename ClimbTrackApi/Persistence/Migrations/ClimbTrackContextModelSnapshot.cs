@@ -15,7 +15,7 @@ namespace Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -23,15 +23,20 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("Deleted");
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Expiration");
+                    b.Property<DateTime>("Expiration")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Token");
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -42,14 +47,18 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("EmailAddress");
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -60,13 +69,17 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClimbingSessionId");
+                    b.Property<int?>("ClimbingSessionId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Grade");
+                    b.Property<string>("Grade")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StyleId");
+                    b.Property<int?>("StyleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -81,11 +94,17 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateTime");
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("MaxGrade");
+                    b.Property<string>("MaxGrade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -96,18 +115,23 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100)
                         .HasDefaultValue("");
 
-                    b.Property<string>("Notes");
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Reps");
+                    b.Property<int>("Reps")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Sets");
+                    b.Property<int>("Sets")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -141,9 +165,11 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -154,12 +180,15 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100)
                         .HasDefaultValue("");
 
@@ -190,9 +219,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("ClimbTrackApi.Domain.Models.WorkoutExercise", b =>
                 {
-                    b.Property<int>("WorkoutId");
+                    b.Property<int>("WorkoutId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("ExerciseId");
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
 
                     b.HasKey("WorkoutId", "ExerciseId");
 
@@ -208,7 +239,7 @@ namespace Persistence.Migrations
                         .HasForeignKey("ClimbingSessionId");
 
                     b.HasOne("ClimbTrackApi.Domain.Models.Style", "Style")
-                        .WithMany()
+                        .WithMany("Climbs")
                         .HasForeignKey("StyleId");
                 });
 
@@ -217,12 +248,14 @@ namespace Persistence.Migrations
                     b.HasOne("ClimbTrackApi.Domain.Models.Exercise", "Exercise")
                         .WithMany("WorkoutExercises")
                         .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ClimbTrackApi.Domain.Models.Workout", "Workout")
                         .WithMany("WorkoutExercises")
                         .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

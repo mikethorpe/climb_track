@@ -7,7 +7,7 @@ using WorkoutExercise = ClimbTrackApi.Domain.Models.WorkoutExercise;
 
 namespace ClimbTrackApi.Persistence.Contexts
 {
-    public class ClimbTrackContext: DbContext
+    public class ClimbTrackContext : DbContext
     {
         public DbSet<Style> Styles { get; set; }
         public DbSet<Style> Climbs { get; set; }
@@ -17,11 +17,11 @@ namespace ClimbTrackApi.Persistence.Contexts
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        private IConfiguration _configuration;
+        private IConfiguration configuration;
 
         public ClimbTrackContext(DbContextOptions<ClimbTrackContext> options, IConfiguration configuration) : base(options)
         {
-            _configuration = configuration;
+            this.configuration = configuration;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

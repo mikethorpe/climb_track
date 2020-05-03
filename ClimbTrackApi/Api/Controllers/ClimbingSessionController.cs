@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ClimbTrackApi.Domain.Models;
 using Domain.Interfaces;
@@ -23,10 +24,12 @@ namespace ClimbTrackApi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetClimbingSessionsAsync()
         {
-            IEnumerable<ClimbingSession> climbingSessions = await climbingSessionService.ListAsync();
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            string emailAddress = identity.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
+
+            IEnumerable<ClimbingSession> climbingSessions = await climbingSessionService.ListAsync(emailAddress);
             if (climbingSessions.Any())
             {
-
                 var climbingSessionsDto = climbingSessions.Select(cs => new
                 {
                     Id = cs.Id,
@@ -43,7 +46,9 @@ namespace ClimbTrackApi.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateClimbingSessionAsync([FromBody] ClimbingSession climbingSession)
         {
-            ClimbingSession savedClimbingSession = await climbingSessionService.SaveAsync(climbingSession);
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            string emailAddress = identity.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
+            ClimbingSession savedClimbingSession = await climbingSessionService.SaveAsync(climbingSession, emailAddress);
             return Ok(savedClimbingSession.Id);
         }
     }

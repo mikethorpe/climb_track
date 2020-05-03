@@ -26,7 +26,7 @@ namespace ClimbTrackApi.Api
 {
     public class Startup
     {
-        private IWebHostEnvironment env;
+        private readonly IWebHostEnvironment env;
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;

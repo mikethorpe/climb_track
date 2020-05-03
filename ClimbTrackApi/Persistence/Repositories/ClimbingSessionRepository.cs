@@ -21,6 +21,7 @@ namespace ClimbTrackApi.Persistence.Repositories
             {
                 DateTime = climbingSession.DateTime,
                 MaxGrade = climbingSession.MaxGrade,
+                UserId = climbingSession.UserId,
                 Climbs = climbingSession.Climbs.Select(c => new Climb
                 {
                     Grade = c.Grade,
@@ -31,14 +32,16 @@ namespace ClimbTrackApi.Persistence.Repositories
             return climbingSessionToSave;
         }
 
-        public async Task<ICollection<ClimbingSession>> ListAsync()
+        public async Task<ICollection<ClimbingSession>> ListAsync(int userId)
         {
             return await context.ClimbingSessions
+                .Where(cs => cs.UserId == userId)
                 .Select(cs => new ClimbingSession
                 {
                     Id = cs.Id,
                     DateTime = cs.DateTime,
                     MaxGrade = cs.MaxGrade,
+                    UserId = cs.UserId,
                     Climbs = cs.Climbs.Select(c => new Climb
                     {
                         Id = c.Id,
