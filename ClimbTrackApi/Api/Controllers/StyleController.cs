@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ClimbTrackApi.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StyleController : Controller
@@ -19,7 +20,6 @@ namespace ClimbTrackApi.Api.Controllers
             this.styleService = styleService;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetStylesAsync()
         {

@@ -24,6 +24,7 @@ export const configureRefreshAccessTokenInterceptor = () => {
                             return axios(originalRequest);
                         }
                         if (res.status === 400) {
+                            //TODO:
                             // clear the access token
                             // clear the refresh token
                             // clear the refresh token expiry date

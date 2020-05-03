@@ -4,7 +4,7 @@ import ClimbLog from './ClimbLog';
 import createStore from '../../../dataLayer/store/store';
 import Provider from '../../../dataLayer/store/providerWrapper';
 
-//ToDo: We fetch from the mock API when this component mounts - do we need this store?
+//TODO: We fetch from the mock API when this component mounts - do we need this store?
 const storeWithClimbingSessions = {
     climbingSessions: [
         {

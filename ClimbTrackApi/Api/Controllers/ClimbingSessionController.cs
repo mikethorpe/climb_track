@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClimbTrackApi.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClimbingSessionController : ControllerBase
@@ -19,7 +20,6 @@ namespace ClimbTrackApi.Api.Controllers
             this.climbingSessionService = climbingSessionService;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetClimbingSessionsAsync()
         {
@@ -40,7 +40,6 @@ namespace ClimbTrackApi.Api.Controllers
             return NoContent();
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateClimbingSessionAsync([FromBody] ClimbingSession climbingSession)
         {
