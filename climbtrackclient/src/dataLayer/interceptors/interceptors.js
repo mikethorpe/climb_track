@@ -17,7 +17,7 @@ export const configureRefreshAccessTokenInterceptor = () => {
 
                 // originalRequest._retry = true;
                 const refreshToken = localStorage.getItem('refreshToken');
-                axios.post('/api/login/refresh', { emailAddress: 'climber@climber.com', token: refreshToken })
+                axios.post('/api/login/refresh', { token: refreshToken })
                     .then(res => {
                         if (res.status === 200) {
                             debugger;

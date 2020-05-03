@@ -45,7 +45,7 @@ namespace ClimbTrackApi.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            ServiceResponse<AccessToken> response = await authenticationService.RefreshTokenAsync(refreshTokenResource.Token, refreshTokenResource.EmailAddress);
+            ServiceResponse<AccessToken> response = await authenticationService.RefreshTokenAsync(refreshTokenResource.Token);
 
             if (response.Entity == null)
             {

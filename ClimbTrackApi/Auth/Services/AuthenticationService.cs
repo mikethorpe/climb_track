@@ -47,10 +47,9 @@ namespace ClimbTrackApi.Auth.Services
             }
         }
 
-        public async Task<ServiceResponse<AccessToken>> RefreshTokenAsync(string refreshToken, string emailAddress)
+        public async Task<ServiceResponse<AccessToken>> RefreshTokenAsync(string refreshToken)
         {
             RefreshToken refreshTokenEntity = await _tokenHandler.GetRefreshTokenAsync(refreshToken);
-            
             if (refreshTokenEntity == null)
             {
                 return new ServiceResponse<AccessToken>("Invalid refresh token");
@@ -59,8 +58,7 @@ namespace ClimbTrackApi.Auth.Services
             {
                 return new ServiceResponse<AccessToken>("Refresh token expired");
             }
-            User user = _userRepository.FindByEmailAddress(emailAddress);
-
+            User user = await _userRepository.FindByIdAsync(refreshTokenEntity.UserId);
             if (user == null)
             {
                 return new ServiceResponse<AccessToken>("Invalid refresh token for user");
