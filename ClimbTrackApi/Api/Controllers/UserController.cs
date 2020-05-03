@@ -4,7 +4,6 @@ using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Api.Extensions;
 using ClimbTrackApi.Api.Resources;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClimbTrackApi.Api.Controllers
