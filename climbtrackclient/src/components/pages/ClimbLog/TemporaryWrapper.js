@@ -20,9 +20,12 @@ const TemporaryWrapper = () => {
 
     return (
         <>
-            {authenticationObject?.authenticated && <ClimbLog />}
+            {authenticationObject?.authenticated &&
+                <>
+                    <LogOffButton />
+                    <ClimbLog />
+                </>}
             {!authenticationObject?.authenticated && <LogonForm />}
-            <LogOffButton />
         </>
     );
 };
