@@ -32,7 +32,6 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
                         .then(res => {
 
                             if (res.status === 200) {
-                                debugger;
                                 localStorage.setItem('accessToken', res.data.token);
                                 localStorage.setItem('refreshToken', res.data.refreshToken.token);
                                 localStorage.setItem('refreshTokenExpiration', res.data.refreshToken.expiration);
@@ -43,11 +42,11 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
                         })
                         .catch((refreshError) => {
                             if (refreshError.response.status) {
-                                debugger;
                                 removeJwtTokensFromLocalStorage();
                                 removeAxiosAuthorizationHeader();
                                 dispatch({ type: SET_AUTHENTICATED, payload: false });
                             }
+                            return null;
                         });
                 }
                 return Promise.reject(error);
