@@ -10,20 +10,7 @@ export const useCreateClimbingSession = () => {
             dispatch({ type: CREATE_CLIMBING_SESSION, payload: climbingSession });
             return;
         }
-        const postResponse = await axios.post('/api/climbingsession', climbingSession);
-        // if (postResponse.data.status === 401) {
-        //     console.log('refreshing access token');
-        //     let refreshToken = localStorage.getItem('refreshToken');
-        //     let refreshTokenResponse = await axios.post('/api/login/refresh', { emailAddress: 'climber@climber.com', token: refreshToken });
-        //     localStorage.setItem('accessToken', refreshTokenResponse.data.token);
-        //     localStorage.setItem('refreshToken', refreshTokenResponse.data.refreshToken.token);
-        //     localStorage.setItem('refreshTokenExpiration', refreshTokenResponse.data.refreshToken.expiration);
-        //     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
-        //     const secondPostResponse = await axios.post('/api/climbingsession', climbingSession);
-        //     if (secondPostResponse.data.status === 401) {
-        //         console.log('failed to refresh access token');
-        //     }
-        // }
+        await axios.post('/api/climbingsession', climbingSession);
         const response = await axios.get('/api/climbingsession');
         const fetchedClimbingSessions = response.data;
         dispatch({ type: SET_CLIMBING_SESSIONS, payload: fetchedClimbingSessions });
@@ -39,7 +26,6 @@ export const useFetchClimbingSessions = () => {
             return;
         }
         const response = await axios.get('/api/climbingsession');
-        console.log(response);
         const fetchedClimbingSessions = response.data;
         dispatch({ type: SET_CLIMBING_SESSIONS, payload: fetchedClimbingSessions });
     };
