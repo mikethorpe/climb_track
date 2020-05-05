@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { SET_AUTHENTICATED } from '../../../dataLayer/actions/types';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const LogonForm = () => {
 
@@ -18,14 +19,23 @@ const LogonForm = () => {
 
     const dispatch = useDispatch();
 
+    let history = useHistory();
+    let location = useLocation();
+    let { from } = location.state || { from: { pathname: "/" } };
+
     const onLogonButtonClick = async () => {
         const response = await axios.post('/api/login', credentials);
-        localStorage.setItem('accessToken', response.data.token);
-        localStorage.setItem('refreshToken', response.data.refreshToken.token);
-        localStorage.setItem('refreshTokenExpiration', response.data.refreshToken.expiration);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
-        dispatch({ type: SET_AUTHENTICATED, payload: true });
-    }
+        debugger;
+        if (response.status == 200) {
+            localStorage.setItem('accessToken', response.data.token);
+            localStorage.setItem('refreshToken', response.data.refreshToken.token);
+            localStorage.setItem('refreshTokenExpiration', response.data.refreshToken.expiration);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
+            dispatch({ type: SET_AUTHENTICATED, payload: true });
+            history.replace(from);
+            return;
+        }
+    };
 
     return (
         <Paper>

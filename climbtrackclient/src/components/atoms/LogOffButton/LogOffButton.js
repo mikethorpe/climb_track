@@ -3,8 +3,11 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { SET_AUTHENTICATED } from '../../../dataLayer/actions/types';
+import { useHistory } from 'react-router-dom';
 
 const LogOffButton = () => {
+
+    let history = useHistory();
 
     const dispatch = useDispatch();
 
@@ -17,6 +20,7 @@ const LogOffButton = () => {
         localStorage.removeItem('refreshTokenExpiration');
         delete axios.defaults.headers.common['Authorization'];
         dispatch({ type: SET_AUTHENTICATED, payload: false });
+        history.push("/");
     };
 
     return (
