@@ -12,6 +12,9 @@ export const useFetchStyles = () => {
             return;
         }
         const response = await axios.get('/api/style');
+        if (!response?.data) {
+            return;
+        }
         const fetchedStyles = response.data;
         dispatch({ type: SET_STYLES, payload: fetchedStyles });
     }

@@ -35,29 +35,13 @@ function App() {
 
 const PrivateRoute = ({ children, ...rest }) => {
 
-  const dispatch = useDispatch();
+  const authentication = useSelector(state => state.authentication);
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (accessToken && refreshToken) {
-      debugger;
-      dispatch({ type: SET_AUTHENTICATED, payload: true });
-    }
-  }, []);
-
-  // const authSelector = createSelector(
-  //   state => state.authentication.authenticated,
-  //   authenticated => authenticated
-  // );
-  const authenticated = useSelector(state => state.authentication.authenticated);
-
-  console.log(`authenticated ${authenticated}`);
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        authenticated ? (
+        authentication.authenticated ? (
           children
         ) : (
             <Redirect

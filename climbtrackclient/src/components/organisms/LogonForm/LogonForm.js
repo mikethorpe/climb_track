@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -7,9 +7,29 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { SET_AUTHENTICATED } from '../../../dataLayer/actions/types';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const LogonForm = () => {
 
+    const dispatch = useDispatch();
+
+    const authentication = useSelector(state => state.authentication);
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (accessToken && refreshToken) {
+            dispatch({ type: SET_AUTHENTICATED, payload: true });
+        }
+    }, []);
+
+    let history = useHistory();
+
+    useEffect(() => {
+        if (authentication?.authenticated) {
+            history.push("/");
+        }
+    }, [authentication]);
     const [credentials, setCredentials] = useState({
         emailAddress: '',
         password: ''
@@ -17,9 +37,7 @@ const LogonForm = () => {
     const onEmailTextFieldChange = (event) => setCredentials({ ...credentials, emailAddress: event.target.value });
     const onPasswordTextFieldChange = (event) => setCredentials({ ...credentials, password: event.target.value });
 
-    const dispatch = useDispatch();
 
-    let history = useHistory();
     let location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
 
