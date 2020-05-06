@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SET_AUTHENTICATED } from '../../../dataLayer/actions/types';
 import { useHistory } from 'react-router-dom';
 
@@ -23,8 +23,10 @@ const LogOffButton = () => {
         history.push("/");
     };
 
+    const authentication = useSelector(state => state.authentication);
+
     return (
-        <Button variant="outlined" onClick={onLogOffClicked}>Log off</Button>
+        authentication.authenticated && <Button variant="outlined" onClick={onLogOffClicked} > Log off</Button>
     );
 };
 
