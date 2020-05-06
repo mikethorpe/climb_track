@@ -4,6 +4,9 @@ import { SET_AUTHENTICATED } from '../actions/types';
 
 export const useConfigureRefreshAccessTokenInterceptor = () => {
 
+    let isRefreshingAccessToken = false;
+    let queuedRequests = [];
+
     // TODO: Handle storybook cases
     const dispatch = useDispatch();
 
@@ -17,6 +20,10 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
         delete axios.defaults.headers.common['Authorization'];
     };
 
+    function onAccessTokenFetched(authorizationHeader) {
+        queuedRequests = queuedRequests.filter(callback => callback(authorizationHeader))
+    }
+
     return () => {
         axios.interceptors.response.use(
             (response) => {
@@ -28,6 +35,17 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
                 if (error.response.status === 401 && !originalRequest._retry) {
                     const refreshToken = localStorage.getItem('refreshToken');
 
+                    if (isRefreshingAccessToken) {
+                        const retryOriginalRequest = new Promise((resolve) => {
+                            queuedRequests.push((authorizationHeader) => {
+                                originalRequest.headers.Authorization = authorizationHeader;
+                                resolve(axios(originalRequest));
+                            })
+                        });
+                        return retryOriginalRequest;
+                    }
+
+                    isRefreshingAccessToken = true;
                     return axios.post('/api/login/refresh', { token: refreshToken })
                         .then(res => {
 
@@ -37,6 +55,9 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
                                 localStorage.setItem('refreshTokenExpiration', res.data.refreshToken.expiration);
                                 axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
                                 originalRequest.headers.Authorization = `Bearer ${res.data.token}`;
+                                isRefreshingAccessToken = false;
+                                onAccessTokenFetched(`Bearer ${res.data.token}`);
+                                // TODO: called the queued requests
                                 return axios(originalRequest);
                             }
                         })
@@ -44,6 +65,7 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
                             if (refreshError.response.status) {
                                 removeJwtTokensFromLocalStorage();
                                 removeAxiosAuthorizationHeader();
+                                isRefreshingAccessToken = false;
                                 dispatch({ type: SET_AUTHENTICATED, payload: false });
                             }
                             return null;
