@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { getRefreshToken } from '../../../dataLayer/accessToken/accessTokenHelper';
 import { useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
 
+//TODO: Create a story for this component...maybe it could be more than 'just a button'!
 const LogOffButton = () => {
 
     let history = useHistory();
