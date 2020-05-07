@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
@@ -24,7 +25,7 @@ namespace ClimbTrackApi.Api.Controllers
         public async Task<IActionResult> GetStylesAsync()
         {
             IEnumerable<Style> styles = await styleService.ListAsync();
-            if (styles.Any())
+            if (styles.ToList().Any())
             {
                 return Ok(styles);
             }

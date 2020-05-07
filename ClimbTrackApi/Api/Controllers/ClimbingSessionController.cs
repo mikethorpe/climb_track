@@ -32,10 +32,10 @@ namespace ClimbTrackApi.Api.Controllers
             {
                 var climbingSessionsDto = climbingSessions.Select(cs => new
                 {
-                    Id = cs.Id,
+                    cs.Id,
                     DateTime = cs.DateTime.ToString("ddd MMM dd yyyy"),
-                    Climbs = cs.Climbs,
-                    MaxGrade = cs.MaxGrade
+                    cs.Climbs,
+                    cs.MaxGrade
                 });
 
                 return Ok(climbingSessionsDto);

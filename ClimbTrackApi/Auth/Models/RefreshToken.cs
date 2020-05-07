@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace ClimbTrackApi.Auth.Models
 {
     public class RefreshToken
     {
-        // ToDo: Should the Ids here be serialized?
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonIgnore]
+        public int UserId { get; set; }
+        [JsonIgnore]
+        public DateTime? Deleted { get; set; }
         public string Token { get; set; }
         public DateTime Expiration { get; set; }
-        public int UserId { get; set; }
-        public DateTime? Deleted { get; set; }
 
         public bool IsExpired()
         {
