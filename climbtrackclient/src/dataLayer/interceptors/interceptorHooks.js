@@ -45,7 +45,6 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
                                 originalRequest.headers.Authorization = authHeader;
                                 isRefreshingAccessToken = false;
                                 onAccessTokenFetched(authHeader);
-                                // TODO: called the queued requests
                                 return axios(originalRequest);
                             }
                         })
