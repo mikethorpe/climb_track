@@ -43,12 +43,12 @@ namespace ClimbTrackApi.Api
             // Inject services
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<AuthenticationService>();
+            services.AddScoped<StyleService>();
             services.AddScoped<ITokenHandler, TokenHandler>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IStyleRepository, StyleRepository>();
-            services.AddScoped<StyleService>();
             services.AddScoped<IClimbingSessionRepository, ClimbingSessionRepository>();
             services.AddScoped<ClimbingSessionService>();
             services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));

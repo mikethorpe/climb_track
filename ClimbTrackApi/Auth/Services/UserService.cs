@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Auth.Services
 {
-    public class UserService : IUserService
+    public class UserService
     {
         private IUserRepository _userRepository { get; set; }
         private IUnitOfWork _unitOfWork { get; set; }

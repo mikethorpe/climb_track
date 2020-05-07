@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Api.Extensions;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Auth.Services;
 
 namespace ClimbTrackApi.Api.Controllers
 {
@@ -12,10 +12,10 @@ namespace ClimbTrackApi.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService _userService;
+        private UserService _userService;
         private IMapper _mapper;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(UserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
