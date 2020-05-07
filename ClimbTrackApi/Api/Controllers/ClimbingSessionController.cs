@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ClimbTrackApi.Domain.Models;
-using Domain.Interfaces;
+using ClimbTrackApi.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,9 +14,9 @@ namespace ClimbTrackApi.Api.Controllers
     [ApiController]
     public class ClimbingSessionController : ControllerBase
     {
-        private readonly IClimbingSessionService climbingSessionService;
+        private readonly ClimbingSessionService climbingSessionService;
 
-        public ClimbingSessionController(IClimbingSessionService climbingSessionService)
+        public ClimbingSessionController(ClimbingSessionService climbingSessionService)
         {
             this.climbingSessionService = climbingSessionService;
         }

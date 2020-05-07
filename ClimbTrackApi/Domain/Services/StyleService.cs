@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Domain.Services
 {
-    public class StyleService : IStyleService
+    public class StyleService
     {
         private readonly IStyleRepository styleRepository;
 

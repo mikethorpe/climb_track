@@ -1,12 +1,11 @@
 ﻿using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
-using Domain.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Domain.Services
 {
-    public class ClimbingSessionService : IClimbingSessionService
+    public class ClimbingSessionService
     {
         private readonly IClimbingSessionRepository climbingSessionRepository;
         private readonly IUserRepository userRepository;

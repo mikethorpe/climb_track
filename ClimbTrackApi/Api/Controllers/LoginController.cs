@@ -23,7 +23,6 @@ namespace ClimbTrackApi.Api.Controllers
 
         public async Task<IActionResult> LoginAsync([FromBody] UserCredentialResource userCredentialResource)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

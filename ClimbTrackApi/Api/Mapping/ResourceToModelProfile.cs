@@ -9,7 +9,6 @@ namespace ClimbTrackApi.Api.Mapping
     {
         public ResourceToModelProfile()
         {
-            CreateMap<SaveExerciseResource, Exercise>();
             CreateMap<UserCredentialResource, User>();
         }
     }
