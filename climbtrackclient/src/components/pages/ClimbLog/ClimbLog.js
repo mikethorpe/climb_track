@@ -7,7 +7,7 @@ import ClimbLogger from '../../organisms/ClimbLogger/ClimbLogger';
 import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
 import axios from 'axios';
-import { setAuthHeader } from '../../../dataLayer/localStore/localStoreHelper';
+import { setAuthHeader } from '../../../dataLayer/accessToken/accessTokenHelper';
 
 const TabPanel = (props) => {
     const { children, value, index } = props;

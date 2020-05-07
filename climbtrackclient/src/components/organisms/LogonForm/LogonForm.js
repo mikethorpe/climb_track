@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { accessTokensExist, setAccessTokens } from '../../../dataLayer/localStore/localStoreHelper';
+import { accessTokensExist, setAccessTokens } from '../../../dataLayer/accessToken/accessTokenHelper';
 
 const LogonForm = () => {
 

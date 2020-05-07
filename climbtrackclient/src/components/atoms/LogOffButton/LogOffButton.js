@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getRefreshToken } from '../../../dataLayer/localStore/localStoreHelper';
+import { getRefreshToken } from '../../../dataLayer/accessToken/accessTokenHelper';
 import { useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
 
 const LogOffButton = () => {

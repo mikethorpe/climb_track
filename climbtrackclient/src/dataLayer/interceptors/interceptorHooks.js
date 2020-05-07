@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useSetAuthenticated } from '../actions/authenticationActions';
-import { setAccessTokens, getRefreshToken, clearAccessTokens, getAuthHeader } from '../localStore/localStoreHelper';
+import { setAccessTokens, getRefreshToken, clearAccessTokens, getAuthHeader } from '../accessToken/accessTokenHelper';
 
 export const useConfigureRefreshAccessTokenInterceptor = () => {
 
