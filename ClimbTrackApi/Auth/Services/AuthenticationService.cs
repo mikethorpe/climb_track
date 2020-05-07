@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Auth.Services
 {
-    public class AuthenticationService: IAuthenticationService
+    public class AuthenticationService
     {
         private IPasswordHasher<User> _passwordHasher;
         private IUserRepository _userRepository;

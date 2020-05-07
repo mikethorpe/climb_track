@@ -5,6 +5,7 @@ using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using ClimbTrackApi.Common.Communication;
+using ClimbTrackApi.Auth.Services;
 
 namespace ClimbTrackApi.Api.Controllers
 {
@@ -12,10 +13,10 @@ namespace ClimbTrackApi.Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        public IAuthenticationService authenticationService { get; set; }
+        public AuthenticationService authenticationService { get; set; }
         public IMapper mapper { get; set; }
 
-        public LoginController(IAuthenticationService authenticationService, IMapper mapper)
+        public LoginController(AuthenticationService authenticationService, IMapper mapper)
         {
             this.authenticationService = authenticationService;
             this.mapper = mapper;
