@@ -12,14 +12,9 @@ export const useCreateClimbingSession = () => {
         }
         const postResponse = await axios.post('/api/climbingsession', climbingSession);
         if (!postResponse) {
-            return;
+            return false;
         }
-        const response = await axios.get('/api/climbingsession');
-        if (!response?.data) {
-            return;
-        }
-        const fetchedClimbingSessions = response?.data;
-        dispatch({ type: SET_CLIMBING_SESSIONS, payload: fetchedClimbingSessions });
+        return true;
     };
 };
 
@@ -33,9 +28,9 @@ export const useFetchClimbingSessions = () => {
         }
         const response = await axios.get('/api/climbingsession');
         if (!response?.data) {
-            return;
+            return false;
         }
-        const fetchedClimbingSessions = response.data;
-        dispatch({ type: SET_CLIMBING_SESSIONS, payload: fetchedClimbingSessions });
+        dispatch({ type: SET_CLIMBING_SESSIONS, payload: response.data });
+        return true;
     };
 };

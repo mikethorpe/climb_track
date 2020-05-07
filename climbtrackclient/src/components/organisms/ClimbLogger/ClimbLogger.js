@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Knob from '../../atoms/Knob/Knob';
-import { useCreateClimbingSession } from '../../../dataLayer/actions/climbingSessionsActions';
+import { useCreateClimbingSession, useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from '@date-io/date-fns';
@@ -51,14 +51,18 @@ const ClimbLogger = () => {
     };
 
     const createClimbingSession = useCreateClimbingSession();
-    const storeClimbingSession = () => {
-        createClimbingSession({
+    const fetchClimbingSessions = useFetchClimbingSessions();
+    const storeClimbingSession = async () => {
+        const sessionCreated = await createClimbingSession({
             id: newId(),
             dateTime: selectedDate,
             maxGrade: calculateMaxGradeFromClimbs(climbs, grades.frenchSport),
             climbs: climbs
         });
-        clearClimbs();
+        if (sessionCreated) {
+            fetchClimbingSessions();
+            clearClimbs();
+        }
     };
 
     let displayGradeKnob = climb.grade == null;
@@ -68,6 +72,7 @@ const ClimbLogger = () => {
         {climb.grade + ' ' + climb.style.description}
         <Button variant="outlined" onClick={() => removeClimbFromClimbs(climb.id)}>Remove</Button>
     </Paper>);
+
     const gradeKnobControlText = 'What was the grade of your climb?';
     const styleKnobControlText = 'What was the style of your climb?';
 

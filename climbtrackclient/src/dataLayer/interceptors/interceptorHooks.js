@@ -7,7 +7,6 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
     let isRefreshingAccessToken = false;
     let queuedRequests = [];
 
-    // TODO: Handle storybook cases
     const setAuthenticated = useSetAuthenticated();
 
     function onAccessTokenFetched(authorizationHeader) {

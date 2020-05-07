@@ -2,7 +2,7 @@ import React from 'react';
 import ProviderWrapper from './dataLayer/store/providerWrapper';
 import createStore from './dataLayer/store/store';
 import Interceptor from './dataLayer/interceptors/interceptors';
-import { BrowserRouter as Router, Route, Switch, Link, Redirect, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
 import ClimbLog from './components/pages/ClimbLog/ClimbLog';
 import LogonForm from './components/organisms/LogonForm/LogonForm';
 import { useSelector, useDispatch } from 'react-redux';
