@@ -14,9 +14,9 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         }
 
-        public async Task AddAsync(RefreshToken exercise)
+        public async Task AddAsync(RefreshToken refreshToken)
         {
-            await context.AddAsync(exercise);
+            await context.AddAsync(refreshToken);
         }
 
         public async Task<RefreshToken> FindByIdAsync(int id)

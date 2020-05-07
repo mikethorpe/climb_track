@@ -4,6 +4,7 @@ using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
+using ClimbTrackApi.Common.Communication;
 
 namespace ClimbTrackApi.Api.Controllers
 {
@@ -11,15 +12,15 @@ namespace ClimbTrackApi.Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        public IAuthenticationService _authenticationService { get; set; }
-        public IMapper _mapper { get; set; }
+        public IAuthenticationService authenticationService { get; set; }
+        public IMapper mapper { get; set; }
+
         public LoginController(IAuthenticationService authenticationService, IMapper mapper)
         {
-            _authenticationService = authenticationService;
-            _mapper = mapper;
+            this.authenticationService = authenticationService;
+            this.mapper = mapper;
         }
 
-        [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] UserCredentialResource userCredentialResource)
         {
 
@@ -27,38 +28,41 @@ namespace ClimbTrackApi.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var response = await _authenticationService.CreateAccessTokenAsync(userCredentialResource.EmailAddress, userCredentialResource.Password);
+            ServiceResponse<AccessToken> response = await authenticationService.CreateAccessTokenAsync(userCredentialResource.EmailAddress, userCredentialResource.Password);
 
             if (!response.Success)
             {
                 return BadRequest(response.Message);
             }
-
-            var accessTokenResource = _mapper.Map<AccessToken, AccessTokenResource>(response.Entity);
-
+            var accessTokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Entity);
             return Ok(accessTokenResource);
         }
 
-        // add route to request new access token by providing refresh token
-        [HttpPost("api/token/refresh")]
-        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenResource refreshTokenResource)
+        [HttpPost("refresh")]
+        public async Task<IActionResult> RefreshAccessToken([FromBody] RefreshTokenResource refreshTokenResource)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            ServiceResponse<AccessToken> response = await authenticationService.RefreshTokenAsync(refreshTokenResource.Token);
 
-            var response = await _authenticationService.RefreshTokenAsync(refreshTokenResource.Token, refreshTokenResource.EmailAddress);
-
-            if (response.Entity == null) return BadRequest(response.Message);
-
-            var tokenResource = _mapper.Map<AccessToken, AccessTokenResource>(response.Entity);
+            if (response.Entity == null)
+            {
+                return BadRequest(response.Message);
+            }
+            var tokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Entity);
             return Ok(tokenResource);
         }
 
-        [HttpPost("api/token/revoke")]
+        [HttpPost("revoke")]
         public async Task<IActionResult> RevokeRefreshTokenAsync([FromBody] RevokeTokenResource revokeTokenResource)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            await _authenticationService.RevokeRefreshTokenAsync(revokeTokenResource.Token);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await authenticationService.RevokeRefreshTokenAsync(revokeTokenResource.Token);
             return NoContent();
         }
 

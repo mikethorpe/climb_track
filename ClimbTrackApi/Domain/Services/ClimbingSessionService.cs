@@ -9,22 +9,27 @@ namespace ClimbTrackApi.Domain.Services
     public class ClimbingSessionService : IClimbingSessionService
     {
         private readonly IClimbingSessionRepository climbingSessionRepository;
+        private readonly IUserRepository userRepository;
         private readonly IUnitOfWork unitOfWork;
 
-        public ClimbingSessionService(IClimbingSessionRepository climbingSessionRepository, IUnitOfWork unitOfWork)
+        public ClimbingSessionService(IClimbingSessionRepository climbingSessionRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             this.climbingSessionRepository = climbingSessionRepository;
+            this.userRepository = userRepository;
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ICollection<ClimbingSession>> ListAsync()
+        public async Task<ICollection<ClimbingSession>> ListAsync(string emailAddress)
         {
-            return await climbingSessionRepository.ListAsync();
+            User user = userRepository.FindByEmailAddress(emailAddress);
+            return await climbingSessionRepository.ListAsync(user.Id);
         }
 
-        public async Task<ClimbingSession> SaveAsync(ClimbingSession climbingSession)
+        public async Task<ClimbingSession> SaveAsync(ClimbingSession climbingSession, string emailAddress)
         {
-            ClimbingSession savedClimbingSession =  await climbingSessionRepository.AddAsync(climbingSession);
+            User user = userRepository.FindByEmailAddress(emailAddress);
+            climbingSession.UserId = user.Id;
+            ClimbingSession savedClimbingSession = await climbingSessionRepository.AddAsync(climbingSession);
             await unitOfWork.CompleteAsync();
             return savedClimbingSession;
         }

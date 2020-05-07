@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using ClimbTrackApi.Auth.Interfaces;
-using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Api.Extensions;
 using ClimbTrackApi.Api.Resources;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ClimbTrackApi.Domain.Models;
 
 namespace ClimbTrackApi.Api.Controllers
 {
@@ -22,13 +21,6 @@ namespace ClimbTrackApi.Api.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> TestAuth()
-        {
-            return await Task.FromResult<IActionResult>(Ok("Access granted"));
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserCredentialResource userCredentialResource)
         {
@@ -37,7 +29,7 @@ namespace ClimbTrackApi.Api.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            var user = _mapper.Map<UserCredentialResource, User>(userCredentialResource);
+            User user = _mapper.Map<UserCredentialResource, User>(userCredentialResource);
 
             var result = await _userService.CreateUserAsync(RoleEnum.USER, user);
 

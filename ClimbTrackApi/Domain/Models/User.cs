@@ -1,4 +1,4 @@
-﻿namespace ClimbTrackApi.Auth.Models
+﻿namespace ClimbTrackApi.Domain.Models
 {
     public class User
     {

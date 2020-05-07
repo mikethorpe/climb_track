@@ -1,7 +1,7 @@
-﻿using ClimbTrackApi.Auth.Models;
+﻿using ClimbTrackApi.Domain.Models;
 using System.Threading.Tasks;
 
-namespace ClimbTrackApi.Auth.Interfaces
+namespace ClimbTrackApi.Domain.Interfaces
 {
     public interface IUserRepository
     {

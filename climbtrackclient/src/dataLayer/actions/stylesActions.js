@@ -5,6 +5,7 @@ import { SET_STYLES } from './types';
 
 export const useFetchStyles = () => {
     const dispatch = useDispatch();
+
     return async () => {
         if (process.env.STORYBOOK_MODE) {
             const fetchedStyles = mockApi.styles;
@@ -12,7 +13,11 @@ export const useFetchStyles = () => {
             return;
         }
         const response = await axios.get('/api/style');
+        if (!response?.data) {
+            return false;
+        }
         const fetchedStyles = response.data;
         dispatch({ type: SET_STYLES, payload: fetchedStyles });
+        return true;
     }
 };

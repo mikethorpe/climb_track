@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using ClimbTrackApi.Auth.Interfaces;
-using ClimbTrackApi.Auth.Models;
+using ClimbTrackApi.Domain.Interfaces;
+using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Persistence.Contexts;
 
 namespace ClimbTrackApi.Persistence.Repositories
