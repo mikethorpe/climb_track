@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ProviderWrapper from './dataLayer/store/providerWrapper';
 import createStore from './dataLayer/store/store';
 import Interceptor from './dataLayer/interceptors/interceptors';
@@ -6,9 +6,7 @@ import { BrowserRouter as Router, Route, Switch, Link, Redirect, useHistory } fr
 import ClimbLog from './components/pages/ClimbLog/ClimbLog';
 import LogonForm from './components/organisms/LogonForm/LogonForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { createSelector } from 'reselect';
 import LogOffButton from './components/atoms/LogOffButton/LogOffButton';
-import { SET_AUTHENTICATED } from './dataLayer/actions/types';
 
 const store = createStore();
 

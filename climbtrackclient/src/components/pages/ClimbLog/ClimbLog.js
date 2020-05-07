@@ -7,14 +7,11 @@ import ClimbLogger from '../../organisms/ClimbLogger/ClimbLogger';
 import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
 import axios from 'axios';
+import { setAuthHeader } from '../../../dataLayer/localStore/localStoreHelper';
 
 const TabPanel = (props) => {
     const { children, value, index } = props;
     return (<div hidden={value !== index}>{children}</div>);
-};
-
-const setAuthHeader = () => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
 };
 
 const ClimbLog = () => {
