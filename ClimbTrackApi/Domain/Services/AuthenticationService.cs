@@ -41,9 +41,9 @@ namespace ClimbTrackApi.Domain.Services
                 }
                 return new ServiceResponse<AccessToken>($"Error: invalid credentials");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new ServiceResponse<AccessToken>($"Error when creating authentication token: {ex.Message}");
+                return new ServiceResponse<AccessToken>($"Error when creating authentication token");
             }
         }
 

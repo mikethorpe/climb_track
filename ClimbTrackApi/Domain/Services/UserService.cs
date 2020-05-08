@@ -38,9 +38,9 @@ namespace ClimbTrackApi.Domain.Services
                 await unitOfWork.CompleteAsync();
                 return new ServiceResponse<User>(user);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new ServiceResponse<User>($"Error occurred whilst creating user: {ex.Message}");
+                return new ServiceResponse<User>($"Error occurred whilst creating user");
             }
         }
     }
