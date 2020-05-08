@@ -8,26 +8,26 @@ namespace ClimbTrackApi.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        ClimbTrackContext _context;
+        private readonly ClimbTrackContext context;
 
         public UserRepository(ClimbTrackContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task<User> FindByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await context.Users.FindAsync(id);
         }
 
         public async Task AddAsync(User user)
         {
-            await _context.Users.AddAsync(user);
+            await context.Users.AddAsync(user);
         }
 
         public User FindByEmailAddress(string emailAddress)
         {
-            return _context.Users
+            return context.Users
                 .Where(u => u.EmailAddress == emailAddress)
                 .SingleOrDefault();
         }

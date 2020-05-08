@@ -12,11 +12,11 @@ namespace ClimbTrackApi.Domain.Services
 {
     public class TokenHandler
     {
-        private IPasswordHasher<User> passwordHasher;
-        private IConfiguration configuration; 
+        private readonly IPasswordHasher<User> passwordHasher;
+        private readonly IConfiguration configuration; 
         private readonly SigningConfigurations signingConfigurations;
-        public IRefreshTokenRepository refreshTokenRepository { get; set; }
-        public IUnitOfWork unitOfWork { get; set; }
+        private readonly IRefreshTokenRepository refreshTokenRepository;
+        private readonly IUnitOfWork unitOfWork;
 
         public TokenHandler(IPasswordHasher<User> passwordHasher, IConfiguration configuration, IRefreshTokenRepository refreshTokenRepository, IUnitOfWork unitOfWork, SigningConfigurations signingConfigurations)
         {

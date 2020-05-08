@@ -12,8 +12,8 @@ namespace ClimbTrackApi.Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        public AuthenticationService authenticationService { get; set; }
-        public IMapper mapper { get; set; }
+        private readonly AuthenticationService authenticationService;
+        private readonly IMapper mapper;
 
         public LoginController(AuthenticationService authenticationService, IMapper mapper)
         {
