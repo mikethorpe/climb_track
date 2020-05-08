@@ -39,7 +39,7 @@ export const useConfigureRefreshAccessTokenInterceptor = () => {
                         .then(res => {
 
                             if (res.status === 200) {
-                                setAccessTokens(res.data.token, res.data.refreshToken.token);
+                                setAccessTokens(res.data.accessToken, res.data.refreshToken);
                                 const authHeader = getAuthHeader();
                                 originalRequest.headers.Authorization = authHeader;
                                 isRefreshingAccessToken = false;

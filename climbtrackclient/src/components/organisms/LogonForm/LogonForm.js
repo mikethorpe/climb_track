@@ -43,7 +43,7 @@ const LogonForm = () => {
     const onLogonButtonClick = async () => {
         const response = await axios.post('/api/login', credentials);
         if (response.status == 200) {
-            setAccessTokens(response.data.token, response.data.refreshToken.token);
+            setAccessTokens(response.data.accessToken, response.data.refreshToken);
             setAuthenticated(true);
             history.replace(from);
             return;
