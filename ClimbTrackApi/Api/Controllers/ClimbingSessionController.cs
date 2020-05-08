@@ -45,7 +45,6 @@ namespace ClimbTrackApi.Api.Controllers
                     Climbs = cs.Climbs,
                     MaxGrade = cs.MaxGrade
                 });
-
                 return Ok(climbingSessionsDto);
             }
             return NoContent();

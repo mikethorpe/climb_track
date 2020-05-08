@@ -10,7 +10,7 @@ namespace ClimbTrackApi.Api.Mapping
         {
             CreateMap<User, UserResource>()
                 .ForMember(ur => ur.Role, opt => opt.MapFrom(u => u.Role.ToString()));
-            CreateMap<AccessToken, AccessTokenResource>();
+            CreateMap<AccessToken, AccessTokenDto>();
         } 
     }
     

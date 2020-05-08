@@ -20,20 +20,27 @@ namespace ClimbTrackApi.Api.Controllers
             this.authenticationService = authenticationService;
             this.mapper = mapper;
         }
+
         public async Task<IActionResult> Login([FromBody] UserCredentialResource userCredentialResource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            
             ServiceResponse<AccessToken> response = await authenticationService.CreateAccessTokenAsync(userCredentialResource.EmailAddress, userCredentialResource.Password);
-
             if (!response.Success)
             {
                 return BadRequest(response.Message);
             }
-            var accessTokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Model);
-            return Ok(accessTokenResource);
+            AccessToken accessToken = response.Model;
+            var accessTokenDto = new AccessTokenDto
+            {
+                AccessToken = accessToken.Token,
+                RefreshToken = accessToken.RefreshToken.Token,
+                RefreshTokenExpiration = accessToken.RefreshToken.Expiration
+            };
+            return Ok(accessTokenDto);
         }
 
         [HttpPost("refresh")]
@@ -49,7 +56,7 @@ namespace ClimbTrackApi.Api.Controllers
             {
                 return BadRequest(response.Message);
             }
-            var tokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Model);
+            var tokenResource = mapper.Map<AccessToken, AccessTokenDto>(response.Model);
             return Ok(tokenResource);
         }
 
@@ -63,6 +70,5 @@ namespace ClimbTrackApi.Api.Controllers
             await authenticationService.RevokeRefreshTokenAsync(revokeTokenResource.Token);
             return NoContent();
         }
-
     }
 }
