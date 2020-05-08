@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace ClimbTrackApi.Auth.Models
+namespace ClimbTrackApi.Domain.Models
 {
     public class RefreshToken
     {
-        // ToDo: Should the Ids here be serialized?
         public int Id { get; set; }
-        public string Token { get; set; }
-        public DateTime Expiration { get; set; }
         public int UserId { get; set; }
         public DateTime? Deleted { get; set; }
+        public string Token { get; set; }
+        public DateTime Expiration { get; set; }
 
         public bool IsExpired()
         {

@@ -1,6 +1,6 @@
 ﻿namespace ClimbTrackApi.Api.Resources
 {
-    public class UserResource
+    public class UserDto
     {
         public int Id { get; set; }
         public string EmailAddress { get; set; }

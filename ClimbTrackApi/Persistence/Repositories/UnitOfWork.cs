@@ -6,16 +6,16 @@ namespace ClimbTrackApi.Persistence.Repositories
 {
     public class UnitOfWork: IUnitOfWork
     {
-        private readonly ClimbTrackContext _context;
+        private readonly ClimbTrackContext context;
 
         public UnitOfWork(ClimbTrackContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task CompleteAsync()
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
     }
 }

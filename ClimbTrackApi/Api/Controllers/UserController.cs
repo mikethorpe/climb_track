@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
-using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Api.Extensions;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Domain.Services;
 
 namespace ClimbTrackApi.Api.Controllers
 {
@@ -12,13 +11,11 @@ namespace ClimbTrackApi.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService _userService;
-        private IMapper _mapper;
+        private readonly UserService userService;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(UserService userService)
         {
-            _userService = userService;
-            _mapper = mapper;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -29,17 +26,21 @@ namespace ClimbTrackApi.Api.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            User user = _mapper.Map<UserCredentialResource, User>(userCredentialResource);
+            var userToSave = new User
+            {
+                EmailAddress = userCredentialResource.EmailAddress,
+                Password = userCredentialResource.Password,
+            };
 
-            var result = await _userService.CreateUserAsync(RoleEnum.USER, user);
+            var response = await userService.CreateUserAsync(RoleEnum.USER, userToSave);
 
-            if (!result.Success) return BadRequest(result.Message);
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
 
-            // TODO: user resource should contain list of roles - user may have multiple
-            var userResource = _mapper.Map<User, UserResource>(result.Entity);
-
-            return Ok(userResource);
-
+            User savedUser = response.Model;
+            return Ok(savedUser.Id);
         }
     }
 }

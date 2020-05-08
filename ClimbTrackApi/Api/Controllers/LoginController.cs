@@ -1,41 +1,43 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
-using ClimbTrackApi.Auth.Interfaces;
-using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
-using ClimbTrackApi.Common.Communication;
+using ClimbTrackApi.Domain.Services;
+using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Domain.Communication;
 
 namespace ClimbTrackApi.Api.Controllers
 {
-    [Route("api/login")]
+    [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
-        public IAuthenticationService authenticationService { get; set; }
-        public IMapper mapper { get; set; }
+        private readonly AuthenticationService authenticationService;
 
-        public LoginController(IAuthenticationService authenticationService, IMapper mapper)
+        public LoginController(AuthenticationService authenticationService)
         {
             this.authenticationService = authenticationService;
-            this.mapper = mapper;
         }
 
-        public async Task<IActionResult> LoginAsync([FromBody] UserCredentialResource userCredentialResource)
+        public async Task<IActionResult> Login([FromBody] UserCredentialResource userCredentialResource)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            
             ServiceResponse<AccessToken> response = await authenticationService.CreateAccessTokenAsync(userCredentialResource.EmailAddress, userCredentialResource.Password);
-
             if (!response.Success)
             {
                 return BadRequest(response.Message);
             }
-            var accessTokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Entity);
-            return Ok(accessTokenResource);
+            AccessToken accessToken = response.Model;
+            var accessTokenDto = new AccessTokenDto
+            {
+                AccessToken = accessToken.Token,
+                RefreshToken = accessToken.RefreshToken.Token,
+                RefreshTokenExpiration = accessToken.RefreshToken.Expiration
+            };
+            return Ok(accessTokenDto);
         }
 
         [HttpPost("refresh")]
@@ -46,17 +48,24 @@ namespace ClimbTrackApi.Api.Controllers
                 return BadRequest(ModelState);
             }
             ServiceResponse<AccessToken> response = await authenticationService.RefreshTokenAsync(refreshTokenResource.Token);
-
-            if (response.Entity == null)
+            
+            if (response.Model == null)
             {
                 return BadRequest(response.Message);
             }
-            var tokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Entity);
+            AccessToken accessToken = response.Model;
+            var tokenResource = new AccessTokenDto
+            {
+                AccessToken = accessToken.Token,
+                RefreshToken = accessToken.RefreshToken.Token,
+                RefreshTokenExpiration = accessToken.RefreshToken.Expiration
+            };
+            
             return Ok(tokenResource);
         }
 
         [HttpPost("revoke")]
-        public async Task<IActionResult> RevokeRefreshTokenAsync([FromBody] RevokeTokenResource revokeTokenResource)
+        public async Task<IActionResult> RevokeRefreshToken([FromBody] RevokeTokenResource revokeTokenResource)
         {
             if (!ModelState.IsValid)
             {
@@ -65,6 +74,5 @@ namespace ClimbTrackApi.Api.Controllers
             await authenticationService.RevokeRefreshTokenAsync(revokeTokenResource.Token);
             return NoContent();
         }
-
     }
 }

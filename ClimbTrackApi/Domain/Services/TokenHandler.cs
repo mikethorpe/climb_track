@@ -1,6 +1,4 @@
-﻿using ClimbTrackApi.Auth.Interfaces;
-using ClimbTrackApi.Auth.Models;
-using ClimbTrackApi.Domain.Interfaces;
+﻿using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -10,15 +8,15 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace ClimbTrackApi.Auth.Helpers
+namespace ClimbTrackApi.Domain.Services
 {
     public class TokenHandler
     {
-        private IPasswordHasher<User> passwordHasher;
-        private IConfiguration configuration; 
+        private readonly IPasswordHasher<User> passwordHasher;
+        private readonly IConfiguration configuration; 
         private readonly SigningConfigurations signingConfigurations;
-        public IRefreshTokenRepository refreshTokenRepository { get; set; }
-        public IUnitOfWork unitOfWork { get; set; }
+        private readonly IRefreshTokenRepository refreshTokenRepository;
+        private readonly IUnitOfWork unitOfWork;
 
         public TokenHandler(IPasswordHasher<User> passwordHasher, IConfiguration configuration, IRefreshTokenRepository refreshTokenRepository, IUnitOfWork unitOfWork, SigningConfigurations signingConfigurations)
         {
@@ -32,12 +30,12 @@ namespace ClimbTrackApi.Auth.Helpers
         // tokens should be stored in db
         // probably should hash / encrypt the tokens as well
         // passwords should be encrypted on sending to the api
-        public AccessToken GenerateAccessToken(User user)
+        public async Task<AccessToken> GenerateAccessToken(User user)
         {
             var refreshToken = BuildRefreshToken(user);
             // TODO: Hash / encrypt refresh tokens
-            refreshTokenRepository.AddAsync(refreshToken);
-            unitOfWork.CompleteAsync();
+            await refreshTokenRepository.AddAsync(refreshToken);
+            await unitOfWork.CompleteAsync();
             var accessToken = BuildAccessToken(user, refreshToken);
             return accessToken;
         }
