@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
 using ClimbTrackApi.Api.Extensions;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +12,10 @@ namespace ClimbTrackApi.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService userService;
-        private readonly IMapper mapper;
 
-        public UserController(UserService userService, IMapper mapper)
+        public UserController(UserService userService)
         {
             this.userService = userService;
-            this.mapper = mapper;
         }
 
         [HttpPost]
@@ -29,17 +26,21 @@ namespace ClimbTrackApi.Api.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            User user = mapper.Map<UserCredentialResource, User>(userCredentialResource);
+            var userToSave = new User
+            {
+                EmailAddress = userCredentialResource.EmailAddress,
+                Password = userCredentialResource.Password,
+            };
 
-            var result = await userService.CreateUserAsync(RoleEnum.USER, user);
+            var response = await userService.CreateUserAsync(RoleEnum.USER, userToSave);
 
-            if (!result.Success) return BadRequest(result.Message);
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
 
-            // TODO: user resource should contain list of roles - user may have multiple
-            var userResource = mapper.Map<User, UserResource>(result.Model);
-
-            return Ok(userResource);
-
+            User savedUser = response.Model;
+            return Ok(savedUser.Id);
         }
     }
 }

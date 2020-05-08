@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClimbTrackApi.Domain.Communication;
 using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -24,7 +25,8 @@ namespace ClimbTrackApi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStylesAsync()
         {
-            IEnumerable<Style> styles = await styleService.ListAsync();
+            ServiceResponse<IEnumerable<Style>> response = await styleService.ListAsync();
+            IEnumerable<Style> styles = response.Model;
             if (styles.Any())
             {
                 return Ok(styles);

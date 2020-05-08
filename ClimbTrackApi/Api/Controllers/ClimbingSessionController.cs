@@ -28,14 +28,14 @@ namespace ClimbTrackApi.Api.Controllers
         {
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             string emailAddress = identity.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
-            ServiceResponse<IEnumerable<ClimbingSession>> serviceResponse = await climbingSessionService.ListAsync(emailAddress);
+            ServiceResponse<IEnumerable<ClimbingSession>> response = await climbingSessionService.ListAsync(emailAddress);
             
-            if (!serviceResponse.Success)
+            if (!response.Success)
             {
-                return BadRequest(serviceResponse.Message);
+                return BadRequest(response.Message);
             }
 
-            IEnumerable<ClimbingSession> climbingSessions = serviceResponse.Model;
+            IEnumerable<ClimbingSession> climbingSessions = response.Model;
             if (climbingSessions.Any())
             {
                 var climbingSessionsDto = climbingSessions.Select(cs => new ClimbingSessionDto
@@ -55,14 +55,14 @@ namespace ClimbTrackApi.Api.Controllers
         {
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             string emailAddress = identity.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
-            ServiceResponse<ClimbingSession> serviceResponse = await climbingSessionService.SaveAsync(climbingSession, emailAddress);
+            ServiceResponse<ClimbingSession> response = await climbingSessionService.SaveAsync(climbingSession, emailAddress);
             
-            if (!serviceResponse.Success)
+            if (!response.Success)
             {
-                return BadRequest(serviceResponse.Message);
+                return BadRequest(response.Message);
             }
 
-            return Ok(serviceResponse.Model.Id);
+            return Ok(response.Model.Id);
         }
     }
 }

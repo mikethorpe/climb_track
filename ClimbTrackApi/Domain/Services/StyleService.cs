@@ -1,4 +1,5 @@
-﻿using ClimbTrackApi.Domain.Interfaces;
+﻿using ClimbTrackApi.Domain.Communication;
+using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,9 +15,10 @@ namespace ClimbTrackApi.Domain.Services
             this.styleRepository = styleRepository;
         }
 
-        public async Task<IEnumerable<Style>> ListAsync()
+        public async Task<ServiceResponse<IEnumerable<Style>>> ListAsync()
         {
-            return await styleRepository.ListAsync();
+            IEnumerable<Style> styles = await styleRepository.ListAsync();
+            return new ServiceResponse<IEnumerable<Style>>(styles);
         }
     }
 }

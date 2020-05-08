@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
-using ClimbTrackApi.Api.Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -49,7 +47,6 @@ namespace ClimbTrackApi.Api
             services.AddScoped<IClimbingSessionRepository, ClimbingSessionRepository>();
             services.AddScoped<ClimbingSessionService>();
             services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
-            services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
             
             // JWT authentication
             var signingConfigurations = new SigningConfigurations();

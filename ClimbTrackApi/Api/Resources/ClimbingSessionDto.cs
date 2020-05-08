@@ -1,5 +1,4 @@
 ﻿using ClimbTrackApi.Domain.Models;
-using System;
 using System.Collections.Generic;
 
 namespace ClimbTrackApi.Api.Resources

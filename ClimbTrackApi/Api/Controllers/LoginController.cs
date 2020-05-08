@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using ClimbTrackApi.Domain.Services;
@@ -13,12 +12,10 @@ namespace ClimbTrackApi.Api.Controllers
     public class LoginController : ControllerBase
     {
         private readonly AuthenticationService authenticationService;
-        private readonly IMapper mapper;
 
-        public LoginController(AuthenticationService authenticationService, IMapper mapper)
+        public LoginController(AuthenticationService authenticationService)
         {
             this.authenticationService = authenticationService;
-            this.mapper = mapper;
         }
 
         public async Task<IActionResult> Login([FromBody] UserCredentialResource userCredentialResource)
@@ -51,12 +48,19 @@ namespace ClimbTrackApi.Api.Controllers
                 return BadRequest(ModelState);
             }
             ServiceResponse<AccessToken> response = await authenticationService.RefreshTokenAsync(refreshTokenResource.Token);
-
+            
             if (response.Model == null)
             {
                 return BadRequest(response.Message);
             }
-            var tokenResource = mapper.Map<AccessToken, AccessTokenDto>(response.Model);
+            AccessToken accessToken = response.Model;
+            var tokenResource = new AccessTokenDto
+            {
+                AccessToken = accessToken.Token,
+                RefreshToken = accessToken.RefreshToken.Token,
+                RefreshTokenExpiration = accessToken.RefreshToken.Expiration
+            };
+            
             return Ok(tokenResource);
         }
 
