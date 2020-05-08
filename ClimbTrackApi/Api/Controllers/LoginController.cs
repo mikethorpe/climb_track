@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using ClimbTrackApi.Auth.Interfaces;
-using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using ClimbTrackApi.Common.Communication;
-using ClimbTrackApi.Auth.Services;
+using ClimbTrackApi.Domain.Services;
+using ClimbTrackApi.Domain.Models;
 
 namespace ClimbTrackApi.Api.Controllers
 {

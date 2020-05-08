@@ -1,5 +1,5 @@
-﻿using ClimbTrackApi.Auth.Interfaces;
-using ClimbTrackApi.Auth.Models;
+﻿using ClimbTrackApi.Domain.Interfaces;
+using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

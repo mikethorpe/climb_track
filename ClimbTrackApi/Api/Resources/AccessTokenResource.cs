@@ -1,4 +1,4 @@
-﻿using ClimbTrackApi.Auth.Models;
+﻿using ClimbTrackApi.Domain.Models;
 
 namespace ClimbTrackApi.Api.Resources
 {

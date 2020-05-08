@@ -4,7 +4,7 @@ using ClimbTrackApi.Api.Extensions;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using ClimbTrackApi.Domain.Models;
-using ClimbTrackApi.Auth.Services;
+using ClimbTrackApi.Domain.Services;
 
 namespace ClimbTrackApi.Api.Controllers
 {
@@ -12,13 +12,13 @@ namespace ClimbTrackApi.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private UserService _userService;
-        private IMapper _mapper;
+        private readonly UserService userService;
+        private readonly IMapper mapper;
 
         public UserController(UserService userService, IMapper mapper)
         {
-            _userService = userService;
-            _mapper = mapper;
+            this.userService = userService;
+            this.mapper = mapper;
         }
 
         [HttpPost]
@@ -29,14 +29,14 @@ namespace ClimbTrackApi.Api.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            User user = _mapper.Map<UserCredentialResource, User>(userCredentialResource);
+            User user = mapper.Map<UserCredentialResource, User>(userCredentialResource);
 
-            var result = await _userService.CreateUserAsync(RoleEnum.USER, user);
+            var result = await userService.CreateUserAsync(RoleEnum.USER, user);
 
             if (!result.Success) return BadRequest(result.Message);
 
             // TODO: user resource should contain list of roles - user may have multiple
-            var userResource = _mapper.Map<User, UserResource>(result.Entity);
+            var userResource = mapper.Map<User, UserResource>(result.Entity);
 
             return Ok(userResource);
 

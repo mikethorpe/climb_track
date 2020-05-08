@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
 
-namespace ClimbTrackApi.Auth.Services
+namespace ClimbTrackApi.Domain.Services
 {
     public class UserService
     {
@@ -36,9 +36,6 @@ namespace ClimbTrackApi.Auth.Services
             {
                 await userRepository.AddAsync(user);
                 await unitOfWork.CompleteAsync();
-                // In the controller we map this to a user resource
-                // We are returning the hashed password into the controller method here which is potentially dangerous
-                // Should it ever be returned from this method???
                 return new ServiceResponse<User>(user);
             }
             catch (Exception ex)

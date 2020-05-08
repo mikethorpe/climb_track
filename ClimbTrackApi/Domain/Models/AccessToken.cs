@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ClimbTrackApi.Auth.Models
+﻿namespace ClimbTrackApi.Domain.Models
 {
     public class AccessToken
     {

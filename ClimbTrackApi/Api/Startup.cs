@@ -11,14 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Auth.Services;
-using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Persistence.Repositories;
-using TokenHandler = ClimbTrackApi.Auth.Helpers.TokenHandler;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using ClimbTrackApi.Auth.Models;
+using ClimbTrackApi.Domain.Models;
 
 namespace ClimbTrackApi.Api
 {
@@ -44,7 +41,7 @@ namespace ClimbTrackApi.Api
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<AuthenticationService>();
             services.AddScoped<StyleService>();
-            services.AddScoped<TokenHandler>();
+            services.AddScoped<Domain.Services.TokenHandler>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -1,26 +1,23 @@
-﻿using ClimbTrackApi.Auth.Helpers;
-using ClimbTrackApi.Auth.Interfaces;
-using ClimbTrackApi.Auth.Models;
-using ClimbTrackApi.Common.Communication;
+﻿using ClimbTrackApi.Common.Communication;
 using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
 
-namespace ClimbTrackApi.Auth.Services
+namespace ClimbTrackApi.Domain.Services
 {
     public class AuthenticationService
     {
-        private IPasswordHasher<User> _passwordHasher;
-        private IUserRepository _userRepository;
-        private TokenHandler _tokenHandler;
+        private readonly IPasswordHasher<User> passwordHasher;
+        private readonly IUserRepository userRepository;
+        private readonly TokenHandler tokenHandler;
 
         public AuthenticationService(IPasswordHasher<User> passwordHasher, IUserRepository userRepository,  TokenHandler tokenHandler)
         {
-            _passwordHasher = passwordHasher;
-            _userRepository = userRepository;
-            _tokenHandler = tokenHandler;
+            this.passwordHasher = passwordHasher;
+            this.userRepository = userRepository;
+            this.tokenHandler = tokenHandler;
         }
 
         public async Task<ServiceResponse<AccessToken>> CreateAccessTokenAsync(string emailAddress, string password)
@@ -28,16 +25,16 @@ namespace ClimbTrackApi.Auth.Services
             // TODO: wrap all in transaction to account for failures
             try
             {
-                User existingUser = _userRepository.FindByEmailAddress(emailAddress);
+                User existingUser = userRepository.FindByEmailAddress(emailAddress);
 
                 if (existingUser == null)
                 {
                     return new ServiceResponse<AccessToken>($"Error: cannot find user with email address: {emailAddress}");
                 }
-                PasswordVerificationResult passwordVerification =_passwordHasher.VerifyHashedPassword(existingUser, existingUser.Password, password);
+                PasswordVerificationResult passwordVerification =passwordHasher.VerifyHashedPassword(existingUser, existingUser.Password, password);
                 if (passwordVerification == PasswordVerificationResult.Success)
                 {
-                    AccessToken token = _tokenHandler.GenerateAccessToken(existingUser);
+                    AccessToken token = tokenHandler.GenerateAccessToken(existingUser);
 
                     // call save async here on the context here?
                     return new ServiceResponse<AccessToken>(token);
@@ -52,7 +49,7 @@ namespace ClimbTrackApi.Auth.Services
 
         public async Task<ServiceResponse<AccessToken>> RefreshTokenAsync(string refreshToken)
         {
-            RefreshToken refreshTokenEntity = await _tokenHandler.GetRefreshTokenAsync(refreshToken);
+            RefreshToken refreshTokenEntity = await tokenHandler.GetRefreshTokenAsync(refreshToken);
             if (refreshTokenEntity == null)
             {
                 return new ServiceResponse<AccessToken>("Invalid refresh token");
@@ -61,18 +58,18 @@ namespace ClimbTrackApi.Auth.Services
             {
                 return new ServiceResponse<AccessToken>("Refresh token expired");
             }
-            User user = await _userRepository.FindByIdAsync(refreshTokenEntity.UserId);
+            User user = await userRepository.FindByIdAsync(refreshTokenEntity.UserId);
             if (user == null)
             {
                 return new ServiceResponse<AccessToken>("Invalid refresh token for user");
             }
-            var accessToken = _tokenHandler.GenerateAccessToken(user);
+            var accessToken = tokenHandler.GenerateAccessToken(user);
             return new ServiceResponse<AccessToken>(accessToken);
         }
 
         public async Task<ServiceResponse<object>> RevokeRefreshTokenAsync(string refreshToken)
         {
-            await _tokenHandler.RevokeRefreshToken(refreshToken);
+            await tokenHandler.RevokeRefreshToken(refreshToken);
             return new ServiceResponse<object>(new Object());
         }
     }
