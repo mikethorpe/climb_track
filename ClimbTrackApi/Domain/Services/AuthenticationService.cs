@@ -2,7 +2,6 @@
 using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Domain.Services
@@ -22,29 +21,20 @@ namespace ClimbTrackApi.Domain.Services
 
         public async Task<ServiceResponse<AccessToken>> CreateAccessTokenAsync(string emailAddress, string password)
         {
-            // TODO: wrap all in transaction to account for failures
-            try
+            User existingUser = userRepository.FindByEmailAddress(emailAddress);
+            if (existingUser == null)
             {
-                User existingUser = userRepository.FindByEmailAddress(emailAddress);
-
-                if (existingUser == null)
-                {
-                    return new ServiceResponse<AccessToken>($"Error: cannot find user with email address: {emailAddress}");
-                }
-                PasswordVerificationResult passwordVerification =passwordHasher.VerifyHashedPassword(existingUser, existingUser.Password, password);
-                if (passwordVerification == PasswordVerificationResult.Success)
-                {
-                    AccessToken token = tokenHandler.GenerateAccessToken(existingUser);
-
-                    // call save async here on the context here?
-                    return new ServiceResponse<AccessToken>(token);
-                }
-                return new ServiceResponse<AccessToken>($"Error: invalid credentials");
+                return new ServiceResponse<AccessToken>("Error: cannot find user by email address");
             }
-            catch (Exception)
+
+            PasswordVerificationResult passwordVerification = passwordHasher.VerifyHashedPassword(existingUser, existingUser.Password, password);
+            if (passwordVerification == PasswordVerificationResult.Success)
             {
-                return new ServiceResponse<AccessToken>($"Error when creating authentication token");
+                AccessToken token = await tokenHandler.GenerateAccessToken(existingUser);
+                return new ServiceResponse<AccessToken>(token);
             }
+
+            return new ServiceResponse<AccessToken>($"Error: invalid credentials");
         }
 
         public async Task<ServiceResponse<AccessToken>> RefreshTokenAsync(string refreshToken)
@@ -58,19 +48,21 @@ namespace ClimbTrackApi.Domain.Services
             {
                 return new ServiceResponse<AccessToken>("Refresh token expired");
             }
+            
             User user = await userRepository.FindByIdAsync(refreshTokenEntity.UserId);
             if (user == null)
             {
                 return new ServiceResponse<AccessToken>("Invalid refresh token for user");
             }
-            var accessToken = tokenHandler.GenerateAccessToken(user);
+            
+            var accessToken = await tokenHandler.GenerateAccessToken(user);
             return new ServiceResponse<AccessToken>(accessToken);
         }
 
-        public async Task<ServiceResponse<object>> RevokeRefreshTokenAsync(string refreshToken)
+        public async Task<ServiceResponse<RefreshToken>> RevokeRefreshTokenAsync(string refreshToken)
         {
             await tokenHandler.RevokeRefreshToken(refreshToken);
-            return new ServiceResponse<object>(new Object());
+            return new ServiceResponse<RefreshToken>(refreshToken);
         }
     }
 }

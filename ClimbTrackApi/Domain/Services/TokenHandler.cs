@@ -30,12 +30,12 @@ namespace ClimbTrackApi.Domain.Services
         // tokens should be stored in db
         // probably should hash / encrypt the tokens as well
         // passwords should be encrypted on sending to the api
-        public AccessToken GenerateAccessToken(User user)
+        public async Task<AccessToken> GenerateAccessToken(User user)
         {
             var refreshToken = BuildRefreshToken(user);
             // TODO: Hash / encrypt refresh tokens
-            refreshTokenRepository.AddAsync(refreshToken);
-            unitOfWork.CompleteAsync();
+            await refreshTokenRepository.AddAsync(refreshToken);
+            await unitOfWork.CompleteAsync();
             var accessToken = BuildAccessToken(user, refreshToken);
             return accessToken;
         }

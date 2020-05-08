@@ -8,7 +8,7 @@ using ClimbTrackApi.Domain.Communication;
 
 namespace ClimbTrackApi.Api.Controllers
 {
-    [Route("api/login")]
+    [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace ClimbTrackApi.Api.Controllers
             this.authenticationService = authenticationService;
             this.mapper = mapper;
         }
-        public async Task<IActionResult> LoginAsync([FromBody] UserCredentialResource userCredentialResource)
+        public async Task<IActionResult> Login([FromBody] UserCredentialResource userCredentialResource)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace ClimbTrackApi.Api.Controllers
         }
 
         [HttpPost("revoke")]
-        public async Task<IActionResult> RevokeRefreshTokenAsync([FromBody] RevokeTokenResource revokeTokenResource)
+        public async Task<IActionResult> RevokeRefreshToken([FromBody] RevokeTokenResource revokeTokenResource)
         {
             if (!ModelState.IsValid)
             {
