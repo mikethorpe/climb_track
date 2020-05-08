@@ -2,9 +2,9 @@
 using AutoMapper;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
-using ClimbTrackApi.Common.Communication;
 using ClimbTrackApi.Domain.Services;
 using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Domain.Communication;
 
 namespace ClimbTrackApi.Api.Controllers
 {
@@ -33,7 +33,7 @@ namespace ClimbTrackApi.Api.Controllers
             {
                 return BadRequest(response.Message);
             }
-            var accessTokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Entity);
+            var accessTokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Model);
             return Ok(accessTokenResource);
         }
 
@@ -46,11 +46,11 @@ namespace ClimbTrackApi.Api.Controllers
             }
             ServiceResponse<AccessToken> response = await authenticationService.RefreshTokenAsync(refreshTokenResource.Token);
 
-            if (response.Entity == null)
+            if (response.Model == null)
             {
                 return BadRequest(response.Message);
             }
-            var tokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Entity);
+            var tokenResource = mapper.Map<AccessToken, AccessTokenResource>(response.Model);
             return Ok(tokenResource);
         }
 

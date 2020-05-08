@@ -36,7 +36,7 @@ namespace ClimbTrackApi.Api.Controllers
             if (!result.Success) return BadRequest(result.Message);
 
             // TODO: user resource should contain list of roles - user may have multiple
-            var userResource = mapper.Map<User, UserResource>(result.Entity);
+            var userResource = mapper.Map<User, UserResource>(result.Model);
 
             return Ok(userResource);
 

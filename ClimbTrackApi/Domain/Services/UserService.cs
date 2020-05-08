@@ -1,4 +1,4 @@
-﻿using ClimbTrackApi.Common.Communication;
+﻿using ClimbTrackApi.Domain.Communication;
 using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
 using Microsoft.AspNetCore.Identity;
