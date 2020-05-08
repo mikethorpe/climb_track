@@ -1,4 +1,4 @@
-﻿namespace ClimbTrackApi.Common.Communication
+﻿namespace ClimbTrackApi.Domain.Communication
 {
     public abstract class BaseResponse
     {

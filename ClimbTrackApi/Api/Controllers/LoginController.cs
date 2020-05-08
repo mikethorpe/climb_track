@@ -20,7 +20,6 @@ namespace ClimbTrackApi.Api.Controllers
             this.authenticationService = authenticationService;
             this.mapper = mapper;
         }
-
         public async Task<IActionResult> LoginAsync([FromBody] UserCredentialResource userCredentialResource)
         {
             if (!ModelState.IsValid)
