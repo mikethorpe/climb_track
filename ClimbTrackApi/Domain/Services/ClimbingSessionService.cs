@@ -19,15 +19,15 @@ namespace ClimbTrackApi.Domain.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ServiceResponse<ICollection<ClimbingSession>>> ListAsync(string emailAddress)
+        public async Task<ServiceResponse<IEnumerable<ClimbingSession>>> ListAsync(string emailAddress)
         {
             User user = userRepository.FindByEmailAddress(emailAddress);
             if (user == null)
             {
-                return new ServiceResponse<ICollection<ClimbingSession>>("User cannot be found by email address");
+                return new ServiceResponse<IEnumerable<ClimbingSession>>("User cannot be found by email address");
             }
-            ICollection<ClimbingSession> climbingSessions = await climbingSessionRepository.ListAsync(user.Id);
-            return new ServiceResponse<ICollection<ClimbingSession>>(climbingSessions);
+            IEnumerable<ClimbingSession> climbingSessions = await climbingSessionRepository.ListAsync(user.Id);
+            return new ServiceResponse<IEnumerable<ClimbingSession>>(climbingSessions);
         }
 
         public async Task<ServiceResponse<ClimbingSession>> SaveAsync(ClimbingSession climbingSession, string emailAddress)

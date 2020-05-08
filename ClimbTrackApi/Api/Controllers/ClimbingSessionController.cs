@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ClimbTrackApi.Api.Resources;
 using ClimbTrackApi.Domain.Communication;
 using ClimbTrackApi.Domain.Models;
 using ClimbTrackApi.Domain.Services;
@@ -27,22 +28,22 @@ namespace ClimbTrackApi.Api.Controllers
         {
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             string emailAddress = identity.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
-            ServiceResponse<ICollection<ClimbingSession>> serviceResponse = await climbingSessionService.ListAsync(emailAddress);
+            ServiceResponse<IEnumerable<ClimbingSession>> serviceResponse = await climbingSessionService.ListAsync(emailAddress);
             
             if (!serviceResponse.Success)
             {
                 return BadRequest(serviceResponse.Message);
             }
 
-            ICollection<ClimbingSession> climbingSessions = serviceResponse.Model;
+            IEnumerable<ClimbingSession> climbingSessions = serviceResponse.Model;
             if (climbingSessions.Any())
             {
-                var climbingSessionsDto = climbingSessions.Select(cs => new
+                var climbingSessionsDto = climbingSessions.Select(cs => new ClimbingSessionDto
                 {
-                    cs.Id,
+                    Id = cs.Id,
                     DateTime = cs.DateTime.ToString("ddd MMM dd yyyy"),
-                    cs.Climbs,
-                    cs.MaxGrade
+                    Climbs = cs.Climbs,
+                    MaxGrade = cs.MaxGrade
                 });
 
                 return Ok(climbingSessionsDto);
