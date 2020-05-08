@@ -4,7 +4,7 @@ using ClimbTrackApi.Persistence.Contexts;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class UnitOfWork: IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ClimbTrackContext context;
 

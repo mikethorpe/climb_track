@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class StyleRepository : BaseRepository, IStyleRepository
+    public class StyleRepository :  IStyleRepository
     {
-        public StyleRepository(ClimbTrackContext context) : base(context)
-        {
+        private readonly ClimbTrackContext context;
 
+        public StyleRepository(ClimbTrackContext context)
+        {
+            this.context = context;
         }
 
         public async Task AddAsync(Style style)
@@ -27,8 +29,7 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public async Task<ICollection<Style>> ListAsync()
         {
-            return await context.Styles.
-                Select(s => new Style
+            return await context.Styles.Select(s => new Style
                 {
                     Id = s.Id,
                     Description = s.Description

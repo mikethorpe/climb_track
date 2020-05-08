@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class RefreshTokenRepository : BaseRepository, IRefreshTokenRepository
+    public class RefreshTokenRepository : IRefreshTokenRepository
     {
-        public RefreshTokenRepository(ClimbTrackContext context) : base(context)
-        {
+        private readonly ClimbTrackContext context;
 
+        public RefreshTokenRepository(ClimbTrackContext context)
+        {
+            this.context = context;
         }
 
         public async Task AddAsync(RefreshToken refreshToken)
