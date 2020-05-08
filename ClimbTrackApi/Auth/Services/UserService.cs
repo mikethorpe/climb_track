@@ -1,5 +1,4 @@
-﻿using ClimbTrackApi.Auth.Interfaces;
-using ClimbTrackApi.Common.Communication;
+﻿using ClimbTrackApi.Common.Communication;
 using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -10,33 +9,33 @@ namespace ClimbTrackApi.Auth.Services
 {
     public class UserService
     {
-        private IUserRepository _userRepository { get; set; }
-        private IUnitOfWork _unitOfWork { get; set; }
-        private IPasswordHasher<User> _passwordHasher { get; set; }
+        private readonly IUserRepository userRepository;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IPasswordHasher<User> passwordHasher;
 
         public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IPasswordHasher<User> passwordHasher)
         {
-            _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
-            _passwordHasher = passwordHasher;
+            this.userRepository = userRepository;
+            this.unitOfWork = unitOfWork;
+            this.passwordHasher = passwordHasher;
         }
 
         public async Task<ServiceResponse<User>> CreateUserAsync(RoleEnum role, User user)
         {
-            var existingUser = _userRepository.FindByEmailAddress(user.EmailAddress);
+            var existingUser = userRepository.FindByEmailAddress(user.EmailAddress);
 
             if (existingUser != null)
             {
                 return new ServiceResponse<User>($"A user with the address {user.EmailAddress} is already registered");
             }
 
-            user.Password = _passwordHasher.HashPassword(user, user.Password);
+            user.Password = passwordHasher.HashPassword(user, user.Password);
             user.Role = role;
 
             try
             {
-                await _userRepository.AddAsync(user);
-                await _unitOfWork.CompleteAsync();
+                await userRepository.AddAsync(user);
+                await unitOfWork.CompleteAsync();
                 // In the controller we map this to a user resource
                 // We are returning the hashed password into the controller method here which is potentially dangerous
                 // Should it ever be returned from this method???

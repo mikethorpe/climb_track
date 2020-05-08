@@ -1,4 +1,5 @@
-﻿using ClimbTrackApi.Auth.Interfaces;
+﻿using ClimbTrackApi.Auth.Helpers;
+using ClimbTrackApi.Auth.Interfaces;
 using ClimbTrackApi.Auth.Models;
 using ClimbTrackApi.Common.Communication;
 using ClimbTrackApi.Domain.Interfaces;
@@ -13,9 +14,9 @@ namespace ClimbTrackApi.Auth.Services
     {
         private IPasswordHasher<User> _passwordHasher;
         private IUserRepository _userRepository;
-        private ITokenHandler _tokenHandler;
+        private TokenHandler _tokenHandler;
 
-        public AuthenticationService(IPasswordHasher<User> passwordHasher, IUserRepository userRepository,  ITokenHandler tokenHandler)
+        public AuthenticationService(IPasswordHasher<User> passwordHasher, IUserRepository userRepository,  TokenHandler tokenHandler)
         {
             _passwordHasher = passwordHasher;
             _userRepository = userRepository;

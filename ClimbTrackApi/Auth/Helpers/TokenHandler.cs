@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Auth.Helpers
 {
-    public class TokenHandler: ITokenHandler
+    public class TokenHandler
     {
         private IPasswordHasher<User> passwordHasher;
         private IConfiguration configuration; 

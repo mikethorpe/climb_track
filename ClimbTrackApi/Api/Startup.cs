@@ -44,7 +44,7 @@ namespace ClimbTrackApi.Api
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<AuthenticationService>();
             services.AddScoped<StyleService>();
-            services.AddScoped<ITokenHandler, TokenHandler>();
+            services.AddScoped<TokenHandler>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
