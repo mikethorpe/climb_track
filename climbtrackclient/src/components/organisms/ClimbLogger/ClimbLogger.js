@@ -78,8 +78,6 @@ const ClimbLogger = () => {
 
     return (
         <div>
-            {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setClimbGrade} />}
-            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setClimbStyleAndAddToClimbs} />}
             {climbs.length > 0 &&
                 <div>
                     <Typography>Your climbs:</Typography>
@@ -100,6 +98,8 @@ const ClimbLogger = () => {
                     <Button variant="contained" color="secondary" onClick={storeClimbingSession}>Add climbs to logbook</Button>
                     {yourClimbsList}
                 </div>}
+            {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setClimbGrade} />}
+            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setClimbStyleAndAddToClimbs} />}
         </div>
     );
 };
