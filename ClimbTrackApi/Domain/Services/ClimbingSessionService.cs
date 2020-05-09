@@ -1,6 +1,7 @@
 ﻿using ClimbTrackApi.Domain.Communication;
 using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,13 +11,13 @@ namespace ClimbTrackApi.Domain.Services
     {
         private readonly ClimbingSessionRepository climbingSessionRepository;
         private readonly UserRepository userRepository;
-        private readonly UnitOfWork UnitOfWork;
+        private readonly UnitOfWork unitOfWork;
 
-        public ClimbingSessionService(ClimbingSessionRepository climbingSessionRepository, UserRepository userRepository, UnitOfWork UnitOfWork)
+        public ClimbingSessionService(ClimbingSessionRepository climbingSessionRepository, UserRepository userRepository, UnitOfWork unitOfWork)
         {
             this.climbingSessionRepository = climbingSessionRepository;
             this.userRepository = userRepository;
-            this.UnitOfWork = UnitOfWork;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<ServiceResponse<IEnumerable<ClimbingSession>>> ListAsync(string emailAddress)
@@ -39,8 +40,30 @@ namespace ClimbTrackApi.Domain.Services
             }
             climbingSession.UserId = user.Id;
             ClimbingSession savedClimbingSession = await climbingSessionRepository.AddAsync(climbingSession);
-            await UnitOfWork.CompleteAsync();
+            await unitOfWork.CompleteAsync();
             return new ServiceResponse<ClimbingSession>(savedClimbingSession);
+        }
+
+        public async Task<ServiceResponse<int>> DeleteAsync(int climbingSessionId, string emailAddress)
+        {
+            User user = userRepository.FindByEmailAddress(emailAddress);
+            if (user == null)
+            {
+                return new ServiceResponse<int>("User cannot be found by email address");
+            }
+            ClimbingSession climbingSessionToDelete = await climbingSessionRepository.FindById(climbingSessionId);
+            if (climbingSessionToDelete == null)
+            {
+                return new ServiceResponse<int>("ClimbingSession not found");
+
+            }
+            if (climbingSessionToDelete.UserId != user.Id)
+            {
+                return new ServiceResponse<int>("User is not authorized to delete this climbing session");
+            }
+            climbingSessionRepository.Remove(climbingSessionToDelete);
+            await unitOfWork.CompleteAsync();
+            return new ServiceResponse<int>(climbingSessionId);
         }
     }
 }

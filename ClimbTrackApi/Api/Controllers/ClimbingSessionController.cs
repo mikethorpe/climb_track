@@ -64,5 +64,19 @@ namespace ClimbTrackApi.Api.Controllers
 
             return Ok(response.Model.Id);
         }
+
+        [HttpDelete("{climbingSessionId}")]
+        public async Task<IActionResult> DeleteClimbingSession(int climbingSessionId)
+        {
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            string emailAddress = identity.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
+            ServiceResponse<int> response = await climbingSessionService.DeleteAsync(climbingSessionId, emailAddress);
+
+            if (!response.Success)
+            {
+                return Unauthorized(response.Message);
+            }
+            return NoContent();
+        }
     }
 }

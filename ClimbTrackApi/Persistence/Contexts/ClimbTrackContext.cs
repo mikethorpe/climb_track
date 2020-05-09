@@ -34,7 +34,8 @@ namespace ClimbTrackApi.Persistence.Contexts
             modelBuilder.Entity<ClimbingSession>().Property(cs => cs.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<ClimbingSession>()
                 .HasMany(cs => cs.Climbs)
-                .WithOne(c => c.ClimbingSession);
+                .WithOne(c => c.ClimbingSession)
+                .OnDelete(DeleteBehavior.Cascade);
             
             var roleConverter = new EnumToStringConverter<RoleEnum>();
             modelBuilder.Entity<User>()

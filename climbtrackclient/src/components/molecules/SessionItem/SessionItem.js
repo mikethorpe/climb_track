@@ -11,9 +11,20 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import { Delete } from '@material-ui/icons';
+import { IconButton } from '@material-ui/core';
+import { useDeleteClimbingSession, useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 
 const SessionItem = ({ climbingSession }) => {
+
+    const deleteClimbingSession = useDeleteClimbingSession();
+    const fetchClimbingSessions = useFetchClimbingSessions();
+
+    const onDeleteClicked = async (climbingSession) => {
+        await deleteClimbingSession(climbingSession);
+        fetchClimbingSessions();
+    };
+
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary
@@ -45,8 +56,11 @@ const SessionItem = ({ climbingSession }) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <IconButton aria-label="delete" onClick={() => onDeleteClicked(climbingSession)}>
+                    <Delete />
+                </IconButton>
             </ExpansionPanelDetails>
-        </ExpansionPanel>
+        </ExpansionPanel >
     );
 };
 
