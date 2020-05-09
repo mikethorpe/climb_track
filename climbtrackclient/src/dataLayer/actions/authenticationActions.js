@@ -18,28 +18,27 @@ export const useRevokeRefreshToken = () => {
     }
 };
 
-export function login(credentials){
+export function login(credentials) {
     return (dispatch) => {
         axios
-          .post('/api/login', credentials)
-          .then(
-            (response) => {
-                  const { token, refreshToken} = response.data;
-                  return dispatch(saveUserTokens({access: token, refresh: refreshToken.token}));
-                  //history.replace(from);
-            },
-            (error) => dispatch(showError(error)))
-          .catch((error) => dispatch(showError(error)))
+            .post('/api/login', credentials)
+            .then(
+                (response) => {
+                    const { accessToken, refreshToken } = response.data;
+                    return dispatch(saveUserTokens({ access: accessToken, refresh: refreshToken }));
+                },
+                (error) => dispatch(showError(error)))
+            .catch((error) => dispatch(showError(error)))
     }
 }
 
-function saveUserTokens(tokens){
-    const { access, refresh } = tokens
-    setAccessTokens(access, refresh)
-    return { type: SET_AUTHENTICATED, payload: true }
+function saveUserTokens(tokens) {
+    const { access, refresh } = tokens;
+    setAccessTokens(access, refresh);
+    return { type: SET_AUTHENTICATED, payload: true };
 }
 
-function showError(error){
-    console.error(error.message)
-    return { type: SHOW_ERROR, payload: error.message }
+function showError(error) {
+    console.error(error.message);
+    return { type: SHOW_ERROR, payload: error.message };
 }

@@ -9,9 +9,9 @@ import { accessTokensExist } from '../../../dataLayer/accessToken/accessTokenHel
 import { login, useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
 import { ErrorModal } from '../../atoms/ErrorModal/ErrorModal';
 
-export function LogonForm(){
+export function LogonForm() {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const authentication = useSelector(state => state.authentication);
     const setAuthenticated = useSetAuthenticated();
@@ -30,13 +30,13 @@ export function LogonForm(){
     }, [authentication]);
 
     const [credentials, setCredentials] = useState({
-        emailAddress: '',
-        password: ''
+        emailAddress: 'climber@climber.com',
+        password: 'climbing'
     });
-    const onEmailTextFieldChange = (event) => setCredentials({ ...credentials, emailAddress: event.target.value });
-    const onPasswordTextFieldChange = (event) => setCredentials({ ...credentials, password: event.target.value });
+    const onEmailTextFieldChange = (event) => null  // setCredentials({ ...credentials, emailAddress: event.target.value });
+    const onPasswordTextFieldChange = (event) => null // setCredentials({ ...credentials, password: event.target.value });
 
-    const onLogonButtonClick = useCallback(() => dispatch(login(credentials)),[dispatch, credentials])
+    const onLogonButtonClick = useCallback(() => dispatch(login(credentials)), [dispatch, credentials]);
 
     return (
         <Paper>

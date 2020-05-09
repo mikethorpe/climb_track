@@ -15,7 +15,6 @@ function App() {
   return (
     <div className="App">
       <ProviderWrapper store={store}>
-        <ErrorModal />
         <Interceptor />
         <Router>
           <LogOffButton />
