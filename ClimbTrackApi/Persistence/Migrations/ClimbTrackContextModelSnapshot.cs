@@ -19,7 +19,7 @@ namespace Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Climb", b =>
+            modelBuilder.Entity("ClimbTrackApi.Persistence.Models.Climb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace Persistence.Migrations
                     b.ToTable("Climb");
                 });
 
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.ClimbingSession", b =>
+            modelBuilder.Entity("ClimbTrackApi.Persistence.Models.ClimbingSession", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace Persistence.Migrations
                     b.ToTable("ClimbingSessions");
                 });
 
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.RefreshToken", b =>
+            modelBuilder.Entity("ClimbTrackApi.Persistence.Models.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace Persistence.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Style", b =>
+            modelBuilder.Entity("ClimbTrackApi.Persistence.Models.Style", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,7 +101,7 @@ namespace Persistence.Migrations
                     b.ToTable("Style");
                 });
 
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.User", b =>
+            modelBuilder.Entity("ClimbTrackApi.Persistence.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,13 +123,14 @@ namespace Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ClimbTrackApi.Domain.Models.Climb", b =>
+            modelBuilder.Entity("ClimbTrackApi.Persistence.Models.Climb", b =>
                 {
-                    b.HasOne("ClimbTrackApi.Domain.Models.ClimbingSession", "ClimbingSession")
+                    b.HasOne("ClimbTrackApi.Persistence.Models.ClimbingSession", "ClimbingSession")
                         .WithMany("Climbs")
-                        .HasForeignKey("ClimbingSessionId");
+                        .HasForeignKey("ClimbingSessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ClimbTrackApi.Domain.Models.Style", "Style")
+                    b.HasOne("ClimbTrackApi.Persistence.Models.Style", "Style")
                         .WithMany("Climbs")
                         .HasForeignKey("StyleId");
                 });

@@ -27,10 +27,24 @@ export const useFetchClimbingSessions = () => {
             return;
         }
         const response = await axios.get('/api/climbingsession');
+        // if (!response?.data) {
+        //     return false;
+        // }
+        const climbingSessions = response?.data ?? [];
+        dispatch({ type: SET_CLIMBING_SESSIONS, payload: response.data });
+        return true;
+    };
+};
+
+export const useDeleteClimbingSession = () => {
+    return async (climbingSession) => {
+        // if (process.env.STORYBOOK_MODE) {
+        //     return;
+        // }
+        const response = await axios.delete(`/api/climbingsession/${climbingSession.id}`);
         if (!response?.data) {
             return false;
         }
-        dispatch({ type: SET_CLIMBING_SESSIONS, payload: response.data });
         return true;
     };
 };

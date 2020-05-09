@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
@@ -54,6 +55,16 @@ namespace ClimbTrackApi.Persistence.Repositories
                         }
                     }).ToList()
                 }).ToListAsync();
+        }
+
+        public async Task<ClimbingSession> FindById(int climbingSessionId)
+        {
+            return await context.ClimbingSessions.FindAsync(climbingSessionId);
+        }
+
+        public void Remove(ClimbingSession climbingSession)
+        {
+            context.ClimbingSessions.Remove(climbingSession);
         }
     }
 }
