@@ -27,13 +27,9 @@ namespace ClimbTrackApi.Domain.Services
             this.signingConfigurations = signingConfigurations;
         }
 
-        // tokens should be stored in db
-        // probably should hash / encrypt the tokens as well
-        // passwords should be encrypted on sending to the api
         public async Task<AccessToken> GenerateAccessToken(User user)
         {
             var refreshToken = BuildRefreshToken(user);
-            // TODO: Hash / encrypt refresh tokens
             await refreshTokenRepository.AddAsync(refreshToken);
             await unitOfWork.CompleteAsync();
             var accessToken = BuildAccessToken(user, refreshToken);
@@ -48,7 +44,6 @@ namespace ClimbTrackApi.Domain.Services
             }
             RefreshToken refreshToken = await refreshTokenRepository.FindByToken(token);
 
-            // Refresh token is good for one use
             if (refreshToken != null) refreshTokenRepository.Remove(refreshToken);
             await unitOfWork.CompleteAsync();
             return refreshToken;
@@ -66,7 +61,6 @@ namespace ClimbTrackApi.Domain.Services
             var jwtConfigurationSection = configuration.GetSection("TokenOptions");
             return new RefreshToken
             {
-                // why does this method take a user - would be nice to know?
                 Token = passwordHasher.HashPassword(user, Guid.NewGuid().ToString()),
                 Expiration = DateTime.UtcNow.AddSeconds(jwtConfigurationSection.GetValue<int>("RefreshTokenExpirationMins")*60),
                 UserId = user.Id
