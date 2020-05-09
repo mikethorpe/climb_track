@@ -1,5 +1,4 @@
-﻿using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class RefreshTokenRepository : BaseRepository, IRefreshTokenRepository
+    public class RefreshTokenRepository
     {
-        public RefreshTokenRepository(ClimbTrackContext context) : base(context)
-        {
+        private readonly ClimbTrackContext context;
 
+        public RefreshTokenRepository(ClimbTrackContext context)
+        {
+            this.context = context;
         }
 
         public async Task AddAsync(RefreshToken refreshToken)
@@ -35,7 +36,6 @@ namespace ClimbTrackApi.Persistence.Repositories
         {
             return await context.RefreshTokens
                 .Where(t => t.UserId == userID)
-                .Where(t => t.Deleted == null)
                 .SingleOrDefaultAsync();
         }
 

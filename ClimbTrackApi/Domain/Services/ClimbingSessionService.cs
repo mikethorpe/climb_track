@@ -1,6 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Communication;
-using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
+using ClimbTrackApi.Persistence.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,15 +8,15 @@ namespace ClimbTrackApi.Domain.Services
 {
     public class ClimbingSessionService
     {
-        private readonly IClimbingSessionRepository climbingSessionRepository;
-        private readonly IUserRepository userRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly ClimbingSessionRepository climbingSessionRepository;
+        private readonly UserRepository userRepository;
+        private readonly UnitOfWork UnitOfWork;
 
-        public ClimbingSessionService(IClimbingSessionRepository climbingSessionRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public ClimbingSessionService(ClimbingSessionRepository climbingSessionRepository, UserRepository userRepository, UnitOfWork UnitOfWork)
         {
             this.climbingSessionRepository = climbingSessionRepository;
             this.userRepository = userRepository;
-            this.unitOfWork = unitOfWork;
+            this.UnitOfWork = UnitOfWork;
         }
 
         public async Task<ServiceResponse<IEnumerable<ClimbingSession>>> ListAsync(string emailAddress)
@@ -39,7 +39,7 @@ namespace ClimbTrackApi.Domain.Services
             }
             climbingSession.UserId = user.Id;
             ClimbingSession savedClimbingSession = await climbingSessionRepository.AddAsync(climbingSession);
-            await unitOfWork.CompleteAsync();
+            await UnitOfWork.CompleteAsync();
             return new ServiceResponse<ClimbingSession>(savedClimbingSession);
         }
     }

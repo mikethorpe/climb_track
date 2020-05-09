@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClimbTrackApi.Domain.Models
+namespace ClimbTrackApi.Persistence.Models
 {
     public class ClimbingSession
     {

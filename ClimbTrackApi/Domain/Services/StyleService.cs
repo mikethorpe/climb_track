@@ -1,6 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Communication;
-using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
+using ClimbTrackApi.Persistence.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,9 +8,9 @@ namespace ClimbTrackApi.Domain.Services
 {
     public class StyleService
     {
-        private readonly IStyleRepository styleRepository;
+        private readonly StyleRepository styleRepository;
 
-        public StyleService(IStyleRepository styleRepository)
+        public StyleService(StyleRepository styleRepository)
         {
             this.styleRepository = styleRepository;
         }

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ClimbTrackApi.Domain.Communication;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

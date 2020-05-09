@@ -1,6 +1,5 @@
-﻿using ClimbTrackApi.Domain.Models;
+﻿using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Contexts;
-using ClimbTrackApi.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class StyleRepository : BaseRepository, IStyleRepository
+    public class StyleRepository
     {
-        public StyleRepository(ClimbTrackContext context) : base(context)
-        {
+        private readonly ClimbTrackContext context;
 
+        public StyleRepository(ClimbTrackContext context)
+        {
+            this.context = context;
         }
 
         public async Task AddAsync(Style style)
@@ -27,8 +28,7 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public async Task<ICollection<Style>> ListAsync()
         {
-            return await context.Styles.
-                Select(s => new Style
+            return await context.Styles.Select(s => new Style
                 {
                     Id = s.Id,
                     Description = s.Description
