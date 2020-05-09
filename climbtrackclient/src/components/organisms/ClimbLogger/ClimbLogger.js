@@ -11,6 +11,8 @@ import { createSelector } from 'reselect';
 import calculateMaxGradeFromClimbs from '../../../helpers/calculateMaxGradeFromClimbs';
 import Paper from '@material-ui/core/Paper';
 import grades from '../../../dataLayer/constants/grades';
+import Dialog from '@material-ui/core/Dialog';
+import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
 
 const ClimbLogger = () => {
 
@@ -52,6 +54,7 @@ const ClimbLogger = () => {
 
     const createClimbingSession = useCreateClimbingSession();
     const fetchClimbingSessions = useFetchClimbingSessions();
+
     const storeClimbingSession = async () => {
         const sessionCreated = await createClimbingSession({
             id: newId(),
@@ -61,8 +64,8 @@ const ClimbLogger = () => {
         });
         if (sessionCreated) {
             fetchClimbingSessions();
-            clearClimbs();
         }
+        closeModal();
     };
 
     let displayGradeKnob = climb.grade == null;
@@ -76,31 +79,41 @@ const ClimbLogger = () => {
     const gradeKnobControlText = 'What was the grade of your climb?';
     const styleKnobControlText = 'What was the style of your climb?';
 
+    const displayClimbLoggerModal = useDisplayClimbLoggerModal();
+    const showModal = useSelector(state => state.userInterface.climbLoggerModalDisplayed);
+
+    const closeModal = () => {
+        displayClimbLoggerModal(false);
+        clearClimbs();
+    };
+
     return (
-        <div>
-            {climbs.length > 0 &&
-                <div>
-                    <Typography>Your climbs:</Typography>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            margin="normal"
-                            id="date-picker-dialog"
-                            label="Select session date"
-                            format="dd/MM/yyyy"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                            maxDate={new Date()}
-                        />
-                    </MuiPickersUtilsProvider>
-                    <Button variant="contained" color="secondary" onClick={storeClimbingSession}>Add climbs to logbook</Button>
-                    {yourClimbsList}
-                </div>}
-            {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setClimbGrade} />}
-            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setClimbStyleAndAddToClimbs} />}
-        </div>
+        <Dialog onClose={closeModal} aria-labelledby="simple-dialog-title" open={showModal} >
+            <div>
+                {climbs.length > 0 &&
+                    <div>
+                        <Typography>Your climbs:</Typography>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                margin="normal"
+                                id="date-picker-dialog"
+                                label="Select session date"
+                                format="dd/MM/yyyy"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                                maxDate={new Date()}
+                            />
+                        </MuiPickersUtilsProvider>
+                        <Button variant="contained" color="secondary" onClick={storeClimbingSession}>Add climbs to logbook</Button>
+                        {yourClimbsList}
+                    </div>}
+                {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setClimbGrade} />}
+                {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setClimbStyleAndAddToClimbs} />}
+            </div>
+        </Dialog >
     );
 };
 
