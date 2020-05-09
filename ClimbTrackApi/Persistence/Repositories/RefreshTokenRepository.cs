@@ -1,4 +1,3 @@
-﻿
 using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
