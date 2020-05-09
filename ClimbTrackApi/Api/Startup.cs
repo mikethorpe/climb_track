@@ -27,7 +27,6 @@ namespace ClimbTrackApi.Api
             this.env = env;
         }
 
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -79,7 +78,8 @@ namespace ClimbTrackApi.Api
                             .AllowAnyMethod()));
 
             // Serve spa static files
-            services.AddSpaStaticFiles(configuration => {
+            services.AddSpaStaticFiles(configuration =>
+            {
                 configuration.RootPath = Configuration.GetSection("StaticFiles").GetSection("ClientBuildFolder").Value;
             });
         }
@@ -107,10 +107,13 @@ namespace ClimbTrackApi.Api
             app.UseSpaStaticFiles();
             app.UseSpa(spa =>
             {
+                // Uncomment the conditional block below to run the production build react app with PWA
                 if (env.IsDevelopment())
                 {
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:3000/");
+                    return;
                 }
+                spa.Options.SourcePath = Configuration.GetSection("StaticFiles").GetSection("ClientBuildFolder").Value;
             });
         }
     }
