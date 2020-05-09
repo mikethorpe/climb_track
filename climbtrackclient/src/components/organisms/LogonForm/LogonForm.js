@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { accessTokensExist, setAccessTokens } from '../../../dataLayer/accessToken/accessTokenHelper';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { accessTokensExist } from '../../../dataLayer/accessToken/accessTokenHelper';
+import { login, useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
+import { ErrorModal } from '../../atoms/ErrorModal/ErrorModal';
 
-const LogonForm = () => {
+export function LogonForm() {
 
     const dispatch = useDispatch();
 
@@ -31,28 +30,18 @@ const LogonForm = () => {
     }, [authentication]);
 
     const [credentials, setCredentials] = useState({
-        emailAddress: '',
-        password: ''
+        emailAddress: 'climber@climber.com',
+        password: 'climbing'
     });
-    const onEmailTextFieldChange = (event) => setCredentials({ ...credentials, emailAddress: event.target.value });
-    const onPasswordTextFieldChange = (event) => setCredentials({ ...credentials, password: event.target.value });
+    const onEmailTextFieldChange = (event) => null  // setCredentials({ ...credentials, emailAddress: event.target.value });
+    const onPasswordTextFieldChange = (event) => null // setCredentials({ ...credentials, password: event.target.value });
 
-    let location = useLocation();
-    let { from } = location.state || { from: { pathname: "/" } };
-
-    const onLogonButtonClick = async () => {
-        const response = await axios.post('/api/login', credentials);
-        if (response.status == 200) {
-            setAccessTokens(response.data.accessToken, response.data.refreshToken);
-            setAuthenticated(true);
-            history.replace(from);
-            return;
-        }
-    };
+    const onLogonButtonClick = useCallback(() => dispatch(login(credentials)), [dispatch, credentials]);
 
     return (
         <Paper>
             <Typography>Enter your credentials to log on:</Typography>
+            <ErrorModal statePath='authentication' />
             <TextField
                 label="Email address"
                 variant="outlined"
@@ -67,6 +56,4 @@ const LogonForm = () => {
             <Button variant="outlined" onClick={onLogonButtonClick}>Log on</Button>
         </Paper>
     );
-};
-
-export default LogonForm;
+}

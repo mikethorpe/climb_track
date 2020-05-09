@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import climbingSessions from '../reducers/climbingSessionReducer';
 import styles from '../reducers/stylesReducer';
 import authentication from '../reducers/authenticationReducer';
@@ -10,7 +10,8 @@ export const createStore = (preloadedState) => {
             styles,
             authentication
         },
-        preloadedState
+        preloadedState,
+        middleware: [...getDefaultMiddleware()],
     });
 };
 export default createStore;
