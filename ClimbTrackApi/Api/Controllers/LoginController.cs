@@ -20,11 +20,6 @@ namespace ClimbTrackApi.Api.Controllers
 
         public async Task<IActionResult> Login([FromBody] UserCredentialResource userCredentialResource)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            
             ServiceResponse<AccessToken> response = await authenticationService.CreateAccessTokenAsync(userCredentialResource.EmailAddress, userCredentialResource.Password);
             if (!response.Success)
             {
@@ -43,10 +38,6 @@ namespace ClimbTrackApi.Api.Controllers
         [HttpPost("refresh")]
         public async Task<IActionResult> RefreshAccessToken([FromBody] RefreshTokenResource refreshTokenResource)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             ServiceResponse<AccessToken> response = await authenticationService.RefreshTokenAsync(refreshTokenResource.Token);
             
             if (response.Model == null)
@@ -67,10 +58,6 @@ namespace ClimbTrackApi.Api.Controllers
         [HttpPost("revoke")]
         public async Task<IActionResult> RevokeRefreshToken([FromBody] RevokeTokenResource revokeTokenResource)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             await authenticationService.RevokeRefreshTokenAsync(revokeTokenResource.Token);
             return NoContent();
         }

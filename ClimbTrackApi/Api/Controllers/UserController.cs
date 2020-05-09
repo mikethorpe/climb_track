@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using ClimbTrackApi.Api.Extensions;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using ClimbTrackApi.Domain.Models;
@@ -21,11 +20,6 @@ namespace ClimbTrackApi.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserCredentialResource userCredentialResource)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.GetErrorMessages());
-            }
-
             var userToSave = new User
             {
                 EmailAddress = userCredentialResource.EmailAddress,
