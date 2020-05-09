@@ -12,6 +12,7 @@ namespace ClimbTrackApi.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                //.UseUrls("https://0.0.0.0:6001")
                 .UseStartup<Startup>();
     }
 }
