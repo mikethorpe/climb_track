@@ -37,7 +37,6 @@ namespace ClimbTrackApi.Persistence.Repositories
         {
             return await context.RefreshTokens
                 .Where(t => t.UserId == userID)
-                .Where(t => t.Deleted == null)
                 .SingleOrDefaultAsync();
         }
 
