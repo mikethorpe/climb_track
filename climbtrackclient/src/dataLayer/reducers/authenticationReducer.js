@@ -1,4 +1,4 @@
-import { SET_AUTHENTICATED } from '../actions/types';
+import { SET_AUTHENTICATED, SHOW_ERROR } from '../actions/types';
 
 const initialState = {
     authenticated: false
@@ -11,6 +11,11 @@ export default function (state = initialState, action) {
                 ...state,
                 authenticated: action.payload
             };
+        case SHOW_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            }
         default:
             return {
                 ...state

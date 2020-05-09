@@ -1,6 +1,6 @@
 
 import React from 'react';
-import LogonForm from './LogonForm';
+import {LogonForm} from './LogonForm';
 import { storiesOf } from '@storybook/react';
 import Provider from '../../../dataLayer/store/providerWrapper';
 import createStore from '../../../dataLayer/store/store';

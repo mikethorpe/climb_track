@@ -1,12 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { ErrorModal } from './components/atoms/ErrorModal/ErrorModal';
+import LogOffButton from './components/atoms/LogOffButton/LogOffButton';
+import { LogonForm } from './components/organisms/LogonForm/LogonForm';
+import ClimbLog from './components/pages/ClimbLog/ClimbLog';
+import Interceptor from './dataLayer/interceptors/interceptors';
 import ProviderWrapper from './dataLayer/store/providerWrapper';
 import createStore from './dataLayer/store/store';
-import Interceptor from './dataLayer/interceptors/interceptors';
-import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
-import ClimbLog from './components/pages/ClimbLog/ClimbLog';
-import LogonForm from './components/organisms/LogonForm/LogonForm';
-import { useSelector, useDispatch } from 'react-redux';
-import LogOffButton from './components/atoms/LogOffButton/LogOffButton';
 
 const store = createStore();
 
@@ -14,6 +15,7 @@ function App() {
   return (
     <div className="App">
       <ProviderWrapper store={store}>
+        <ErrorModal />
         <Interceptor />
         <Router>
           <LogOffButton />
