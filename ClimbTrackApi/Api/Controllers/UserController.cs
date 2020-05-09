@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Domain.Services;
 
 namespace ClimbTrackApi.Api.Controllers

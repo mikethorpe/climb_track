@@ -1,4 +1,4 @@
-﻿using ClimbTrackApi.Domain.Models;
+﻿using ClimbTrackApi.Persistence.Models;
 using System.Collections.Generic;
 
 namespace ClimbTrackApi.Api.Resources

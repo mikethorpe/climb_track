@@ -1,6 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Communication;
-using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
+using ClimbTrackApi.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
@@ -9,14 +9,14 @@ namespace ClimbTrackApi.Domain.Services
 {
     public class UserService
     {
-        private readonly IUserRepository userRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly UserRepository userRepository;
+        private readonly UnitOfWork UnitOfWork;
         private readonly IPasswordHasher<User> passwordHasher;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IPasswordHasher<User> passwordHasher)
+        public UserService(UserRepository userRepository, UnitOfWork UnitOfWork, IPasswordHasher<User> passwordHasher)
         {
             this.userRepository = userRepository;
-            this.unitOfWork = unitOfWork;
+            this.UnitOfWork = UnitOfWork;
             this.passwordHasher = passwordHasher;
         }
 
@@ -35,7 +35,7 @@ namespace ClimbTrackApi.Domain.Services
             try
             {
                 await userRepository.AddAsync(user);
-                await unitOfWork.CompleteAsync();
+                await UnitOfWork.CompleteAsync();
                 return new ServiceResponse<User>(user);
             }
             catch (Exception)

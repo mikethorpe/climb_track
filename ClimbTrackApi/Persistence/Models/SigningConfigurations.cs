@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 
-namespace ClimbTrackApi.Domain.Models
+namespace ClimbTrackApi.Persistence.Models
 {
     public class SigningConfigurations
     {

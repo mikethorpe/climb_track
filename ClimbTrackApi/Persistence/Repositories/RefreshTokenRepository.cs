@@ -1,5 +1,5 @@
-﻿using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Domain.Models;
+﻿
+using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class RefreshTokenRepository : IRefreshTokenRepository
+    public class RefreshTokenRepository
     {
         private readonly ClimbTrackContext context;
 

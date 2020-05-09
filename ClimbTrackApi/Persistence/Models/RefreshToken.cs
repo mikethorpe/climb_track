@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClimbTrackApi.Domain.Models
+namespace ClimbTrackApi.Persistence.Models
 {
     public class RefreshToken
     {

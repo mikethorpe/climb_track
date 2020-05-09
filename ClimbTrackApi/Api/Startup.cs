@@ -8,12 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Persistence.Repositories;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
 
 namespace ClimbTrackApi.Api
 {
@@ -37,15 +36,15 @@ namespace ClimbTrackApi.Api
                 options.UseSqlServer(Configuration.GetConnectionString("ClimbTrackDb")));
             
             // Inject services
-            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<RefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<AuthenticationService>();
             services.AddScoped<StyleService>();
             services.AddScoped<Domain.Services.TokenHandler>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<UserRepository, UserRepository>();
             services.AddScoped<UserService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IStyleRepository, StyleRepository>();
-            services.AddScoped<IClimbingSessionRepository, ClimbingSessionRepository>();
+            services.AddScoped<UnitOfWork, UnitOfWork>();
+            services.AddScoped<StyleRepository>();
+            services.AddScoped<ClimbingSessionRepository>();
             services.AddScoped<ClimbingSessionService>();
             services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
             

@@ -2,7 +2,7 @@
 using ClimbTrackApi.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using ClimbTrackApi.Domain.Services;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Domain.Communication;
 
 namespace ClimbTrackApi.Api.Controllers

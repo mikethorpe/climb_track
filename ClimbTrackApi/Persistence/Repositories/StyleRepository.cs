@@ -1,6 +1,5 @@
-﻿using ClimbTrackApi.Domain.Models;
+﻿using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Contexts;
-using ClimbTrackApi.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class StyleRepository :  IStyleRepository
+    public class StyleRepository
     {
         private readonly ClimbTrackContext context;
 

@@ -1,6 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Communication;
-using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Domain.Models;
+using ClimbTrackApi.Persistence.Models;
+using ClimbTrackApi.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
@@ -9,10 +9,10 @@ namespace ClimbTrackApi.Domain.Services
     public class AuthenticationService
     {
         private readonly IPasswordHasher<User> passwordHasher;
-        private readonly IUserRepository userRepository;
+        private readonly UserRepository userRepository;
         private readonly TokenHandler tokenHandler;
 
-        public AuthenticationService(IPasswordHasher<User> passwordHasher, IUserRepository userRepository,  TokenHandler tokenHandler)
+        public AuthenticationService(IPasswordHasher<User> passwordHasher, UserRepository userRepository,  TokenHandler tokenHandler)
         {
             this.passwordHasher = passwordHasher;
             this.userRepository = userRepository;

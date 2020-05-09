@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using ClimbTrackApi.Domain.Interfaces;
 using ClimbTrackApi.Persistence.Contexts;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork
     {
         private readonly ClimbTrackContext context;
 

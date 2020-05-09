@@ -1,5 +1,5 @@
-﻿using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Domain.Models;
+﻿using ClimbTrackApi.Persistence.Models;
+using ClimbTrackApi.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -15,15 +15,15 @@ namespace ClimbTrackApi.Domain.Services
         private readonly IPasswordHasher<User> passwordHasher;
         private readonly IConfiguration configuration; 
         private readonly SigningConfigurations signingConfigurations;
-        private readonly IRefreshTokenRepository refreshTokenRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly RefreshTokenRepository refreshTokenRepository;
+        private readonly UnitOfWork UnitOfWork;
 
-        public TokenHandler(IPasswordHasher<User> passwordHasher, IConfiguration configuration, IRefreshTokenRepository refreshTokenRepository, IUnitOfWork unitOfWork, SigningConfigurations signingConfigurations)
+        public TokenHandler(IPasswordHasher<User> passwordHasher, IConfiguration configuration, RefreshTokenRepository refreshTokenRepository, UnitOfWork UnitOfWork, SigningConfigurations signingConfigurations)
         {
             this.passwordHasher = passwordHasher;
             this.configuration = configuration;
             this.refreshTokenRepository = refreshTokenRepository;
-            this.unitOfWork = unitOfWork;
+            this.UnitOfWork = UnitOfWork;
             this.signingConfigurations = signingConfigurations;
         }
 
@@ -31,7 +31,7 @@ namespace ClimbTrackApi.Domain.Services
         {
             var refreshToken = BuildRefreshToken(user);
             await refreshTokenRepository.AddAsync(refreshToken);
-            await unitOfWork.CompleteAsync();
+            await UnitOfWork.CompleteAsync();
             var accessToken = BuildAccessToken(user, refreshToken);
             return accessToken;
         }
@@ -45,7 +45,7 @@ namespace ClimbTrackApi.Domain.Services
             RefreshToken refreshToken = await refreshTokenRepository.FindByToken(token);
 
             if (refreshToken != null) refreshTokenRepository.Remove(refreshToken);
-            await unitOfWork.CompleteAsync();
+            await UnitOfWork.CompleteAsync();
             return refreshToken;
         }
 
@@ -53,7 +53,7 @@ namespace ClimbTrackApi.Domain.Services
         {
             var refreshTokenEntity = await refreshTokenRepository.FindByToken(refreshToken);
             refreshTokenRepository.Remove(refreshTokenEntity);
-            await unitOfWork.CompleteAsync();
+            await UnitOfWork.CompleteAsync();
         }
 
         private RefreshToken BuildRefreshToken(User user)

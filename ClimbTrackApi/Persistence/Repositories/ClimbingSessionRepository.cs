@@ -1,5 +1,4 @@
-﻿using ClimbTrackApi.Domain.Interfaces;
-using ClimbTrackApi.Domain.Models;
+﻿using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
-    public class ClimbingSessionRepository : IClimbingSessionRepository
+    public class ClimbingSessionRepository
     {
         private readonly ClimbTrackContext context;
 
