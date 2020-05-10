@@ -158,8 +158,8 @@ const ClimbLogger = () => {
                                 <div>
                                     <Typography hidden={!addReviewButtonDisabled}>Go back to create some climbs to add them to your logbook</Typography>
                                 </div>
-                                <FooterButton variant="contained" color="secondary" onClick={() => setShowReviewPage(false)}>Back</FooterButton>
-                                <FooterButton variant="contained" color="secondary" disabled={addReviewButtonDisabled} onClick={storeClimbingSession}>Add climbs to logbook</FooterButton>
+                                <FooterButton variant="outlined" onClick={() => setShowReviewPage(false)}>Back</FooterButton>
+                                <FooterButton variant="contained" color="primary" disabled={addReviewButtonDisabled} onClick={storeClimbingSession}>Add climbs to logbook</FooterButton>
                             </StyledFooterDiv>
                         </StyledDiv>
                     </>
@@ -173,8 +173,7 @@ const ClimbLogger = () => {
                             <StyledFooterDiv>
                                 <TotalClimbsText>Total number of climbs in your session: {climbs.length}</TotalClimbsText>
                                 <Button
-                                    variant="contained"
-                                    color="secondary"
+                                    variant="outlined"
                                     disabled={addReviewButtonDisabled}
                                     onClick={() => setShowReviewPage(true)}>
                                     Review climbs to add
