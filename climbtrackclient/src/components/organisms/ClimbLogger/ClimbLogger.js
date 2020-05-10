@@ -9,11 +9,10 @@ import grades from '../../../dataLayer/constants/grades';
 import { useCreateClimbingSession, useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
 import { Delete } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
 import { DialogContent, Dialog, DialogTitle, Typography, Button, IconButton } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core'
-
-
 import styled from 'styled-components';
 
 const ClimbLogger = () => {
@@ -112,8 +111,11 @@ const ClimbLogger = () => {
     }, [climbs]);
 
     return (
-        <Dialog onClose={closeModal} aria-labelledby="simple-dialog-title" open={showModal} fullWidth={true}>
+        <Dialog fullScreen open={showModal} onClose={closeModal}>
             <StyledDialogContent>
+                <StyledCloseButton onClick={closeModal} aria-label="close">
+                    <CloseIcon />
+                </StyledCloseButton>
                 {showReviewPage &&
                     <>
                         <DialogTitle>Review your session: </DialogTitle>
@@ -174,24 +176,13 @@ const ClimbLogger = () => {
                     <>
                         <DialogTitle>Create some climbs to add to your logbook</DialogTitle>
                         <StyledDiv>
-                            <CurrentClimbStatsContainer>
+                            <StyledLoggerContainer>
                                 <CurrentGradeStyleTypography variant="h5">
-                                    Grade:
+                                    Grade: {climb.grade ?? ''}    Style: {climb.style?.description ?? 'None'}
                                 </CurrentGradeStyleTypography>
-                                <CurrentGradeStyleTypography variant="h6">
-                                    {climb.grade ?? ''}
-                                </CurrentGradeStyleTypography>
-                                <CurrentGradeStyleTypography variant="h5">
-                                    Style:
-                                </CurrentGradeStyleTypography>
-                                <CurrentGradeStyleTypography variant="h6">
-                                    {climb.style?.description ?? 'None'}
-                                </CurrentGradeStyleTypography>
-                            </CurrentClimbStatsContainer>
-                            <KnobContainer>
                                 {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onButtonClick={setKnobsToStyleDisplay} onWheelTurn={setClimbGrade} />}
                                 {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onButtonClick={onSettingStyle} onWheelTurn={setClimbStyle} />}
-                            </KnobContainer>
+                            </StyledLoggerContainer>
                             <StyledFooterDiv>
                                 <TotalClimbsText>Total number of climbs in your session: {climbs.length}</TotalClimbsText>
                                 <Button
@@ -210,27 +201,30 @@ const ClimbLogger = () => {
     );
 };
 
+
+const StyledCloseButton = styled(IconButton)`
+    && {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+    }
+`;
+
 const NoClimbsTextContainer = styled.div`
     height: 10px;
     text-align: right;
+    margin-bottom: 20px;
 `;
 
-const CurrentClimbStatsContainer = styled.div`
-    display: inline-block;
-    width: 40%;
-`;
-
-const KnobContainer = styled.div`
-    display: inline-block;
+const StyledLoggerContainer = styled.div`
+    display: block;
     height: 80%;
-    padding-top: 33px;
-    padding-left: 30px;
 `;
 
 const CurrentGradeStyleTypography = styled(Typography)`
+    display: block;
     text-align: center;
     margin-top: 15px;
-    vertical-align: middle;
 `;
 
 const TotalClimbsText = styled(Typography)`

@@ -1,13 +1,11 @@
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { Card, Button, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { accessTokensExist } from '../../../dataLayer/accessToken/accessTokenHelper';
 import { login, useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
 import { ErrorModal } from '../../atoms/ErrorModal/ErrorModal';
+import styled from 'styled-components';
 
 export function LogonForm() {
 
@@ -39,21 +37,47 @@ export function LogonForm() {
     const onLogonButtonClick = useCallback(() => dispatch(login(credentials)), [dispatch, credentials]);
 
     return (
-        <Paper>
-            <Typography>Enter your credentials to log on:</Typography>
+        <StyledCard>
+            <StyledTypography>Enter your credentials to log on:</StyledTypography>
             <ErrorModal statePath='authentication' />
-            <TextField
+            <StyledTextField
                 label="Email address"
                 variant="outlined"
                 value={credentials.emailAddress}
                 onChange={onEmailTextFieldChange} />
-            <TextField
+            <StyledTextField
                 label="Password"
                 type="password"
                 variant="outlined"
                 value={credentials.password}
                 onChange={onPasswordTextFieldChange} />
-            <Button variant="outlined" onClick={onLogonButtonClick}>Log on</Button>
-        </Paper>
+            <StyledButton variant="outlined" color="primary" onClick={onLogonButtonClick}>Log on</StyledButton>
+        </StyledCard>
     );
 }
+
+const StyledTypography = styled(Typography)`
+    && {
+        margin-bottom: 20px;
+    }
+`;
+
+const StyledTextField = styled(TextField)`
+    && {
+        display: block;
+        margin-bottom: 20px;
+        width: 300px;
+    }
+`;
+
+const StyledButton = styled(Button)`
+    margin: 10px;
+    width: 300px;
+    display: block;
+`;
+
+const StyledCard = styled(Card)`
+    width: 400px;
+    text-align: center;
+    padding: 20px;
+`;
