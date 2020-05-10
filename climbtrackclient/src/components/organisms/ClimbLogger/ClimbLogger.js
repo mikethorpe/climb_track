@@ -10,6 +10,7 @@ import { useCreateClimbingSession, useFetchClimbingSessions } from '../../../dat
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
 import { DialogContent, Dialog, DialogTitle, Paper, Typography, Button } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import styled from 'styled-components';
 
 const ClimbLogger = () => {
 
@@ -100,7 +101,7 @@ const ClimbLogger = () => {
 
     return (
         <Dialog onClose={closeModal} aria-labelledby="simple-dialog-title" open={showModal} fullWidth={true}>
-            <DialogContent>
+            <StyledDialogContent>
                 {showReviewPage &&
                     <>
                         <DialogTitle>Review your session: </DialogTitle>
@@ -133,14 +134,38 @@ const ClimbLogger = () => {
                 {!showReviewPage &&
                     <>
                         <DialogTitle>Add a climb:</DialogTitle>
-                        {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setClimbGrade} />}
-                        {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setClimbStyleAndAddToClimbs} />}
-                        <Button variant="contained" color="secondary" disabled={addReviewButtonDisabled} onClick={() => setShowReviewPage(true)}>Review</Button>
+                        <StyledDiv>
+                            {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setClimbGrade} />}
+                            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setClimbStyleAndAddToClimbs} />}
+                            <StyledFooterDiv>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    disabled={addReviewButtonDisabled}
+                                    onClick={() => setShowReviewPage(true)}>
+                                    Review and add to logbook
+                                        </Button>
+                            </StyledFooterDiv>
+                        </StyledDiv>
                     </>
                 }
-            </DialogContent>
-        </Dialog >
+            </StyledDialogContent>
+        </Dialog>
     );
 };
+
+const StyledDiv = styled.div`
+    height: 80%;
+`;
+
+const StyledDialogContent = styled(DialogContent)`
+    height: 450px;
+`;
+
+const StyledFooterDiv = styled.div`
+        position: absolute;
+        bottom: 30px;
+        right: 20px;
+`;
 
 export default ClimbLogger;
