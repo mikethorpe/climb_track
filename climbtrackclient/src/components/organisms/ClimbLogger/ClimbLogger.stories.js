@@ -5,8 +5,7 @@ import Provider from '../../../dataLayer/store/providerWrapper';
 import { storiesOf } from '@storybook/react';
 import createStore from '../../../dataLayer/store/store';
 
-//TODO fix with climbs sub property of climbing session
-const storeWithSessions = {
+const store = {
     climbingSessions: [
         { id: 1, dateTime: '24th April', grade: '7a', style: { id: 1, description: 'Overhang' } },
         { id: 2, dateTime: '22th April', grade: '7b', style: { id: 2, description: 'Slab' } }
@@ -14,10 +13,13 @@ const storeWithSessions = {
     styles: [
         { id: 1, description: 'Overhang' },
         { id: 2, description: 'Slab' }
-    ]
+    ],
+    userInterface: {
+        climbLoggerModalDisplayed: true
+    }
 };
 
-const defaultStore = createStore(storeWithSessions);
+const defaultStore = createStore(store);
 
 storiesOf('ClimbLogger', module)
     .add('Default', () => (
