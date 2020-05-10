@@ -8,8 +8,12 @@ import calculateMaxGradeFromClimbs from '../../../helpers/calculateMaxGradeFromC
 import grades from '../../../dataLayer/constants/grades';
 import { useCreateClimbingSession, useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
-import { DialogContent, Dialog, DialogTitle, Paper, Typography, Button } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
+import { DialogContent, Dialog, DialogTitle, Typography, Button, IconButton } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core'
+
+
 import styled from 'styled-components';
 
 const ClimbLogger = () => {
@@ -69,10 +73,12 @@ const ClimbLogger = () => {
     let displayGradeKnob = climb.grade == null;
     let displayStyleKnob = climb.grade !== null && climb.style == null;
 
-    const yourClimbsList = climbs.map((climb) => <Paper key={climb.id}>
-        {climb.grade + ' ' + climb.style.description}
-        <Button variant="outlined" onClick={() => removeClimbFromClimbs(climb.id)}>Remove</Button>
-    </Paper>);
+    // const listOfClimbs = climbs.map((climb) => <div key={climb.id}>
+    //     {climb.grade + ' ' + climb.style.description}
+    //     <IconButton aria-label="delete" onClick={() => removeClimbFromClimbs(climb.id)}>
+    //         <Delete />
+    //     </IconButton>
+    // </div>);
 
     const gradeKnobControlText = 'Select grade';
     const styleKnobControlText = 'Select style';
@@ -105,45 +111,73 @@ const ClimbLogger = () => {
                 {showReviewPage &&
                     <>
                         <DialogTitle>Review your session: </DialogTitle>
-                        <div>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                    margin="normal"
-                                    id="date-picker-dialog"
-                                    label="Select session date"
-                                    format="dd/MM/yyyy"
-                                    value={selectedDate}
-                                    onChange={handleDateChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                    maxDate={new Date()}
-                                />
-                            </MuiPickersUtilsProvider>
-                            {yourClimbsList}
-                            <div>
-                                <Typography hidden={!addReviewButtonDisabled}>Go back to create some climbs to add them to your logbook</Typography>
-                            </div>
-                            <div>
-                                <Button variant="contained" color="secondary" onClick={() => setShowReviewPage(false)}>Back</Button>
-                                <Button variant="contained" color="secondary" disabled={addReviewButtonDisabled} onClick={storeClimbingSession}>Add climbs to logbook</Button>
-                            </div>
-                        </div>
+                        <StyledDiv>
+                            <StyledDatePickerDiv>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        margin="normal"
+                                        id="date-picker-dialog"
+                                        label="Select session date"
+                                        format="dd/MM/yyyy"
+                                        value={selectedDate}
+                                        onChange={handleDateChange}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                        maxDate={new Date()}
+                                    />
+                                </MuiPickersUtilsProvider>
+                            </StyledDatePickerDiv>
+                            <ListOfClimbsDiv>
+                                <StyledTableContainer component={Paper}>
+                                    <Table stickyHeader size="small">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell align="center">Grade</TableCell>
+                                                <TableCell align="center">Style</TableCell>
+                                                <TableCell align="center">Remove</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {climbs.map((climb) => (
+                                                <TableRow key={climb.id}>
+                                                    <TableCell align="center">{climb.grade}</TableCell>
+                                                    <TableCell align="center">{climb.style.description}</TableCell>
+                                                    <TableCell align="center">
+                                                        <IconButton aria-label="delete" onClick={() => removeClimbFromClimbs(climb.id)}>
+                                                            <Delete />
+                                                        </IconButton>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </StyledTableContainer>
+                            </ListOfClimbsDiv>
+                            <StyledFooterDiv>
+                                <div>
+                                    <Typography hidden={!addReviewButtonDisabled}>Go back to create some climbs to add them to your logbook</Typography>
+                                </div>
+                                <FooterButton variant="contained" color="secondary" onClick={() => setShowReviewPage(false)}>Back</FooterButton>
+                                <FooterButton variant="contained" color="secondary" disabled={addReviewButtonDisabled} onClick={storeClimbingSession}>Add climbs to logbook</FooterButton>
+                            </StyledFooterDiv>
+                        </StyledDiv>
                     </>
                 }
                 {!showReviewPage &&
                     <>
-                        <DialogTitle>Add a climb:</DialogTitle>
+                        <DialogTitle>Create some climbs to add to your logbook</DialogTitle>
                         <StyledDiv>
                             {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setClimbGrade} />}
                             {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setClimbStyleAndAddToClimbs} />}
                             <StyledFooterDiv>
+                                <TotalClimbsText>Total number of climbs in your session: {climbs.length}</TotalClimbsText>
                                 <Button
                                     variant="contained"
                                     color="secondary"
                                     disabled={addReviewButtonDisabled}
                                     onClick={() => setShowReviewPage(true)}>
-                                    Review and add to logbook
+                                    Review climbs to add
                                         </Button>
                             </StyledFooterDiv>
                         </StyledDiv>
@@ -154,18 +188,40 @@ const ClimbLogger = () => {
     );
 };
 
+const TotalClimbsText = styled(Typography)`
+    display: inline;
+    margin-right: 30px;
+`;
+
+const StyledTableContainer = styled(TableContainer)`
+    height: 100%;
+`;
+
+const FooterButton = styled(Button)`
+   margin-left: 10px;
+`;
+
 const StyledDiv = styled.div`
     height: 80%;
+`;
+
+const ListOfClimbsDiv = styled.div`
+    height: 230px;
+    margin: 10px;
 `;
 
 const StyledDialogContent = styled(DialogContent)`
     height: 450px;
 `;
 
+const StyledDatePickerDiv = styled.div`
+    text-align: right;
+`;
+
 const StyledFooterDiv = styled.div`
-        position: absolute;
-        bottom: 30px;
-        right: 20px;
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
 `;
 
 export default ClimbLogger;
