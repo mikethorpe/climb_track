@@ -161,12 +161,12 @@ const ClimbLogger = () => {
                                 </StyledTableContainer>
                             </ListOfClimbsDiv>
                             <StyledFooterDiv>
-                                <div>
-                                    <Typography hidden={!addReviewButtonDisabled}>Go back to create some climbs to add them to your logbook</Typography>
-                                </div>
                                 <FooterButton variant="outlined" onClick={() => setShowReviewPage(false)}>Back</FooterButton>
                                 <FooterButton variant="contained" color="primary" disabled={addReviewButtonDisabled} onClick={storeClimbingSession}>Add climbs to logbook</FooterButton>
                             </StyledFooterDiv>
+                            <NoClimbsTextContainer>
+                                <Typography variant="subtitle1" color="red" hidden={!addReviewButtonDisabled}>Go back to create some climbs to add them to your logbook</Typography>
+                            </NoClimbsTextContainer>
                         </StyledDiv>
                     </>
                 }
@@ -175,12 +175,18 @@ const ClimbLogger = () => {
                         <DialogTitle>Create some climbs to add to your logbook</DialogTitle>
                         <StyledDiv>
                             <CurrentClimbStatsContainer>
-                                <Typography variant="h5">
-                                    Grade: {climb.grade ?? ''}
-                                </Typography>
-                                <Typography variant="h5">
-                                    Style: {climb.style?.description ?? ''}
-                                </Typography>
+                                <CurrentGradeStyleTypography variant="h5">
+                                    Grade:
+                                </CurrentGradeStyleTypography>
+                                <CurrentGradeStyleTypography variant="h6">
+                                    {climb.grade ?? ''}
+                                </CurrentGradeStyleTypography>
+                                <CurrentGradeStyleTypography variant="h5">
+                                    Style:
+                                </CurrentGradeStyleTypography>
+                                <CurrentGradeStyleTypography variant="h6">
+                                    {climb.style?.description ?? 'None'}
+                                </CurrentGradeStyleTypography>
                             </CurrentClimbStatsContainer>
                             <KnobContainer>
                                 {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onButtonClick={setKnobsToStyleDisplay} onWheelTurn={setClimbGrade} />}
@@ -190,6 +196,7 @@ const ClimbLogger = () => {
                                 <TotalClimbsText>Total number of climbs in your session: {climbs.length}</TotalClimbsText>
                                 <Button
                                     variant="outlined"
+                                    color="primary"
                                     disabled={addReviewButtonDisabled}
                                     onClick={() => setShowReviewPage(true)}>
                                     Review climbs to add
@@ -203,15 +210,28 @@ const ClimbLogger = () => {
     );
 };
 
+const NoClimbsTextContainer = styled.div`
+    height: 10px;
+    text-align: right;
+`;
+
 const CurrentClimbStatsContainer = styled.div`
     display: inline-block;
-    width: 30%;
+    width: 40%;
 `;
 
 const KnobContainer = styled.div`
     display: inline-block;
+    height: 80%;
+    padding-top: 33px;
+    padding-left: 30px;
 `;
 
+const CurrentGradeStyleTypography = styled(Typography)`
+    text-align: center;
+    margin-top: 15px;
+    vertical-align: middle;
+`;
 
 const TotalClimbsText = styled(Typography)`
     display: inline;
@@ -244,7 +264,8 @@ const StyledDatePickerDiv = styled.div`
 `;
 
 const StyledFooterDiv = styled.div`
-    position: absolute;
+    /* position: absolute; */
+    text-align: right;
     bottom: 30px;
     right: 20px;
 `;

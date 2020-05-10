@@ -47,7 +47,8 @@ const StyledDiv = styled.div`
 
 const StyledButton = styled(Button)`
    && {
-   display: inline-block;
+    display: inline-block;
+    margin-top: 20px;
    }    
 `;
 
