@@ -24,22 +24,24 @@ const ClimbLog = () => {
     const displayClimbLoggerModal = useDisplayClimbLoggerModal();
 
     return (
-        <div>
-            <ClimbLogger />
+        <>
+            <div>
+                <ClimbLogger />
+                <Typography>Climbing sessions</Typography>
+                <SessionItems />
+            </div>
             <StyledFab color="primary" aria-label="add" onClick={() => displayClimbLoggerModal(true)}>
                 <AddIcon />
             </StyledFab>
-            <Typography>Climbing sessions</Typography>
-            <SessionItems />
-        </div>
+        </>
     );
 };
 
 const StyledFab = styled(Fab)`
     && { 
-        position: 'absolute';
-        bottom: theme.spacing(2);
-        right: theme.spacing(2);
+        position: fixed;
+        bottom: 20px;
+        left: 10px;
     }
 `;
 

@@ -15,8 +15,9 @@ const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
     return (
         <StyledDiv>
             <Typography>{headerText}</Typography>
+            <Typography variant="h4">{getValueText(value)}</Typography>
             <Donut
-                diameter={200}
+                diameter={180}
                 min={0}
                 max={100}
                 step={1}
@@ -30,12 +31,6 @@ const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
                 style={{
                     display: 'inline-block'
                 }}>
-                <label id={'my-label'} style={{
-                    textAlign: 'center',
-                    width: '200px',
-                    display: 'block',
-                    padding: '10px 0'
-                }}><Typography>{getValueText(value)}</Typography></label>
             </Donut>
             <StyledDiv>
                 <StyledButton variant="outlined" onClick={() => onButtonClick(getValueText(value))}>{buttonText}</StyledButton>
