@@ -29,16 +29,19 @@ const ClimbLogger = () => {
         style: null,
         id: null
     });
-    const setClimbStyleAndAddToClimbs = (selectedStyleDescription) => {
-        let style = styles.filter(s => s.description === selectedStyleDescription)[0];
-        setClimbs([...climbs, { ...climb, style: style }]);
+    const setClimbStyle = (knobStyleDescription) => {
+        let style = styles.filter(s => s.description === knobStyleDescription)[0];
+        setClimb({ ...climb, style: style });
+    }
+    const setClimbGrade = (knobGrade) => setClimb({
+        ...climb,
+        grade: knobGrade
+    });
+    const addClimbToSession = () => {
+        setClimbs([...climbs, { ...climb, id: newId() }]);
         setClimb({ grade: null, style: null, id: null });
     }
-    const setClimbGrade = (grade) => setClimb({
-        ...climb,
-        grade: grade,
-        id: newId()
-    });
+
     const removeClimbFromClimbs = (id) => {
         let updatedClimbs = climbs.filter((climb) => climb.id != id);
         setClimbs(updatedClimbs);
@@ -70,18 +73,21 @@ const ClimbLogger = () => {
         closeModal();
     };
 
-    let displayGradeKnob = climb.grade == null;
-    let displayStyleKnob = climb.grade !== null && climb.style == null;
+    const [displayGradeKnob, setDisplayGradeKnob] = useState(true);
+    const [displayStyleKnob, setDisplayStyleKnob] = useState(false);
+    const setKnobsToStyleDisplay = () => {
+        setDisplayGradeKnob(false);
+        setDisplayStyleKnob(true);
+    };
+    const setKnobsToGradeDisplay = () => {
+        setDisplayGradeKnob(true);
+        setDisplayStyleKnob(false);
+    };
 
-    // const listOfClimbs = climbs.map((climb) => <div key={climb.id}>
-    //     {climb.grade + ' ' + climb.style.description}
-    //     <IconButton aria-label="delete" onClick={() => removeClimbFromClimbs(climb.id)}>
-    //         <Delete />
-    //     </IconButton>
-    // </div>);
-
-    const gradeKnobControlText = 'Select grade';
-    const styleKnobControlText = 'Select style';
+    const onSettingStyle = () => {
+        addClimbToSession();
+        setKnobsToGradeDisplay();
+    }
 
     const displayClimbLoggerModal = useDisplayClimbLoggerModal();
     const showModal = useSelector(state => state.userInterface.climbLoggerModalDisplayed);
@@ -168,8 +174,18 @@ const ClimbLogger = () => {
                     <>
                         <DialogTitle>Create some climbs to add to your logbook</DialogTitle>
                         <StyledDiv>
-                            {displayGradeKnob && <Knob selection={grades.frenchSport} headerText={gradeKnobControlText} buttonText={'Next'} onButtonClick={setClimbGrade} />}
-                            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} headerText={styleKnobControlText} buttonText={'Next'} onButtonClick={setClimbStyleAndAddToClimbs} />}
+                            <CurrentClimbStatsContainer>
+                                <Typography variant="h5">
+                                    Grade: {climb.grade ?? ''}
+                                </Typography>
+                                <Typography variant="h5">
+                                    Style: {climb.style?.description ?? ''}
+                                </Typography>
+                            </CurrentClimbStatsContainer>
+                            <KnobContainer>
+                                {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onButtonClick={setKnobsToStyleDisplay} onWheelTurn={setClimbGrade} />}
+                                {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onButtonClick={onSettingStyle} onWheelTurn={setClimbStyle} />}
+                            </KnobContainer>
                             <StyledFooterDiv>
                                 <TotalClimbsText>Total number of climbs in your session: {climbs.length}</TotalClimbsText>
                                 <Button
@@ -186,6 +202,16 @@ const ClimbLogger = () => {
         </Dialog>
     );
 };
+
+const CurrentClimbStatsContainer = styled.div`
+    display: inline-block;
+    width: 30%;
+`;
+
+const KnobContainer = styled.div`
+    display: inline-block;
+`;
+
 
 const TotalClimbsText = styled(Typography)`
     display: inline;

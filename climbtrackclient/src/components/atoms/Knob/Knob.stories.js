@@ -12,8 +12,15 @@ const biscuits = [
 ];
 const headerText = 'Select a biscuit';
 const buttonText = 'Add biscuit';
+const onWheelTurn = (arg) => {
+    console.log(`called with arg ${arg}`)
+};
 
 storiesOf('Knob', module)
     .add('Default', () => (
-        <Knob selection={biscuits} headerText={headerText} buttonText={buttonText} onButtonClick={action('button clicked')} />
+        <Knob
+            selection={biscuits}
+            buttonText={buttonText}
+            onButtonClick={action('button clicked')}
+            onWheelTurn={onWheelTurn} />
     ));

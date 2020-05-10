@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Donut } from 'react-dial-knob';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
-const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
+const Knob = ({ selection, buttonText, onButtonClick, onWheelTurn }) => {
 
     const [value, setValue] = useState(50);
     const getValueText = (wheelPercentage) => {
@@ -12,10 +12,12 @@ const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
         return selection[selectionIndex > 0 ? selectionIndex : 0];
     }
 
+    useEffect(() => {
+        onWheelTurn(getValueText(value));
+    }, [value])
+
     return (
         <StyledDiv>
-            <Typography>{headerText}</Typography>
-            <Typography variant="h4">{getValueText(value)}</Typography>
             <Donut
                 diameter={180}
                 min={0}
