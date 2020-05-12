@@ -14,6 +14,7 @@ import { DialogContent, Dialog, DialogTitle, Typography, Button, IconButton } fr
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper, AppBar, Toolbar } from '@material-ui/core'
 import styled from 'styled-components';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const ClimbLogger = () => {
 
@@ -59,7 +60,7 @@ const ClimbLogger = () => {
     const createClimbingSession = useCreateClimbingSession();
     const fetchClimbingSessions = useFetchClimbingSessions();
 
-    const storeClimbingSession = async () => {
+    const saveClimbingSession = async () => {
         const sessionCreated = await createClimbingSession({
             id: newId(),
             dateTime: selectedDate,
@@ -114,12 +115,26 @@ const ClimbLogger = () => {
         <Dialog fullScreen open={showModal} onClose={closeModal}>
             <AppBar>
                 <Toolbar>
-                    <IconButton edge="start" color="inherit" onClick={closeModal} aria-label="close">
-                        <CloseIcon />
-                    </IconButton>
-                    <Button autoFocus color="inherit" align="right" disabled={addReviewButtonDisabled} onClick={() => setShowReviewPage(true)}>
-                        Review and save
-                    </Button>
+                    {!showReviewPage &&
+                        <>
+                            <IconButton edge="start" color="inherit" onClick={closeModal} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+                            <Button autoFocus color="inherit" disabled={addReviewButtonDisabled} onClick={() => setShowReviewPage(true)}>
+                                Review and save
+                            </Button>
+                        </>}
+                    {showReviewPage &&
+                        <>
+                            <IconButton edge="start" color="inherit" onClick={() => setShowReviewPage(false)} aria-label="close">
+                                <ArrowBackIcon />
+                            </IconButton>
+                            <Button autoFocus color="inherit" disabled={addReviewButtonDisabled} onClick={saveClimbingSession}>
+                                Save to logbook
+                            </Button>
+                        </>
+                    }
+
                 </Toolbar>
             </AppBar>
             <StyledDialogContent>
@@ -169,10 +184,6 @@ const ClimbLogger = () => {
                                     </Table>
                                 </StyledTableContainer>
                             </ListOfClimbsDiv>
-                            <StyledFooterDiv>
-                                <FooterButton variant="outlined" onClick={() => setShowReviewPage(false)}>Back</FooterButton>
-                                <FooterButton variant="contained" color="primary" disabled={addReviewButtonDisabled} onClick={storeClimbingSession}>Add climbs to logbook</FooterButton>
-                            </StyledFooterDiv>
                         </StyledDiv>
                     </>
                 }
