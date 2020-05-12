@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import { Delete } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { useDeleteClimbingSession, useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
+import styled from 'styled-components';
 
 const SessionItem = ({ climbingSession }) => {
 
@@ -26,7 +27,7 @@ const SessionItem = ({ climbingSession }) => {
     };
 
     return (
-        <ExpansionPanel>
+        <StyledExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -60,8 +61,12 @@ const SessionItem = ({ climbingSession }) => {
                     <Delete />
                 </IconButton>
             </ExpansionPanelDetails>
-        </ExpansionPanel >
+        </StyledExpansionPanel>
     );
 };
+
+const StyledExpansionPanel = styled(ExpansionPanel)`
+    margin-bottom: 10px;
+`;
 
 export default SessionItem;

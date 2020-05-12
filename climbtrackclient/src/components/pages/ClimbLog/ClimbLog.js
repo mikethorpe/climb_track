@@ -4,6 +4,7 @@ import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSes
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
 import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
 import { setAuthHeader } from '../../../dataLayer/accessToken/accessTokenHelper';
+import LogOffButton from '../../atoms/LogOffButton/LogOffButton';
 import ClimbLogger from '../../organisms/ClimbLogger/ClimbLogger';
 import { Typography } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
@@ -25,12 +26,15 @@ const ClimbLog = () => {
 
     return (
         <>
+            <StyledLogOffButtonContainer>
+                <LogOffButton />
+            </StyledLogOffButtonContainer>
             <div>
                 <ClimbLogger />
-                <Typography>Climbing sessions</Typography>
+                <Typography variant="h4">Climbing sessions</Typography>
                 <SessionItems />
             </div>
-            <StyledFab color="primary" aria-label="add" onClick={() => displayClimbLoggerModal(true)}>
+            <StyledFab color="primary" onClick={() => displayClimbLoggerModal(true)}>
                 <AddIcon />
             </StyledFab>
         </>
@@ -45,5 +49,10 @@ const StyledFab = styled(Fab)`
     }
 `;
 
+const StyledLogOffButtonContainer = styled.div`
+    width: 100%;
+    text-align: right;
+    padding-right: 5px;
 
+`;
 export default ClimbLog;

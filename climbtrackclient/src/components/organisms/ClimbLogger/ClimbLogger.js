@@ -245,7 +245,7 @@ const StyledDiv = styled.div`
 `;
 
 const ListOfClimbsDiv = styled.div`
-    height: 230px;
+    height: 80%;
     margin: 10px;
 `;
 

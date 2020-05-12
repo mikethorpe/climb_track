@@ -37,7 +37,7 @@ export function LogonForm() {
     const onLogonButtonClick = useCallback(() => dispatch(login(credentials)), [dispatch, credentials]);
 
     return (
-        <StyledCard>
+        <StyledDiv>
             <StyledTypography>Enter your credentials to log on:</StyledTypography>
             <ErrorModal statePath='authentication' />
             <StyledTextField
@@ -52,7 +52,7 @@ export function LogonForm() {
                 value={credentials.password}
                 onChange={onPasswordTextFieldChange} />
             <StyledButton variant="outlined" color="primary" onClick={onLogonButtonClick}>Log on</StyledButton>
-        </StyledCard>
+        </StyledDiv>
     );
 }
 
@@ -63,21 +63,20 @@ const StyledTypography = styled(Typography)`
 `;
 
 const StyledTextField = styled(TextField)`
-    && {
+    &&& div {
         display: block;
         margin-bottom: 20px;
-        width: 300px;
+        width: 100%;
     }
 `;
 
 const StyledButton = styled(Button)`
-    margin: 10px;
     width: 300px;
     display: block;
 `;
 
-const StyledCard = styled(Card)`
-    width: 400px;
-    text-align: center;
+const StyledDiv = styled.div`
+    width: 100%;
+    /* text-align: center; */
     padding: 20px;
 `;
