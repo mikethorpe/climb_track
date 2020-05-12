@@ -166,34 +166,29 @@ const ClimbLogger = () => {
                                 <FooterButton variant="outlined" onClick={() => setShowReviewPage(false)}>Back</FooterButton>
                                 <FooterButton variant="contained" color="primary" disabled={addReviewButtonDisabled} onClick={storeClimbingSession}>Add climbs to logbook</FooterButton>
                             </StyledFooterDiv>
-                            <NoClimbsTextContainer>
-                                <Typography variant="subtitle1" color="red" hidden={!addReviewButtonDisabled}>Go back to create some climbs to add them to your logbook</Typography>
-                            </NoClimbsTextContainer>
                         </StyledDiv>
                     </>
                 }
                 {!showReviewPage &&
                     <>
-                        <DialogTitle>Create some climbs to add to your logbook</DialogTitle>
-                        <StyledDiv>
-                            <StyledLoggerContainer>
-                                <CurrentGradeStyleTypography variant="h5">
-                                    Grade: {climb.grade ?? ''}    Style: {climb.style?.description ?? 'None'}
-                                </CurrentGradeStyleTypography>
-                                {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onButtonClick={setKnobsToStyleDisplay} onWheelTurn={setClimbGrade} />}
-                                {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onButtonClick={onSettingStyle} onWheelTurn={setClimbStyle} />}
-                            </StyledLoggerContainer>
-                            <StyledFooterDiv>
-                                <TotalClimbsText>Total number of climbs in your session: {climbs.length}</TotalClimbsText>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    disabled={addReviewButtonDisabled}
-                                    onClick={() => setShowReviewPage(true)}>
-                                    Review climbs to add
+                        <DialogTitle>Create climbs</DialogTitle>
+                        <StyledLoggerContainer>
+                            <CurrentGradeStyleTypography variant="h5">
+                                Grade: {climb.grade ?? ''}    Style: {climb.style?.description ?? 'None'}
+                            </CurrentGradeStyleTypography>
+                            <TotalClimbsText>Total climbs: {climbs.length}</TotalClimbsText>
+                            {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onButtonClick={setKnobsToStyleDisplay} onWheelTurn={setClimbGrade} />}
+                            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onButtonClick={onSettingStyle} onWheelTurn={setClimbStyle} />}
+                        </StyledLoggerContainer>
+                        <StyledFooterDiv>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                disabled={addReviewButtonDisabled}
+                                onClick={() => setShowReviewPage(true)}>
+                                Review climbs to add
                                         </Button>
-                            </StyledFooterDiv>
-                        </StyledDiv>
+                        </StyledFooterDiv>
                     </>
                 }
             </StyledDialogContent>
@@ -222,14 +217,22 @@ const StyledLoggerContainer = styled.div`
 `;
 
 const CurrentGradeStyleTypography = styled(Typography)`
+   && {
+    
     display: block;
     text-align: center;
     margin-top: 15px;
+    margin-bottom: 15px;
+   }
 `;
 
 const TotalClimbsText = styled(Typography)`
-    display: inline;
-    margin-right: 30px;
+    && { 
+        display: block;
+        text-align: center;
+        margin-right: 30px;
+        margin-top: 30px;
+    }
 `;
 
 const StyledTableContainer = styled(TableContainer)`
@@ -237,7 +240,9 @@ const StyledTableContainer = styled(TableContainer)`
 `;
 
 const FooterButton = styled(Button)`
-   margin-left: 10px;
+   && {
+       margin-left: 10px;
+   }
 `;
 
 const StyledDiv = styled.div`
@@ -250,7 +255,7 @@ const ListOfClimbsDiv = styled.div`
 `;
 
 const StyledDialogContent = styled(DialogContent)`
-    height: 450px;
+    height: 100%;
 `;
 
 const StyledDatePickerDiv = styled.div`
@@ -258,10 +263,8 @@ const StyledDatePickerDiv = styled.div`
 `;
 
 const StyledFooterDiv = styled.div`
-    /* position: absolute; */
-    text-align: right;
-    bottom: 30px;
-    right: 20px;
+    position: relative;
+    text-align: center;
 `;
 
 export default ClimbLogger;

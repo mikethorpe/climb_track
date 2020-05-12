@@ -43,12 +43,12 @@ const Knob = ({ selection, buttonText, onButtonClick, onWheelTurn }) => {
 
 const StyledDiv = styled.div`
     text-align: center;
+    margin-top: 43px;
 `;
 
 const StyledButton = styled(Button)`
    && {
     display: inline-block;
-    margin-top: 20px;
    }    
 `;
 

@@ -77,6 +77,4 @@ const StyledButton = styled(Button)`
 
 const StyledDiv = styled.div`
     width: 100%;
-    /* text-align: center; */
-    padding: 20px;
 `;
