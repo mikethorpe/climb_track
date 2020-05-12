@@ -12,7 +12,7 @@ import { Delete } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
 import { DialogContent, Dialog, DialogTitle, Typography, Button, IconButton } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core'
+import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper, AppBar, Toolbar } from '@material-ui/core'
 import styled from 'styled-components';
 
 const ClimbLogger = () => {
@@ -112,10 +112,17 @@ const ClimbLogger = () => {
 
     return (
         <Dialog fullScreen open={showModal} onClose={closeModal}>
+            <AppBar>
+                <Toolbar>
+                    <IconButton edge="start" color="inherit" onClick={closeModal} aria-label="close">
+                        <CloseIcon />
+                    </IconButton>
+                    <Button autoFocus color="inherit" align="right" disabled={addReviewButtonDisabled} onClick={() => setShowReviewPage(true)}>
+                        Review and save
+                    </Button>
+                </Toolbar>
+            </AppBar>
             <StyledDialogContent>
-                <StyledCloseButton onClick={closeModal} aria-label="close">
-                    <CloseIcon />
-                </StyledCloseButton>
                 {showReviewPage &&
                     <>
                         <DialogTitle>Review your session: </DialogTitle>
@@ -171,7 +178,7 @@ const ClimbLogger = () => {
                 }
                 {!showReviewPage &&
                     <>
-                        <DialogTitle>Create climbs</DialogTitle>
+                        <DialogTitle>Add climbs</DialogTitle>
                         <StyledLoggerContainer>
                             <CurrentGradeStyleTypography variant="h5">
                                 Grade: {climb.grade ?? ''}    Style: {climb.style?.description ?? 'None'}
@@ -180,15 +187,6 @@ const ClimbLogger = () => {
                             {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onButtonClick={setKnobsToStyleDisplay} onWheelTurn={setClimbGrade} />}
                             {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onButtonClick={onSettingStyle} onWheelTurn={setClimbStyle} />}
                         </StyledLoggerContainer>
-                        <StyledFooterDiv>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                disabled={addReviewButtonDisabled}
-                                onClick={() => setShowReviewPage(true)}>
-                                Review climbs to add
-                                        </Button>
-                        </StyledFooterDiv>
                     </>
                 }
             </StyledDialogContent>
@@ -199,16 +197,10 @@ const ClimbLogger = () => {
 
 const StyledCloseButton = styled(IconButton)`
     && {
-        position: absolute;
+        position: relative;
         top: 20px;
         right: 30px;
     }
-`;
-
-const NoClimbsTextContainer = styled.div`
-    height: 10px;
-    text-align: right;
-    margin-bottom: 20px;
 `;
 
 const StyledLoggerContainer = styled.div`

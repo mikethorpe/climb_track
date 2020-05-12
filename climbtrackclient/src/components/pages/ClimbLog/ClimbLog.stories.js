@@ -9,6 +9,9 @@ import StoryRouter from 'storybook-react-router';
 const storeWithClimbingSessions = {
     userInterface: {
         climbLoggerModalDisplayed: false
+    },
+    authentication: {
+        authenticated: true
     }
 };
 
