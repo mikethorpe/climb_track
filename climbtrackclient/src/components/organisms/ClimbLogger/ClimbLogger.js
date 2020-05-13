@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Knob from '../../atoms/Knob/Knob';
-import DateFnsUtils from '@date-io/date-fns';
 import newId from '../../../helpers/newid';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -8,13 +7,13 @@ import calculateMaxGradeFromClimbs from '../../../helpers/calculateMaxGradeFromC
 import grades from '../../../dataLayer/constants/grades';
 import { useCreateClimbingSession, useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
-import { Delete } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
 import { DialogContent, Dialog, DialogTitle, Typography, Button, IconButton } from '@material-ui/core';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper, AppBar, Toolbar } from '@material-ui/core'
+import { AppBar, Toolbar } from '@material-ui/core'
 import styled from 'styled-components';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { ClimbsTable } from '../../molecules/ClimbsTable/ClimbsTable';
+import { DatePicker } from '../../atoms/DatePicker/DatePicker';
 
 const ClimbLogger = () => {
 
@@ -142,47 +141,9 @@ const ClimbLogger = () => {
                     <>
                         <DialogTitle>Review your session: </DialogTitle>
                         <StyledDiv>
-                            <StyledDatePickerDiv>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        margin="normal"
-                                        id="date-picker-dialog"
-                                        label="Select session date"
-                                        format="dd/MM/yyyy"
-                                        value={selectedDate}
-                                        onChange={handleDateChange}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }}
-                                        maxDate={new Date()}
-                                    />
-                                </MuiPickersUtilsProvider>
-                            </StyledDatePickerDiv>
+                            <DatePicker label="Pick session date" selectedDate={selectedDate} handleDateChange={handleDateChange} />
                             <ListOfClimbsDiv>
-                                <StyledTableContainer component={Paper}>
-                                    <Table stickyHeader size="small">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell align="center">Grade</TableCell>
-                                                <TableCell align="center">Style</TableCell>
-                                                <TableCell align="center">Remove</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {climbs.map((climb) => (
-                                                <TableRow key={climb.id}>
-                                                    <TableCell align="center">{climb.grade}</TableCell>
-                                                    <TableCell align="center">{climb.style.description}</TableCell>
-                                                    <TableCell align="center">
-                                                        <IconButton aria-label="delete" onClick={() => removeClimbFromClimbs(climb.id)}>
-                                                            <Delete />
-                                                        </IconButton>
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </StyledTableContainer>
+                                <ClimbsTable climbs={climbs} handleDeleteClimb={removeClimbFromClimbs} />
                             </ListOfClimbsDiv>
                         </StyledDiv>
                     </>
@@ -238,9 +199,7 @@ const TotalClimbsText = styled(Typography)`
     }
 `;
 
-const StyledTableContainer = styled(TableContainer)`
-    height: 100%;
-`;
+
 
 const FooterButton = styled(Button)`
    && {
@@ -261,9 +220,7 @@ const StyledDialogContent = styled(DialogContent)`
     height: 100%;
 `;
 
-const StyledDatePickerDiv = styled.div`
-    text-align: right;
-`;
+
 
 const StyledFooterDiv = styled.div`
     position: relative;
