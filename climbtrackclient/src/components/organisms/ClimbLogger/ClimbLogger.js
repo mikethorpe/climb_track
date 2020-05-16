@@ -14,6 +14,8 @@ import styled from 'styled-components';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { ClimbsTable } from '../../molecules/ClimbsTable/ClimbsTable';
 import { DatePicker } from '../../atoms/DatePicker/DatePicker';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const ClimbLogger = () => {
 
@@ -48,6 +50,7 @@ export const ClimbLogger = () => {
     }, [climb])
 
     const addClimbToSession = () => {
+        toast.info(`Adding climb to session: ${climb.grade} ${climb.style.description}`);
         setClimbs([...climbs, climb]);
         setClimb({ grade: null, style: null, id: newId() });
     }
@@ -155,14 +158,12 @@ export const ClimbLogger = () => {
                     <>
                         <DialogTitle>Add climbs</DialogTitle>
                         <StyledDiv>
-                            <CurrentGradeStyleTypography variant="h5">
-                                Grade: {climb.grade ?? ''}    Style: {climb.style?.description ?? 'None'}
-                            </CurrentGradeStyleTypography>
-                            <TotalClimbsText>Total climbs: {climbs.length}</TotalClimbsText>
+                            <TotalClimbsText variant="h4">Total climbs: {climbs.length}</TotalClimbsText>
                             {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onInteractionEnd={setClimbGrade} />}
                             {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onInteractionEnd={setClimbStyle} />}
                         </StyledDiv>
                     </>}
+                <ToastContainer position="top-left" autoClose={2000} draggable newestOnTop />
             </StyledDialogContent>
         </Dialog>
     );
@@ -173,16 +174,6 @@ const StyledAppBarContinueIcon = styled(Button)`
         right: 10px;
         position: absolute;
     }
-`;
-
-const CurrentGradeStyleTypography = styled(Typography)`
-   && {
-    
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
-   }
 `;
 
 const TotalClimbsText = styled(Typography)`

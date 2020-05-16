@@ -22,24 +22,29 @@ export const Knob = ({ selection, onInteractionEnd }) => {
 
     return (
         <StyledDiv>
-            <Typography>{getValueText(value)}</Typography>
-            <StyledDonut
-                diameter={180}
-                min={0}
-                max={100}
-                step={1}
-                theme={{
-                    donutColor: 'lightcoral',
-                }}
-                value={value}
-                onValueChange={setValue}
-                onInteractionChange={() => updateInteracting()}
-                ariaLabelledBy={'my-label'}
-                spaceMaxFromZero={false}
-                style={{
-                    display: 'inline-block'
-                }}>
-            </StyledDonut>
+            <StyledTypography variant="h4" align="center">{getValueText(value)}</StyledTypography>
+            <AnotherDiv>
+                <CoverDiv></CoverDiv>
+                <StyledDonut
+                    diameter={180}
+                    min={0}
+                    max={100}
+                    step={1}
+                    value={value}
+                    onValueChange={setValue}
+                    onInteractionChange={() => updateInteracting()}
+                    ariaLabelledBy={'my-label'}
+                    spaceMaxFromZero={false}
+                    style={{
+                        display: 'inline-block'
+                    }}
+                    theme={{
+                        donutColor: '#3F51B5',
+                        centerFocusedColor: 'white'
+                    }}
+                >
+                </StyledDonut>
+            </AnotherDiv>
         </StyledDiv >
     );
 };
@@ -52,7 +57,28 @@ const StyledDonut = styled(Donut)`
     }
 `;
 
+const AnotherDiv = styled.div`
+    height: 180px;
+    width: 180px;
+    display: inline-block;
+`;
+
 const StyledDiv = styled.div`
     text-align: center;
-    margin-top: 43px;
+`;
+
+const CoverDiv = styled.div`
+    position: relative;
+    top: 108px;
+    left: 35px;
+    z-index: 4;
+    width: 111px;
+    height: 37px;
+    background: white;
+`;
+
+const StyledTypography = styled(Typography)`
+    top: 146px;
+    position: relative;
+    z-index: 5;
 `;
