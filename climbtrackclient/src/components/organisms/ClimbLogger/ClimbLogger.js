@@ -15,7 +15,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { ClimbsTable } from '../../molecules/ClimbsTable/ClimbsTable';
 import { DatePicker } from '../../atoms/DatePicker/DatePicker';
 
-const ClimbLogger = () => {
+export const ClimbLogger = () => {
 
     const stylesSelector = createSelector(
         state => state.styles,
@@ -98,7 +98,6 @@ const ClimbLogger = () => {
 
     const [showReviewPage, setShowReviewPage] = useState(false);
 
-
     const [addReviewButtonDisabled, setAddReviewButtonDisabled] = useState(true);
     useEffect(() => {
         if (!climbs.length) {
@@ -131,11 +130,10 @@ const ClimbLogger = () => {
                             <Button autoFocus color="inherit" disabled={addReviewButtonDisabled} onClick={saveClimbingSession}>
                                 Save to logbook
                             </Button>
-                        </>
-                    }
-
+                        </>}
                 </Toolbar>
             </AppBar>
+
             <StyledDialogContent>
                 {showReviewPage &&
                     <>
@@ -146,39 +144,23 @@ const ClimbLogger = () => {
                                 <ClimbsTable climbs={climbs} handleDeleteClimb={removeClimbFromClimbs} />
                             </ListOfClimbsDiv>
                         </StyledDiv>
-                    </>
-                }
+                    </>}
                 {!showReviewPage &&
                     <>
                         <DialogTitle>Add climbs</DialogTitle>
-                        <StyledLoggerContainer>
+                        <StyledDiv>
                             <CurrentGradeStyleTypography variant="h5">
                                 Grade: {climb.grade ?? ''}    Style: {climb.style?.description ?? 'None'}
                             </CurrentGradeStyleTypography>
                             <TotalClimbsText>Total climbs: {climbs.length}</TotalClimbsText>
                             {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onButtonClick={setKnobsToStyleDisplay} onWheelTurn={setClimbGrade} />}
                             {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onButtonClick={onSettingStyle} onWheelTurn={setClimbStyle} />}
-                        </StyledLoggerContainer>
-                    </>
-                }
+                        </StyledDiv>
+                    </>}
             </StyledDialogContent>
         </Dialog>
     );
 };
-
-
-const StyledCloseButton = styled(IconButton)`
-    && {
-        position: relative;
-        top: 20px;
-        right: 30px;
-    }
-`;
-
-const StyledLoggerContainer = styled.div`
-    display: block;
-    height: 80%;
-`;
 
 const CurrentGradeStyleTypography = styled(Typography)`
    && {
@@ -199,14 +181,6 @@ const TotalClimbsText = styled(Typography)`
     }
 `;
 
-
-
-const FooterButton = styled(Button)`
-   && {
-       margin-left: 10px;
-   }
-`;
-
 const StyledDiv = styled.div`
     height: 80%;
 `;
@@ -219,12 +193,3 @@ const ListOfClimbsDiv = styled.div`
 const StyledDialogContent = styled(DialogContent)`
     height: 100%;
 `;
-
-
-
-const StyledFooterDiv = styled.div`
-    position: relative;
-    text-align: center;
-`;
-
-export default ClimbLogger;

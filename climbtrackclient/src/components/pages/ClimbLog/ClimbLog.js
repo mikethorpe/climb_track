@@ -5,7 +5,7 @@ import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInter
 import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
 import { setAuthHeader } from '../../../dataLayer/accessToken/accessTokenHelper';
 import LogOffButton from '../../atoms/LogOffButton/LogOffButton';
-import ClimbLogger from '../../organisms/ClimbLogger/ClimbLogger';
+import { ClimbLogger } from '../../organisms/ClimbLogger/ClimbLogger';
 import { Typography } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';

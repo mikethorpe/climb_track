@@ -1,6 +1,6 @@
 
 import React from 'react';
-import ClimbLogger from './ClimbLogger';
+import { ClimbLogger } from './ClimbLogger';
 import Provider from '../../../dataLayer/store/providerWrapper';
 import { storiesOf } from '@storybook/react';
 import createStore from '../../../dataLayer/store/store';
