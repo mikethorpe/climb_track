@@ -118,18 +118,18 @@ export const ClimbLogger = () => {
                             <IconButton edge="start" color="inherit" onClick={closeModal} aria-label="close">
                                 <CloseIcon />
                             </IconButton>
-                            <Button autoFocus color="inherit" disabled={addReviewButtonDisabled} onClick={() => setShowReviewPage(true)}>
+                            <StyledAppBarContinueIcon autoFocus color="inherit" disabled={addReviewButtonDisabled} onClick={() => setShowReviewPage(true)}>
                                 Review and save
-                            </Button>
+                            </StyledAppBarContinueIcon>
                         </>}
                     {showReviewPage &&
                         <>
                             <IconButton edge="start" color="inherit" onClick={() => setShowReviewPage(false)} aria-label="close">
                                 <ArrowBackIcon />
                             </IconButton>
-                            <Button autoFocus color="inherit" disabled={addReviewButtonDisabled} onClick={saveClimbingSession}>
+                            <StyledAppBarContinueIcon autoFocus color="inherit" disabled={addReviewButtonDisabled} onClick={saveClimbingSession}>
                                 Save to logbook
-                            </Button>
+                            </StyledAppBarContinueIcon>
                         </>}
                 </Toolbar>
             </AppBar>
@@ -161,6 +161,13 @@ export const ClimbLogger = () => {
         </Dialog>
     );
 };
+
+const StyledAppBarContinueIcon = styled(Button)`
+    && {
+        right: 10px;
+        position: absolute;
+    }
+`;
 
 const CurrentGradeStyleTypography = styled(Typography)`
    && {
