@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Knob from './Knob';
+import { Knob } from './Knob';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Knob from '../../atoms/Knob/Knob';
+import { Knob } from '../../atoms/Knob/Knob';
 import newId from '../../../helpers/newid';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -26,19 +26,30 @@ export const ClimbLogger = () => {
     const [climb, setClimb] = useState({
         grade: null,
         style: null,
-        id: null
+        id: newId()
     });
     const setClimbStyle = (knobStyleDescription) => {
         let style = styles.filter(s => s.description === knobStyleDescription)[0];
         setClimb({ ...climb, style: style });
     }
-    const setClimbGrade = (knobGrade) => setClimb({
-        ...climb,
-        grade: knobGrade
-    });
+    const setClimbGrade = (knobGrade) => {
+        setClimb({
+            ...climb,
+            grade: knobGrade
+        });
+        setKnobsToStyleDisplay();
+    }
+
+    useEffect(() => {
+        if (climb.style && climb.grade) {
+            addClimbToSession();
+            setKnobsToGradeDisplay();
+        }
+    }, [climb])
+
     const addClimbToSession = () => {
-        setClimbs([...climbs, { ...climb, id: newId() }]);
-        setClimb({ grade: null, style: null, id: null });
+        setClimbs([...climbs, climb]);
+        setClimb({ grade: null, style: null, id: newId() });
     }
 
     const removeClimbFromClimbs = (id) => {
@@ -82,11 +93,6 @@ export const ClimbLogger = () => {
         setDisplayGradeKnob(true);
         setDisplayStyleKnob(false);
     };
-
-    const onSettingStyle = () => {
-        addClimbToSession();
-        setKnobsToGradeDisplay();
-    }
 
     const displayClimbLoggerModal = useDisplayClimbLoggerModal();
     const showModal = useSelector(state => state.userInterface.climbLoggerModalDisplayed);
@@ -153,8 +159,8 @@ export const ClimbLogger = () => {
                                 Grade: {climb.grade ?? ''}    Style: {climb.style?.description ?? 'None'}
                             </CurrentGradeStyleTypography>
                             <TotalClimbsText>Total climbs: {climbs.length}</TotalClimbsText>
-                            {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onButtonClick={setKnobsToStyleDisplay} onWheelTurn={setClimbGrade} />}
-                            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onButtonClick={onSettingStyle} onWheelTurn={setClimbStyle} />}
+                            {displayGradeKnob && <Knob selection={grades.frenchSport} buttonText={'Set grade'} onInteractionEnd={setClimbGrade} />}
+                            {displayStyleKnob && <Knob selection={styles.map(s => s.description)} buttonText={'Set style and add'} onInteractionEnd={setClimbStyle} />}
                         </StyledDiv>
                     </>}
             </StyledDialogContent>

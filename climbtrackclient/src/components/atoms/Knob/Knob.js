@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Donut } from 'react-dial-knob';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
-const Knob = ({ selection, buttonText, onButtonClick, onWheelTurn }) => {
+export const Knob = ({ selection, onInteractionEnd }) => {
+
+    const [interacting, setInteracting] = useState(false);
+
+    const updateInteracting = () => {
+        if (interacting) {
+            onInteractionEnd(getValueText(value));
+        }
+        setInteracting(!interacting);
+    };
 
     const [value, setValue] = useState(50);
     const getValueText = (wheelPercentage) => {
@@ -12,13 +20,10 @@ const Knob = ({ selection, buttonText, onButtonClick, onWheelTurn }) => {
         return selection[selectionIndex > 0 ? selectionIndex : 0];
     }
 
-    useEffect(() => {
-        onWheelTurn(getValueText(value));
-    }, [value])
-
     return (
         <StyledDiv>
-            <Donut
+            <Typography>{getValueText(value)}</Typography>
+            <StyledDonut
                 diameter={180}
                 min={0}
                 max={100}
@@ -28,28 +33,26 @@ const Knob = ({ selection, buttonText, onButtonClick, onWheelTurn }) => {
                 }}
                 value={value}
                 onValueChange={setValue}
+                onInteractionChange={() => updateInteracting()}
                 ariaLabelledBy={'my-label'}
                 spaceMaxFromZero={false}
                 style={{
                     display: 'inline-block'
                 }}>
-            </Donut>
-            <StyledDiv>
-                <StyledButton variant="outlined" onClick={() => onButtonClick(getValueText(value))}>{buttonText}</StyledButton>
-            </StyledDiv>
-        </StyledDiv>
+            </StyledDonut>
+        </StyledDiv >
     );
 };
+
+const StyledDonut = styled(Donut)`
+    &&& {
+        div[class$="text"] {
+            display: none !important;
+        }
+    }
+`;
 
 const StyledDiv = styled.div`
     text-align: center;
     margin-top: 43px;
 `;
-
-const StyledButton = styled(Button)`
-   && {
-    display: inline-block;
-   }    
-`;
-
-export default Knob;
