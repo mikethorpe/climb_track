@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import SessionItems from '../../organisms/SessionItems/SessionItems';
-import ClimbLogger from '../../organisms/ClimbLogger/ClimbLogger';
 import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
+import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
 import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
 import { setAuthHeader } from '../../../dataLayer/accessToken/accessTokenHelper';
-
-const TabPanel = (props) => {
-    const { children, value, index } = props;
-    return (<div hidden={value !== index}>{children}</div>);
-};
+import LogOffButton from '../../atoms/LogOffButton/LogOffButton';
+import { ClimbLogger } from '../../organisms/ClimbLogger/ClimbLogger';
+import { Typography } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import styled from 'styled-components';
 
 const ClimbLog = () => {
 
@@ -24,33 +22,37 @@ const ClimbLog = () => {
         fetchStyles();
     }, []);
 
-    const [value, setValue] = React.useState(0);
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    const displayClimbLoggerModal = useDisplayClimbLoggerModal();
 
     return (
-        <div>
-            <AppBar position="static" color="default">
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    variant="fullWidth"
-                    aria-label="full width tabs example">
-                    <Tab label="Log book" />
-                    <Tab label="Add session" />
-                </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0} >
-                <SessionItems />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
+        <>
+            <StyledLogOffButtonContainer>
+                <LogOffButton />
+            </StyledLogOffButtonContainer>
+            <div>
                 <ClimbLogger />
-            </TabPanel>
-        </div>
+                <Typography variant="h4">Climbing sessions</Typography>
+                <SessionItems />
+            </div>
+            <StyledFab color="primary" onClick={() => displayClimbLoggerModal(true)}>
+                <AddIcon />
+            </StyledFab>
+        </>
     );
 };
 
+const StyledFab = styled(Fab)`
+    && { 
+        position: fixed;
+        bottom: 20px;
+        left: 10px;
+    }
+`;
+
+const StyledLogOffButtonContainer = styled.div`
+    width: 100%;
+    text-align: right;
+    padding-right: 5px;
+
+`;
 export default ClimbLog;

@@ -1,8 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import { ErrorModal } from './components/atoms/ErrorModal/ErrorModal';
-import LogOffButton from './components/atoms/LogOffButton/LogOffButton';
 import { LogonForm } from './components/organisms/LogonForm/LogonForm';
 import ClimbLog from './components/pages/ClimbLog/ClimbLog';
 import Interceptor from './dataLayer/interceptors/interceptors';
@@ -17,7 +15,6 @@ function App() {
       <ProviderWrapper store={store}>
         <Interceptor />
         <Router>
-          <LogOffButton />
           <Switch>
             <Route path="/login">
               <LogonForm />

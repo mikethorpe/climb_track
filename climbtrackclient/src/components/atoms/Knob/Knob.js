@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { Donut } from 'react-dial-knob';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import styled from 'styled-components';
 
-const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
+export const Knob = ({ selection, onInteractionEnd }) => {
+
+    const [interacting, setInteracting] = useState(false);
+
+    const updateInteracting = () => {
+        if (interacting) {
+            onInteractionEnd(getValueText(value));
+        }
+        setInteracting(!interacting);
+    };
 
     const [value, setValue] = useState(50);
     const getValueText = (wheelPercentage) => {
@@ -12,32 +21,64 @@ const Knob = ({ selection, headerText, buttonText, onButtonClick }) => {
     }
 
     return (
-        <div>
-            <Typography>{headerText}</Typography>
-            <Donut
-                diameter={200}
-                min={0}
-                max={100}
-                step={1}
-                theme={{
-                    donutColor: 'lightcoral'
-                }}
-                value={value}
-                onValueChange={setValue}
-                ariaLabelledBy={'my-label'}
-                spaceMaxFromZero={false}>
-                <label id={'my-label'} style={{
-                    textAlign: 'center',
-                    width: '200px',
-                    display: 'block',
-                    padding: '10px 0'
-                }}><Typography>{getValueText(value)}</Typography></label>
-            </Donut>
-            <Button variant="outlined" onClick={() => onButtonClick(getValueText(value))}>{buttonText}</Button>
-        </div>
-
-
+        <StyledDiv>
+            <StyledTypography variant="h4" align="center">{getValueText(value)}</StyledTypography>
+            <AnotherDiv>
+                <CoverDiv></CoverDiv>
+                <StyledDonut
+                    diameter={180}
+                    min={0}
+                    max={100}
+                    step={1}
+                    value={value}
+                    onValueChange={setValue}
+                    onInteractionChange={() => updateInteracting()}
+                    ariaLabelledBy={'my-label'}
+                    spaceMaxFromZero={false}
+                    style={{
+                        display: 'inline-block'
+                    }}
+                    theme={{
+                        donutColor: '#3F51B5',
+                        centerFocusedColor: 'white'
+                    }}
+                >
+                </StyledDonut>
+            </AnotherDiv>
+        </StyledDiv >
     );
 };
 
-export default Knob;
+const StyledDonut = styled(Donut)`
+    &&& {
+        div[class$="text"] {
+            display: none !important;
+        }
+    }
+`;
+
+const AnotherDiv = styled.div`
+    height: 180px;
+    width: 180px;
+    display: inline-block;
+`;
+
+const StyledDiv = styled.div`
+    text-align: center;
+`;
+
+const CoverDiv = styled.div`
+    position: relative;
+    top: 108px;
+    left: 35px;
+    z-index: 4;
+    width: 111px;
+    height: 37px;
+    background: white;
+`;
+
+const StyledTypography = styled(Typography)`
+    top: 146px;
+    position: relative;
+    z-index: 5;
+`;

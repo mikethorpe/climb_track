@@ -1,13 +1,11 @@
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { Button, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { accessTokensExist } from '../../../dataLayer/accessToken/accessTokenHelper';
 import { login, useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
 import { ErrorModal } from '../../atoms/ErrorModal/ErrorModal';
+import styled from 'styled-components';
 
 export function LogonForm() {
 
@@ -39,21 +37,51 @@ export function LogonForm() {
     const onLogonButtonClick = useCallback(() => dispatch(login(credentials)), [dispatch, credentials]);
 
     return (
-        <Paper>
-            <Typography>Enter your credentials to log on:</Typography>
+        <StyledDiv>
+            <StyledTypography>Welcome to climb_track</StyledTypography>
             <ErrorModal statePath='authentication' />
-            <TextField
-                label="Email address"
-                variant="outlined"
-                value={credentials.emailAddress}
-                onChange={onEmailTextFieldChange} />
-            <TextField
-                label="Password"
-                type="password"
-                variant="outlined"
-                value={credentials.password}
-                onChange={onPasswordTextFieldChange} />
-            <Button variant="outlined" onClick={onLogonButtonClick}>Log on</Button>
-        </Paper>
+            <FieldAndButtonContainer>
+                <StyledTextField
+                    label="Email address"
+                    variant="outlined"
+                    value={credentials.emailAddress}
+                    onChange={onEmailTextFieldChange}
+                    fullWidth />
+                <StyledTextField
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    value={credentials.password}
+                    onChange={onPasswordTextFieldChange}
+                    fullWidth />
+                <Button variant="outlined" color="primary" onClick={onLogonButtonClick} fullWidth>Log on</Button>
+            </FieldAndButtonContainer>
+        </StyledDiv>
     );
 }
+
+const FieldAndButtonContainer = styled.div`
+    width: 80%;
+    height: 400px;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+`;
+
+const StyledTypography = styled(Typography)`
+    && {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+`;
+
+const StyledTextField = styled(TextField)`
+    && div {
+        margin-bottom: 20px;
+    }
+`;
+
+const StyledDiv = styled.div`
+    width: 100%;
+    text-align: center;
+`;
