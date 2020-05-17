@@ -1,4 +1,4 @@
-import { Card, Button, TextField, Typography } from '@material-ui/core';
+import { Button, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -38,43 +38,50 @@ export function LogonForm() {
 
     return (
         <StyledDiv>
-            <StyledTypography>Enter your credentials to log on:</StyledTypography>
+            <StyledTypography>Welcome to climb_track</StyledTypography>
             <ErrorModal statePath='authentication' />
-            <StyledTextField
-                label="Email address"
-                variant="outlined"
-                value={credentials.emailAddress}
-                onChange={onEmailTextFieldChange} />
-            <StyledTextField
-                label="Password"
-                type="password"
-                variant="outlined"
-                value={credentials.password}
-                onChange={onPasswordTextFieldChange} />
-            <StyledButton variant="outlined" color="primary" onClick={onLogonButtonClick}>Log on</StyledButton>
+            <FieldAndButtonContainer>
+                <StyledTextField
+                    label="Email address"
+                    variant="outlined"
+                    value={credentials.emailAddress}
+                    onChange={onEmailTextFieldChange}
+                    fullWidth />
+                <StyledTextField
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    value={credentials.password}
+                    onChange={onPasswordTextFieldChange}
+                    fullWidth />
+                <Button variant="outlined" color="primary" onClick={onLogonButtonClick} fullWidth>Log on</Button>
+            </FieldAndButtonContainer>
         </StyledDiv>
     );
 }
 
+const FieldAndButtonContainer = styled.div`
+    width: 80%;
+    height: 400px;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+`;
+
 const StyledTypography = styled(Typography)`
     && {
+        margin-top: 20px;
         margin-bottom: 20px;
     }
 `;
 
 const StyledTextField = styled(TextField)`
-    &&& div {
-        display: block;
+    && div {
         margin-bottom: 20px;
-        width: 100%;
     }
-`;
-
-const StyledButton = styled(Button)`
-    width: 300px;
-    display: block;
 `;
 
 const StyledDiv = styled.div`
     width: 100%;
+    text-align: center;
 `;
