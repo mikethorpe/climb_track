@@ -27,7 +27,7 @@ const SessionItem = ({ climbingSession }) => {
     };
 
     return (
-        <StyledExpansionPanel>
+        <StyledExpansionPanel TransitionProps={{ unmountOnExit: true }}>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
