@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import { useRevokeRefreshToken } from '../../../dataLayer/actions/authenticationActions';
 import { useSetAuthenticated } from '../../../dataLayer/actions/authenticationActions';
 import { clearAccessTokens } from '../../../dataLayer/accessToken/accessTokenHelper';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 //TODO: Create a story for this component...maybe it could be more than 'just a button'!
 const LogOffButton = () => {
@@ -20,10 +22,16 @@ const LogOffButton = () => {
         history.push("/");
     };
 
-    const authentication = useSelector(state => state.authentication);
+    // const authentication = useSelector(state => state.authentication);
 
     return (
-        authentication.authenticated && <Button variant="outlined" onClick={onLogOffClicked} > Log off</Button>
+        // <div></div>
+        <ListItem button key={0} onClick={onLogOffClicked}>
+            <ListItemIcon>
+                <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Log out'} />
+        </ListItem>
     );
 };
 

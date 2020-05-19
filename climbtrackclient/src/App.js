@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { LogonForm } from './components/pages/LogonForm/LogonForm';
-import ClimbLog from './components/pages/ClimbLog/ClimbLog';
+import { Main } from './components/pages/Main/Main';
 import Interceptor from './dataLayer/interceptors/interceptors';
 import ProviderWrapper from './dataLayer/store/providerWrapper';
 import createStore from './dataLayer/store/store';
@@ -20,7 +20,7 @@ function App() {
               <LogonForm />
             </Route>
             <PrivateRoute path="/">
-              <ClimbLog />
+              <Main />
             </PrivateRoute>
           </Switch>
         </Router>
