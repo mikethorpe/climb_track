@@ -2,8 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import SessionItem from '../../molecules/SessionItem/SessionItem';
 import { createSelector } from 'reselect';
+import styled from 'styled-components';
 
-const SessionItems = () => {
+export const SessionItems = () => {
 
     const climbingSessionsSelector = createSelector(
         state => state.climbingSessions,
@@ -16,10 +17,13 @@ const SessionItems = () => {
     });
 
     return (
-        <div>
+        <StyledDiv>
             {displayItems}
-        </div >
+        </StyledDiv >
     );
 };
 
-export default SessionItems;
+const StyledDiv = styled.div`
+    margin-top: 78px;
+    margin-bottom: 86px;
+`;

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import SessionItems from '../../organisms/SessionItems/SessionItems';
+import { SessionItems } from '../../organisms/SessionItems/SessionItems';
 import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
 import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
