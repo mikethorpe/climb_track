@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import { LogonForm } from './components/organisms/LogonForm/LogonForm';
+import { LogonForm } from './components/pages/LogonForm/LogonForm';
 import ClimbLog from './components/pages/ClimbLog/ClimbLog';
 import Interceptor from './dataLayer/interceptors/interceptors';
 import ProviderWrapper from './dataLayer/store/providerWrapper';

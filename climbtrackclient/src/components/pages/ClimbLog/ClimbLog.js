@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import SessionItems from '../../organisms/SessionItems/SessionItems';
+import { SessionItems } from '../../organisms/SessionItems/SessionItems';
+import { SessionDetailsModal } from '../../organisms/SessionDetails/SessionDetailsModal';
 import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
 import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
 import { setAuthHeader } from '../../../dataLayer/accessToken/accessTokenHelper';
-import LogOffButton from '../../atoms/LogOffButton/LogOffButton';
 import { ClimbLogger } from '../../organisms/ClimbLogger/ClimbLogger';
-import { Typography } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
@@ -26,13 +25,10 @@ const ClimbLog = () => {
 
     return (
         <>
-            <StyledLogOffButtonContainer>
-                <LogOffButton />
-            </StyledLogOffButtonContainer>
             <div>
                 <ClimbLogger />
-                <Typography variant="h4">Climbing sessions</Typography>
                 <SessionItems />
+                <SessionDetailsModal />
             </div>
             <StyledFab color="primary" onClick={() => displayClimbLoggerModal(true)}>
                 <AddIcon />
@@ -49,10 +45,4 @@ const StyledFab = styled(Fab)`
     }
 `;
 
-const StyledLogOffButtonContainer = styled.div`
-    width: 100%;
-    text-align: right;
-    padding-right: 5px;
-
-`;
 export default ClimbLog;

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { CREATE_CLIMBING_SESSION, SET_CLIMBING_SESSIONS } from './types';
+import { CREATE_CLIMBING_SESSION, SET_CLIMBING_SESSIONS, SET_SELECTED_SESSION } from './types';
 import mockApi from '../mockApi/mockApi';
 
 export const useCreateClimbingSession = () => {
@@ -46,5 +46,12 @@ export const useDeleteClimbingSession = () => {
             return false;
         }
         return true;
+    };
+};
+
+export const useSetSelectedClimbingSession = () => {
+    const dispatch = useDispatch();
+    return (climbingSessionId) => {
+        dispatch({ type: SET_SELECTED_SESSION, payload: climbingSessionId });
     };
 };
