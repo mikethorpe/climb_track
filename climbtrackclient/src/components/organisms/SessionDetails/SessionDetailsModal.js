@@ -7,6 +7,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import styled from 'styled-components';
+import {
+    BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
+
+import { generateGradeDistribution } from '../../../helpers/gradeHelper';
 
 export const SessionDetailsModal = () => {
 
@@ -14,6 +19,7 @@ export const SessionDetailsModal = () => {
         // hit the store to close the modal
         console.log('closing');
     };
+
 
 
     const climbingSession = {
@@ -25,6 +31,8 @@ export const SessionDetailsModal = () => {
             { id: 2, grade: '7b', style: { id: 2, description: 'Slab' } }
         ]
     };
+
+    const data = generateGradeDistribution(climbingSession.climbs);
 
     // add selector to check if the modal is open
 
@@ -86,13 +94,29 @@ export const SessionDetailsModal = () => {
                     </TableContainer>
                 </StyledTableContainer>
                 <StyledGraphContainer>
-                    Graphs go here!
+                    {
+                        <BarChart
+                            width={500}
+                            height={300}
+                            data={data}
+                            margin={{
+                                top: 20, right: 30, left: 20, bottom: 5,
+                            }}
+                        >
+                            {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                            <XAxis dataKey="name" />
+                            <Tooltip />
+                            <Bar dataKey="total" label fill="#ffc658" />
+                        </BarChart>
+                    }
                 </StyledGraphContainer>
 
             </DialogContent>
         </Dialog>
     )
 };
+
+
 
 const StyledEditDeleteContainer = styled.div`
     border: solid;
