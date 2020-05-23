@@ -15,16 +15,16 @@ export default {
             maxGrade: '8a+',
             climbs: [
                 { id: 23742, grade: '7a', style: { id: 1, description: 'Overhang' } },
-                { id: 1263524234, grade: '9b++', style: { id: 2, description: 'Slab' } }
+                { id: 1263524234, grade: '6a', style: { id: 2, description: 'Slab' } }
             ]
         },
         {
             id: 3,
             dateTime: '22th May 2019',
-            maxGrade: '9b++',
+            maxGrade: '6a',
             climbs: [
                 { id: 324512, grade: '7a', style: { id: 1, description: 'Overhang' } },
-                { id: 12361, grade: '9b++', style: { id: 3, description: 'Arete' } }
+                { id: 12361, grade: '6a', style: { id: 3, description: 'Arete' } }
             ]
         }
     ],

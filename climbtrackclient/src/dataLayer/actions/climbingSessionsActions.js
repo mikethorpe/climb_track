@@ -53,5 +53,5 @@ export const useSetSelectedClimbingSession = () => {
     const dispatch = useDispatch();
     return (climbingSessionId) => {
         dispatch({ type: SET_SELECTED_SESSION, payload: climbingSessionId });
-    }
-}
+    };
+};

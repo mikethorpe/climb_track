@@ -18,10 +18,10 @@ export default function (state = initialState, action) {
                 sessions: [...action.payload]
             };
         case SET_SELECTED_SESSION:
-            const sessionToSelect = action.payload ? state.sessions.find(s => s.id == action.payload) : null;
+            const session = action.payload ? { ...state.sessions.find(s => s.id == action.payload) } : null;
             return {
                 ...state,
-                selectedSession: { ...sessionToSelect }
+                selectedSession: session
             }
         default:
             return {
