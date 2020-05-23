@@ -14,38 +14,18 @@ import {
 import { generateGradeDistribution } from '../../../helpers/gradeHelper';
 import { useSelector } from 'react-redux';
 import { useDisplaySessionDetailsModal } from '../../../dataLayer/actions/userInterfaceActions';
+import { useSetSelectedClimbingSession } from '../../../dataLayer/actions/climbingSessionsActions';
 
 export const SessionDetailsModal = () => {
 
-
-
-    const climbingSession = {
-        id: 1,
-        dateTime: '22th April 2019',
-        maxGrade: '7b',
-        climbs: [
-            { id: 2, grade: '5', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6a', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6b', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '5', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6b+', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '5+', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6c', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6a', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6a+', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6a+', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '7a', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6a+', style: { id: 3, description: 'Arete' } },
-            { id: 2, grade: '6b', style: { id: 3, description: 'Arete' } },
-        ]
-    };
-
-
-    const data = generateGradeDistribution(climbingSession.climbs);
+    const selectedClimbingSession = useSelector(state => state.climbingSessions.selectedSession);
+    const gradeDistributionData = selectedClimbingSession ? generateGradeDistribution(selectedClimbingSession.climbs) : null;
     const displaySessionDetailsModal = useDisplaySessionDetailsModal();
+    const setSelectedClimbingSession = useSetSelectedClimbingSession();
 
     const closeModal = () => {
-        displaySessionDetailsModal(false)
+        displaySessionDetailsModal(false);
+        setSelectedClimbingSession(null);
     };
 
     // TODO: Fix bug - sessionDetailsModalDisplayed does not appear in initial store
@@ -74,13 +54,13 @@ export const SessionDetailsModal = () => {
                 </StyledEditDeleteContainer>
                 <StyledStatsContainer>
                     <Typography>
-                        Date: {climbingSession.dateTime}
+                        Date: {selectedClimbingSession && selectedClimbingSession.dateTime}
                     </Typography>
                     <Typography>
-                        Total climbs: {climbingSession.climbs.length}
+                        Total climbs: {selectedClimbingSession && selectedClimbingSession.climbs.length}
                     </Typography>
                     <Typography>
-                        Max grade: {climbingSession.maxGrade}
+                        Max grade: {selectedClimbingSession && selectedClimbingSession.maxGrade}
                     </Typography>
                     <Typography>
                         Average grade: 6b+
@@ -91,7 +71,7 @@ export const SessionDetailsModal = () => {
                         <BarChart
                             width={500}
                             height={300}
-                            data={data}
+                            data={gradeDistributionData}
                             margin={{
                                 top: 20, right: 30, left: 20, bottom: 5,
                             }}
@@ -116,7 +96,7 @@ export const SessionDetailsModal = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {climbingSession.climbs.map((climb) => (
+                                {selectedClimbingSession && selectedClimbingSession.climbs.map((climb) => (
                                     <TableRow key={climb.id}>
                                         <TableCell align="center">{climb.grade}</TableCell>
                                         <TableCell align="center">{climb.style.description}</TableCell>
@@ -126,7 +106,6 @@ export const SessionDetailsModal = () => {
                         </Table>
                     </TableContainer>
                 </StyledTableContainer>
-
             </DialogContent>
         </Dialog >
     )

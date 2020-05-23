@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, ListItem } from '@material-ui/core';
 import styled from 'styled-components';
 import { useDisplaySessionDetailsModal } from '../../../dataLayer/actions/userInterfaceActions';
+import { useSetSelectedClimbingSession } from '../../../dataLayer/actions/climbingSessionsActions';
 
 export const SessionItem = ({ climbingSession }) => {
 
@@ -15,9 +16,16 @@ export const SessionItem = ({ climbingSession }) => {
     // };
 
     const displaySessionDetailsModal = useDisplaySessionDetailsModal();
+    const setSelectedClimbingSession = useSetSelectedClimbingSession();
+
+    const handleSessionItemClicked = (id) => {
+        console.log(id);
+        setSelectedClimbingSession(id);
+        displaySessionDetailsModal(true);
+    }
 
     return (
-        <StyledListItem button onClick={() => displaySessionDetailsModal(true)}>
+        <StyledListItem button onClick={() => handleSessionItemClicked(climbingSession.id)}>
             <Typography>
                 {`Date: ${climbingSession.dateTime}, 
                     Total climbs: ${climbingSession.climbs.length}, 
