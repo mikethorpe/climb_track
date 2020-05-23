@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Dialog, DialogTitle, DialogContent, AppBar, Toolbar, IconButton, TableContainer,
     Table, Paper, TableHead, TableRow, TableCell, TableBody, Typography
@@ -8,7 +8,7 @@ import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import styled from 'styled-components';
 import {
-    BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+    BarChart, Bar, XAxis, LabelList
 } from 'recharts';
 
 import { generateGradeDistribution } from '../../../helpers/gradeHelper';
@@ -20,15 +20,24 @@ export const SessionDetailsModal = () => {
         console.log('closing');
     };
 
-
-
     const climbingSession = {
         id: 1,
         dateTime: '22th April 2019',
         maxGrade: '7b',
         climbs: [
-            { id: 1, grade: '7a', style: { id: 1, description: 'Overhang' } },
-            { id: 2, grade: '7b', style: { id: 2, description: 'Slab' } }
+            { id: 2, grade: '5', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6a', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6b', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '5', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6b+', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '5+', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6c', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6a', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6a+', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6a+', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '7a', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6a+', style: { id: 3, description: 'Arete' } },
+            { id: 2, grade: '6b', style: { id: 3, description: 'Arete' } },
         ]
     };
 
@@ -70,6 +79,23 @@ export const SessionDetailsModal = () => {
                         Average grade: 6b+
                     </Typography>
                 </StyledStatsContainer>
+                <StyledGraphContainer>
+                    {
+                        <BarChart
+                            width={500}
+                            height={300}
+                            data={data}
+                            margin={{
+                                top: 20, right: 30, left: 20, bottom: 5,
+                            }}
+                        >
+                            <XAxis dataKey="name" />
+                            <Bar dataKey="total" fill="#ffc658">
+                                <LabelList dataKey="total" position="top" />
+                            </Bar>
+                        </BarChart>
+                    }
+                </StyledGraphContainer>
                 <StyledTableContainer>
                     <Typography>
                         Breakdown:
@@ -93,23 +119,6 @@ export const SessionDetailsModal = () => {
                         </Table>
                     </TableContainer>
                 </StyledTableContainer>
-                <StyledGraphContainer>
-                    {
-                        <BarChart
-                            width={500}
-                            height={300}
-                            data={data}
-                            margin={{
-                                top: 20, right: 30, left: 20, bottom: 5,
-                            }}
-                        >
-                            {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                            <XAxis dataKey="name" />
-                            <Tooltip />
-                            <Bar dataKey="total" label fill="#ffc658" />
-                        </BarChart>
-                    }
-                </StyledGraphContainer>
 
             </DialogContent>
         </Dialog>

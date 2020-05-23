@@ -26,10 +26,8 @@ export const calculateMinGradeFromClimbs = (climbs) => {
 
 // TODO: Optimize this function - some parts can be abstracted
 export const generateGradeDistribution = (climbs) => {
-
     const maxGrade = calculateMaxGradeFromClimbs(climbs);
     const minGrade = calculateMinGradeFromClimbs(climbs);
-    console.log(`minGrade ${minGrade}`);
     const maxGradeIndex = grades.indexOf(maxGrade);
     const minGradeIndex = grades.indexOf(minGrade);
     const gradeDistribution = [];
