@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { SessionItem } from '../../molecules/SessionItem/SessionItem';
 import { List, Divider } from '@material-ui/core';
 import { createSelector } from 'reselect';
+import styled from 'styled-components';
 
 export const SessionItems = () => {
 
