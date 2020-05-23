@@ -3,7 +3,7 @@ import { Knob } from '../../atoms/Knob/Knob';
 import newId from '../../../helpers/newid';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
-import calculateMaxGradeFromClimbs from '../../../helpers/calculateMaxGradeFromClimbs';
+import { calculateMaxGradeFromClimbs } from '../../../helpers/gradeHelper';
 import grades from '../../../dataLayer/constants/grades';
 import { useCreateClimbingSession, useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
