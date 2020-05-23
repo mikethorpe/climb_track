@@ -145,7 +145,7 @@ const StyledTableContainer = styled.div`
 `;
 
 const StyledGraphContainer = styled.div`
-    height: 400px;
+    height: 210px;
     border: solid;
     margin-bottom: 10px;
     padding: 10px 10px 10px 10px;
