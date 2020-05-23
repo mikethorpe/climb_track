@@ -12,13 +12,12 @@ import {
 } from 'recharts';
 
 import { generateGradeDistribution } from '../../../helpers/gradeHelper';
+import { useSelector } from 'react-redux';
+import { useDisplaySessionDetailsModal } from '../../../dataLayer/actions/userInterfaceActions';
 
 export const SessionDetailsModal = () => {
 
-    const closeModal = () => {
-        // hit the store to close the modal
-        console.log('closing');
-    };
+
 
     const climbingSession = {
         id: 1,
@@ -41,12 +40,20 @@ export const SessionDetailsModal = () => {
         ]
     };
 
-    const data = generateGradeDistribution(climbingSession.climbs);
 
+    const data = generateGradeDistribution(climbingSession.climbs);
+    const displaySessionDetailsModal = useDisplaySessionDetailsModal();
+
+    const closeModal = () => {
+        displaySessionDetailsModal(false)
+    };
+
+    // TODO: Fix bug - sessionDetailsModalDisplayed does not appear in initial store
+    const open = useSelector(state => state.userInterface.sessionDetailsModalDisplayed);
     // add selector to check if the modal is open
 
     return (
-        <Dialog fullScreen open={true} onClose={closeModal}>
+        <Dialog fullScreen open={open} onClose={closeModal}>
             <AppBar>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={closeModal} aria-label="close">
@@ -121,7 +128,7 @@ export const SessionDetailsModal = () => {
                 </StyledTableContainer>
 
             </DialogContent>
-        </Dialog>
+        </Dialog >
     )
 };
 
