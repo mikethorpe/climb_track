@@ -1,5 +1,5 @@
 import React from 'react';
-import SessionItem from './SessionItem';
+import { SessionItem } from './SessionItem';
 import { storiesOf } from '@storybook/react';
 import createStore from '../../../dataLayer/store/store';
 import Provider from '../../../dataLayer/store/providerWrapper';

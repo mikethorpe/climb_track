@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import SessionItems from '../../organisms/SessionItems/SessionItems';
+import { SessionItems } from '../../organisms/SessionItems/SessionItems';
+import { SessionDetailsModal } from '../../organisms/SessionDetails/SessionDetailsModal';
 import { useFetchClimbingSessions } from '../../../dataLayer/actions/climbingSessionsActions';
 import { useDisplayClimbLoggerModal } from '../../../dataLayer/actions/userInterfaceActions';
 import { useFetchStyles } from '../../../dataLayer/actions/stylesActions';
@@ -27,6 +28,7 @@ const ClimbLog = () => {
             <div>
                 <ClimbLogger />
                 <SessionItems />
+                <SessionDetailsModal />
             </div>
             <StyledFab color="primary" onClick={() => displayClimbLoggerModal(true)}>
                 <AddIcon />
