@@ -65,7 +65,6 @@ const StyledSessionNotes = styled(Typography)`
         width: 100%;
         padding-top: 5px;
         padding-bottom: 5px;
-        /* height: 50px; */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
