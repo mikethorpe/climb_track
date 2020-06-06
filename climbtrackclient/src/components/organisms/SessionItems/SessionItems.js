@@ -22,8 +22,12 @@ export const SessionItems = () => {
     });
 
     return (
-        <List>
+        <StyledList>
             {displayItems}
-        </List>
+        </StyledList>
     );
 };
+
+const StyledList = styled(List)`
+    margin-top: 64px;
+`;
