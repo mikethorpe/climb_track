@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -32,6 +32,8 @@ import {
   useFetchClimbingSessions,
 } from "../../../dataLayer/actions/climbingSessionsActions";
 
+import { ConfirmationModal } from "../../molecules/ConfirmationModal/ConfirmationModal";
+
 export const SessionDetailsModal = () => {
   const selectedClimbingSession = useSelector(
     (state) => state.climbingSessions.selectedSession
@@ -51,13 +53,14 @@ export const SessionDetailsModal = () => {
   const deleteClimbingSession = useDeleteClimbingSession();
   const fetchClimbingSessions = useFetchClimbingSessions();
 
-  const onDeleteClicked = async (climbingSession) => {
+  const deleteSession = async (climbingSession) => {
     await deleteClimbingSession(climbingSession);
     fetchClimbingSessions();
-    closeModal();
+    closeConfirmationModal();
+    closeSessionDetailsModal();
   };
 
-  const closeModal = () => {
+  const closeSessionDetailsModal = () => {
     displaySessionDetailsModal(false);
     setSelectedClimbingSession(null);
   };
@@ -67,15 +70,26 @@ export const SessionDetailsModal = () => {
     (state) => state.userInterface.sessionDetailsModalDisplayed
   );
 
-  console.log(selectedClimbingSession);
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+  const closeConfirmationModal = () => setConfirmationModalOpen(false);
+  const onDeleteClicked = () => {
+    setConfirmationModalOpen(true);
+  };
+
   return (
-    <Dialog fullScreen open={open} onClose={closeModal}>
+    <Dialog fullScreen open={open} onClose={closeSessionDetailsModal}>
+      <ConfirmationModal
+        open={confirmationModalOpen}
+        message="Are you sure you want to delete this session?"
+        onConfirmClick={() => deleteSession(selectedClimbingSession)}
+        onCancelClick={closeConfirmationModal}
+      />
       <AppBar>
         <Toolbar>
           <IconButton
             edge="start"
             color="inherit"
-            onClick={closeModal}
+            onClick={closeSessionDetailsModal}
             aria-label="close"
           >
             <CloseIcon />
@@ -90,10 +104,7 @@ export const SessionDetailsModal = () => {
             <IconButton aria-label="delete">
               <Edit />
             </IconButton>
-            <IconButton
-              aria-label="delete"
-              onClick={() => onDeleteClicked(selectedClimbingSession)}
-            >
+            <IconButton aria-label="delete" onClick={onDeleteClicked}>
               <Delete />
             </IconButton>
           </StyledEditDeleteContainer>
