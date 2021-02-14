@@ -11,39 +11,68 @@ namespace Persistence.Tests.Repositories
 {
     internal class UserRepositoryTests
     {
-        [TestFixture]
-        internal class FindByEmailAddress_ContextContainsUserWithMatchingEmailAddress : UserRepositoryTests, IDisposable
+        private SqliteConnection sqliteConnection;
+        private ClimbTrackContext context;
+        private DbContextOptions<ClimbTrackContext> contextOptions;
+
+        [SetUp]
+        public void BaseSetup()
         {
-            private UserRepository userRepository;
-            private DbContextOptions<ClimbTrackContext> contextOptions;
-            private SqliteConnection sqliteConnection;
-            private ClimbTrackContext context;
+            sqliteConnection = new SqliteConnection("Data Source=:memory:");
+            sqliteConnection.Open();
+            contextOptions = new DbContextOptionsBuilder<ClimbTrackContext>()
+                    .UseSqlite(sqliteConnection)
+                    .Options;
+            context = new ClimbTrackContext(contextOptions, null);
+            context.Database.EnsureCreated();
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+            sqliteConnection.Dispose();
+        }
+
+
+        [TestFixture]
+        internal class FindByEmailAddress_ContextContainsUserWithMatchingEmailAddress : UserRepositoryTests
+        {
+            private User user;
 
             [SetUp]
             public void Setup()
             {
-                var sqliteConnection = new SqliteConnection("Data Source=:memory:");
-                sqliteConnection.Open();
-                contextOptions = new DbContextOptionsBuilder<ClimbTrackContext>()
-                        .UseSqlite(sqliteConnection)
-                        .Options;
-                context = new ClimbTrackContext(contextOptions, null);
-                context.Database.EnsureCreated();
                 context.Users.Add(new User { EmailAddress = "user@domain.com", Password = "password", Role = RoleEnum.USER });
                 context.SaveChanges();
-                userRepository = new UserRepository(context);
-            }
-
-            public void Dispose()
-            {
-                sqliteConnection.Dispose();
+                UserRepository userRepository = new UserRepository(context);
+                user = userRepository.FindByEmailAddress("user@domain.com");
             }
 
             [Test]
             public void Returns_user_with_matching_email_address()
             {
-                User user = userRepository.FindByEmailAddress("user@domain.com");
                 Assert.That(user.EmailAddress, Is.EqualTo("user@domain.com"));
+            }
+        }
+
+        [TestFixture]
+        internal class FindByEmailAddress_ContextContainsUserWithoutMatchingEmailAddress : UserRepositoryTests
+        {
+            private User user;
+
+            [SetUp]
+            public void Setup()
+            {
+                context.Users.Add(new User { EmailAddress = "nonmatchinguser@domain.com", Password = "password", Role = RoleEnum.USER });
+                context.SaveChanges();
+                UserRepository userRepository = new UserRepository(context);
+                user = userRepository.FindByEmailAddress("user@domain.com");
+            }
+
+            [Test]
+            public void Returns_null()
+            {
+                Assert.That(user, Is.Null);
             }
         }
     }
