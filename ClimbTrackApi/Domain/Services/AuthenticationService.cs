@@ -21,7 +21,7 @@ namespace ClimbTrackApi.Domain.Services
 
         public async Task<ServiceResponse<AccessToken>> CreateAccessTokenAsync(string emailAddress, string password)
         {
-            User existingUser = userRepository.FindByEmailAddress(emailAddress);
+            User existingUser = await userRepository.FindByEmailAddress(emailAddress);
             if (existingUser == null)
             {
                 return new ServiceResponse<AccessToken>("Error: cannot find user by email address");

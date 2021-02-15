@@ -5,7 +5,7 @@ using ClimbTrackApi.Persistence.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
+using System.Threading.Tasks;
 
 namespace Persistence.Tests.Repositories
 {
@@ -40,12 +40,12 @@ namespace Persistence.Tests.Repositories
             private User user;
 
             [SetUp]
-            public void Setup()
+            public async Task Setup()
             {
                 context.Users.Add(new User { EmailAddress = "user@domain.com", Password = "password", Role = RoleEnum.USER });
                 context.SaveChanges();
                 UserRepository userRepository = new UserRepository(context);
-                user = userRepository.FindByEmailAddress("user@domain.com");
+                user = await userRepository.FindByEmailAddress("user@domain.com");
             }
 
             [Test]
@@ -61,12 +61,12 @@ namespace Persistence.Tests.Repositories
             private User user;
 
             [SetUp]
-            public void Setup()
+            public async Task Setup()
             {
                 context.Users.Add(new User { EmailAddress = "nonmatchinguser@domain.com", Password = "password", Role = RoleEnum.USER });
                 context.SaveChanges();
                 UserRepository userRepository = new UserRepository(context);
-                user = userRepository.FindByEmailAddress("user@domain.com");
+                user = await userRepository.FindByEmailAddress("user@domain.com");
             }
 
             [Test]

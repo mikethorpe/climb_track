@@ -22,7 +22,7 @@ namespace ClimbTrackApi.Domain.Services
 
         public async Task<ServiceResponse<IEnumerable<ClimbingSession>>> ListAsync(string emailAddress)
         {
-            User user = userRepository.FindByEmailAddress(emailAddress);
+            User user = await userRepository.FindByEmailAddress(emailAddress);
             if (user == null)
             {
                 return new ServiceResponse<IEnumerable<ClimbingSession>>("User cannot be found by email address");
@@ -33,7 +33,7 @@ namespace ClimbTrackApi.Domain.Services
 
         public async Task<ServiceResponse<ClimbingSession>> SaveAsync(ClimbingSession climbingSession, string emailAddress)
         {
-            User user = userRepository.FindByEmailAddress(emailAddress);
+            User user = await userRepository.FindByEmailAddress(emailAddress);
             if (user == null)
             {
                 return new ServiceResponse<ClimbingSession>("User cannot be found by email address");
@@ -46,7 +46,7 @@ namespace ClimbTrackApi.Domain.Services
 
         public async Task<ServiceResponse<int>> DeleteAsync(int climbingSessionId, string emailAddress)
         {
-            User user = userRepository.FindByEmailAddress(emailAddress);
+            User user = await userRepository.FindByEmailAddress(emailAddress);
             if (user == null)
             {
                 return new ServiceResponse<int>("User cannot be found by email address");

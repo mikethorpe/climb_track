@@ -22,7 +22,7 @@ namespace ClimbTrackApi.Domain.Services
 
         public async Task<ServiceResponse<User>> CreateUserAsync(RoleEnum role, User user)
         {
-            var existingUser = userRepository.FindByEmailAddress(user.EmailAddress);
+            var existingUser = await userRepository.FindByEmailAddress(user.EmailAddress);
 
             if (existingUser != null)
             {
