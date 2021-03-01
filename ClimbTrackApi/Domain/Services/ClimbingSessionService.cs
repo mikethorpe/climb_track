@@ -1,7 +1,6 @@
 ﻿using ClimbTrackApi.Domain.Communication;
 using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -55,15 +54,18 @@ namespace ClimbTrackApi.Domain.Services
             if (climbingSessionToDelete == null)
             {
                 return new ServiceResponse<int>("ClimbingSession not found");
-
             }
             if (climbingSessionToDelete.UserId != user.Id)
             {
                 return new ServiceResponse<int>("User is not authorized to delete this climbing session");
             }
-            climbingSessionRepository.Remove(climbingSessionToDelete);
-            await unitOfWork.CompleteAsync();
-            return new ServiceResponse<int>(climbingSessionId);
+            bool deleted = await climbingSessionRepository.Remove(climbingSessionToDelete.Id);
+            if (deleted)
+            {
+                await unitOfWork.CompleteAsync();
+                return new ServiceResponse<int>(climbingSessionId);
+            }
+            return new ServiceResponse<int>("Error could not delete climbing session");
         }
     }
 }

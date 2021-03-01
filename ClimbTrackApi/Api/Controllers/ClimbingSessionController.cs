@@ -34,7 +34,6 @@ namespace ClimbTrackApi.Api.Controllers
             {
                 return BadRequest(response.Message);
             }
-
             IEnumerable<ClimbingSession> climbingSessions = response.Model;
             if (climbingSessions.Any())
             {
@@ -44,7 +43,7 @@ namespace ClimbTrackApi.Api.Controllers
                     DateTime = cs.DateTime.ToString("ddd MMM dd yyyy"),
                     Climbs = cs.Climbs,
                     MaxGrade = cs.MaxGrade
-                });
+                }).ToList();
                 return Ok(climbingSessionsDto);
             }
             return NoContent();
@@ -56,12 +55,10 @@ namespace ClimbTrackApi.Api.Controllers
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             string emailAddress = identity.Claims.First(c => c.Type.Contains("nameidentifier")).Value;
             ServiceResponse<ClimbingSession> response = await climbingSessionService.SaveAsync(climbingSession, emailAddress);
-            
             if (!response.Success)
             {
                 return BadRequest(response.Message);
             }
-
             return Ok(response.Model.Id);
         }
 

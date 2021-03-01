@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ClimbTrackApi.Persistence.Models;
 using ClimbTrackApi.Persistence.Contexts;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClimbTrackApi.Persistence.Repositories

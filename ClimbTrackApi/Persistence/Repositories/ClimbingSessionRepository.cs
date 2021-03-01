@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
 
 namespace ClimbTrackApi.Persistence.Repositories
 {
@@ -19,19 +18,22 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public async Task<ClimbingSession> AddAsync(ClimbingSession climbingSession)
         {
+            List<Style> styles = await context.Styles.ToListAsync<Style>();
             var climbingSessionToSave = new ClimbingSession
             {
                 DateTime = climbingSession.DateTime,
                 MaxGrade = climbingSession.MaxGrade,
                 UserId = climbingSession.UserId,
-                Climbs = climbingSession.Climbs.Select(c => new Climb
+                Climbs = climbingSession.Climbs
+                .Select(c => new Climb
                 {
                     Grade = c.Grade,
                     Style = context.Styles.Single(s => s.Id == c.Style.Id)
                 }).ToList()
             };
             await context.ClimbingSessions.AddAsync(climbingSessionToSave);
-            return climbingSessionToSave;
+            climbingSession.Id = climbingSessionToSave.Id;
+            return climbingSession;
         }
 
         public async Task<ICollection<ClimbingSession>> ListAsync(int userId)
@@ -44,7 +46,8 @@ namespace ClimbTrackApi.Persistence.Repositories
                     DateTime = cs.DateTime,
                     MaxGrade = cs.MaxGrade,
                     UserId = cs.UserId,
-                    Climbs = cs.Climbs.Select(c => new Climb
+                    Climbs = cs.Climbs
+                    .Select(c => new Climb
                     {
                         Id = c.Id,
                         Grade = c.Grade,
@@ -59,12 +62,40 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public async Task<ClimbingSession> FindById(int climbingSessionId)
         {
-            return await context.ClimbingSessions.FindAsync(climbingSessionId);
+            ClimbingSession climbingSession = await context.ClimbingSessions.FindAsync(climbingSessionId);
+            if (climbingSession == null)
+            {
+                return null;
+            }
+            return new ClimbingSession
+            {
+                Id = climbingSession.Id,
+                DateTime = climbingSession.DateTime,
+                MaxGrade = climbingSession.MaxGrade,
+                UserId = climbingSession.UserId,
+                Climbs = climbingSession.Climbs
+                .Select(c => new Climb
+                {
+                    Id = c.Id,
+                    Grade = c.Grade,
+                    Style = new Style
+                    {
+                        Id = c.Style.Id,
+                        Description = c.Style.Description
+                    }
+                }).ToList()
+            };
         }
 
-        public void Remove(ClimbingSession climbingSession)
+        public async Task<bool> Remove(int climbingSessionId)
         {
-            context.ClimbingSessions.Remove(climbingSession);
+            ClimbingSession existingClimbingSession = await context.ClimbingSessions.FindAsync(climbingSessionId);
+            if (existingClimbingSession == null)
+            {
+                return false;
+            }
+            context.ClimbingSessions.Remove(existingClimbingSession);
+            return true;
         }
     }
 }

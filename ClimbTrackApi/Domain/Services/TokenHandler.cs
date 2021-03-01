@@ -44,7 +44,10 @@ namespace ClimbTrackApi.Domain.Services
             }
             RefreshToken refreshToken = await refreshTokenRepository.FindByToken(token);
 
-            if (refreshToken != null) refreshTokenRepository.Remove(refreshToken);
+            if (refreshToken != null)
+            {
+                refreshTokenRepository.Remove(refreshToken);
+            }
             await UnitOfWork.CompleteAsync();
             return refreshToken;
         }
