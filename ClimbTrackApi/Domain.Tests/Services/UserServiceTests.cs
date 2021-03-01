@@ -101,6 +101,5 @@ namespace Domain.Tests.Services
                 Assert.That(response.Message, Is.EqualTo("A user with the address user@domain.com is already registered"));
             }
         }
-
     }
 }
