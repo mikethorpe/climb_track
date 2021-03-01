@@ -35,13 +35,13 @@ namespace ClimbTrackApi.Api
                 options.UseSqlServer(Configuration.GetConnectionString("ClimbTrackDb")));
             
             // Inject services
-            services.AddScoped<RefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<RefreshTokenRepository>();
             services.AddScoped<AuthenticationService>();
             services.AddScoped<StyleService>();
             services.AddScoped<Domain.Services.TokenHandler>();
-            services.AddScoped<UserRepository, UserRepository>();
+            services.AddScoped<UserRepository>();
             services.AddScoped<UserService>();
-            services.AddScoped<UnitOfWork, UnitOfWork>();
+            services.AddScoped<UnitOfWork>();
             services.AddScoped<StyleRepository>();
             services.AddScoped<ClimbingSessionRepository>();
             services.AddScoped<ClimbingSessionService>();
