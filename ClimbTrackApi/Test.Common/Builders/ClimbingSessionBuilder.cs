@@ -16,11 +16,17 @@ namespace Test.Common.Builders
                 new Climb
                 {
                     Grade = "7A",
-                    Style = new Style { Id = 1 }
-
+                    //Style = new Style { Id = 1 }
+                    StyleId = 1
                 }
             }
         };
+
+        public ClimbingSessionBuilder WithUserId(int userId)
+        {
+            climbingSession.UserId = userId;
+            return this;
+        }
 
         public ClimbingSession Build()
         {

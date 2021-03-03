@@ -18,7 +18,6 @@ namespace ClimbTrackApi.Persistence.Repositories
 
         public async Task<ClimbingSession> AddAsync(ClimbingSession climbingSession)
         {
-            List<Style> styles = await context.Styles.ToListAsync<Style>();
             var climbingSessionToSave = new ClimbingSession
             {
                 DateTime = climbingSession.DateTime,
@@ -28,7 +27,7 @@ namespace ClimbTrackApi.Persistence.Repositories
                 .Select(c => new Climb
                 {
                     Grade = c.Grade,
-                    Style = context.Styles.Single(s => s.Id == c.Style.Id)
+                    StyleId = c.StyleId
                 }).ToList()
             };
             await context.ClimbingSessions.AddAsync(climbingSessionToSave);
@@ -60,7 +59,7 @@ namespace ClimbTrackApi.Persistence.Repositories
                 }).ToListAsync();
         }
 
-        public async Task<ClimbingSession> FindById(int climbingSessionId)
+        public async Task<ClimbingSession> FindByIdAsync(int climbingSessionId)
         {
             ClimbingSession climbingSession = await context.ClimbingSessions.FindAsync(climbingSessionId);
             if (climbingSession == null)
@@ -87,7 +86,7 @@ namespace ClimbTrackApi.Persistence.Repositories
             };
         }
 
-        public async Task<bool> Remove(int climbingSessionId)
+        public async Task<bool> RemoveAsync(int climbingSessionId)
         {
             ClimbingSession existingClimbingSession = await context.ClimbingSessions.FindAsync(climbingSessionId);
             if (existingClimbingSession == null)

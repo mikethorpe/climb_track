@@ -4,7 +4,6 @@ using ClimbTrackApi.Persistence.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +27,8 @@ namespace Persistence.Tests.Repositories
                     .Options;
             context = new ClimbTrackContext(contextOptions, null);
             context.Database.EnsureCreated();
+            context.Styles.Add(new StyleBuilder().Build());
+            context.SaveChanges();
         }
 
         [TearDown]
@@ -36,49 +37,137 @@ namespace Persistence.Tests.Repositories
             sqliteConnection.Dispose();
         }
 
-
-
         [TestFixture]
         internal class AddAsync_PassedClimbingSession : ClimbingSessionRepositoryTests
         {
             [SetUp]
             public async Task Setup()
             {
-                context.Styles.Add(new StyleBuilder().Build());
-                context.SaveChanges();
-                IEnumerable<Style> styles = context.Styles.ToList();
-                var climbingSession = new ClimbingSessionBuilder().Build();
                 var climbingSessionRepository = new ClimbingSessionRepository(context);
-                await climbingSessionRepository.AddAsync(climbingSession);
+                await climbingSessionRepository.AddAsync(new ClimbingSessionBuilder().Build());
+                context.SaveChanges();
             }
 
             [Test]
             public void Climbing_session_is_added_to_repository()
             {
-                Console.WriteLine();
-                Assert.That(context.ClimbingSessions.Where(cs => cs.DateTime.ToString() == new DateTime(2021, 02, 17, 10, 10, 10).ToString()).Count, Is.EqualTo(1));
+                Assert.That(context.ClimbingSessions.Count, Is.EqualTo(1));
             }
         }
 
-        //[TestFixture]
-        //internal class FindByEmailAddress_ContextContainsUserWithoutMatchingEmailAddress : ClimbingSessionRepositoryTests
-        //{
-        //    private User user;
+        [TestFixture]
+        internal class ListAsync_ClimbingSessionsExistForMultipleUsers : ClimbingSessionRepositoryTests
+        {
+            private IEnumerable<ClimbingSession> climbingSessions;
 
-        //    [SetUp]
-        //    public async Task Setup()
-        //    {
-        //        context.Users.Add(new User { EmailAddress = "nonmatchinguser@domain.com", Password = "password", Role = RoleEnum.USER });
-        //        context.SaveChanges();
-        //        UserRepository userRepository = new UserRepository(context);
-        //        user = await userRepository.FindByEmailAddress("user@domain.com");
-        //    }
+            [SetUp]
+            public async Task Setup()
+            {
+                context.ClimbingSessions.AddRange(
+                    new List<ClimbingSession>
+                    {
+                        new ClimbingSessionBuilder().WithUserId(1).Build(),
+                        new ClimbingSessionBuilder().WithUserId(1).Build(),
+                        new ClimbingSessionBuilder().WithUserId(2).Build()
+                    }
+                );
+                context.SaveChanges();
+                var climbingSessionRepository = new ClimbingSessionRepository(context);
+                climbingSessions = await climbingSessionRepository.ListAsync(1);
+            }
 
-        //    [Test]
-        //    public void Returns_null()
-        //    {
-        //        Assert.That(user, Is.Null);
-        //    }
-        //}
+            [Test]
+            public void Returns_only_climbing_sessions_associated_with_the_passed_user()
+            {
+                Assert.That(climbingSessions.All(cs => cs.UserId == 1), Is.True);
+            }
+
+            [Test]
+            public void Returns_all_climbing_sessions_of_the_current_user()
+            {
+                Assert.That(climbingSessions.Count, Is.EqualTo(2));
+            }
+        }
+
+        [TestFixture]
+        internal class FindById_ClimbingSessionExistsInContext :ClimbingSessionRepositoryTests
+        {
+            private ClimbingSession climbingSession;
+
+            [SetUp]
+            public async Task Setup()
+            {
+                context.ClimbingSessions.AddRange(
+                    new List<ClimbingSession>
+                    {
+                        new ClimbingSessionBuilder().WithUserId(1).Build(),
+                        new ClimbingSessionBuilder().WithUserId(2).Build()
+                    }
+                );
+                context.SaveChanges();
+                var climbingSessionRepository = new ClimbingSessionRepository(context);
+                climbingSession = await climbingSessionRepository.FindByIdAsync(2);
+            }
+
+            [Test]
+            public void Returns_climbing_session()
+            {
+                Assert.That(climbingSession.Id, Is.EqualTo(2));
+            }
+        }
+
+        [TestFixture]
+        internal class FindByIdAsync_ClimbingSessionDoesNotExistInContext : ClimbingSessionRepositoryTests
+        {
+            private ClimbingSession climbingSession;
+
+            [SetUp]
+            public async Task Setup()
+            {
+                var climbingSessionRepository = new ClimbingSessionRepository(context);
+                climbingSession = await climbingSessionRepository.FindByIdAsync(2);
+            }
+
+            [Test]
+            public void Returns_null()
+            {
+                Assert.IsNull(climbingSession);
+            }
+        }
+
+        [TestFixture]
+        internal class RemoveAsync_ClimbingSessionToRemoveExists : ClimbingSessionRepositoryTests
+        {
+            private bool success;
+
+            [SetUp]
+            public async Task Setup()
+            {
+                context.ClimbingSessions.AddRange(
+                    new List<ClimbingSession>
+                    {
+                        new ClimbingSessionBuilder().WithUserId(1).Build(),
+                        new ClimbingSessionBuilder().WithUserId(2).Build()
+                    }
+                );
+                context.SaveChanges();
+                var climbingSessionRepository = new ClimbingSessionRepository(context);
+                success = await climbingSessionRepository.RemoveAsync(1);
+                context.SaveChanges();
+            }
+
+            
+            [Test]
+            public void Returns_true()
+            {
+                Assert.True(success);
+            }
+
+            [Test]
+            public void Removes_climbing_session()
+            {
+                Assert.That(context.ClimbingSessions.Where(cs => cs.Id == 1).Count, Is.EqualTo(0));
+            }
+        }
     }
 }

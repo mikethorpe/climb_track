@@ -50,7 +50,7 @@ namespace ClimbTrackApi.Domain.Services
             {
                 return new ServiceResponse<int>("User cannot be found by email address");
             }
-            ClimbingSession climbingSessionToDelete = await climbingSessionRepository.FindById(climbingSessionId);
+            ClimbingSession climbingSessionToDelete = await climbingSessionRepository.FindByIdAsync(climbingSessionId);
             if (climbingSessionToDelete == null)
             {
                 return new ServiceResponse<int>("ClimbingSession not found");
@@ -59,7 +59,7 @@ namespace ClimbTrackApi.Domain.Services
             {
                 return new ServiceResponse<int>("User is not authorized to delete this climbing session");
             }
-            bool deleted = await climbingSessionRepository.Remove(climbingSessionToDelete.Id);
+            bool deleted = await climbingSessionRepository.RemoveAsync(climbingSessionToDelete.Id);
             if (deleted)
             {
                 await unitOfWork.CompleteAsync();
